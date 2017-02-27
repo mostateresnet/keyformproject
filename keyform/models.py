@@ -67,7 +67,6 @@ class KeyData(models.Model):
         verbose_name_plural = 'Key Data'
 
 
-
 class Comment(models.Model):
     request = models.ForeignKey(Request)
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
