@@ -1,8 +1,11 @@
+{% load static %}
+{% load i18n %}
+
 <!DOCTYPE html>
 <html>
     <head>
         {% block css %}
-            <link rel="stylesheet" type="text/css" href="{% static 'exdb/css/tablesorter_themes.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/tablesorter_themes.css' %}"/>
             <link rel="stylesheet" href="{% static 'keyform/css/foundation_css/foundation.css' %}"/>
             <link rel="stylesheet" href="{% static 'keyform/css/font-awesome-4.6.3/css/font-awesome.min.css' %}"/>
             <link rel="stylesheet" href="{% static 'keyform/css/base.css' %}"/>
@@ -24,6 +27,7 @@
                 </div>
             {% endblock %}
                 {% block content %}
+                
                 {% endblock %}
         {% endblock %}
     </body>
