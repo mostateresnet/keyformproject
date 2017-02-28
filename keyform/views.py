@@ -3,4 +3,6 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 
-# Create your views here.
+class HomeView(CreateView):
+	template_name = 
+	access_level = 'basic'
