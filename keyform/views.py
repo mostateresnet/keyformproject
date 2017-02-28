@@ -2,7 +2,10 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
+from django.views.generic.list import ListView
 
-class HomeView(CreateView):
-	template_name = 
-	access_level = 'basic'
+from keyform.models import Request
+
+class HomeView(ListView):
+    model = Request
+    template_name = "keyform/home.html"
