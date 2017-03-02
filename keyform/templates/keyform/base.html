@@ -5,17 +5,15 @@
 <html>
     <head>
         {% block css %}
-            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/tablesorter_themes.css' %}"/>
-            <link rel="stylesheet" href="{% static 'keyform/css/foundation_css/foundation.css' %}"/>
-            <link rel="stylesheet" href="{% static 'keyform/css/font-awesome-4.6.3/css/font-awesome.min.css' %}"/>
-            <link rel="stylesheet" href="{% static 'keyform/css/base.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/foundation_css/foundation.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/font-awesome-4.6.3/css/font-awesome.min.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/base.css' %}"/>
         {% endblock %}
         {% block javascript %}
             <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery-2.1.4.min.js' %}"></script>
             <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery.tablesorter.js' %}"></script>
             <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery.tablesorter.widgets.js' %}"></script>
             <script type="text/javascript" src="{% static 'keyform/js/libraries/foundation.min.js' %}"></script>
-            <script type="text/javascript" src="{% static 'keyform/js/base.js' %}"></script>
         {% endblock %}
         <title>{% block title %}Keyform{% endblock %}</title>
     </head>
@@ -26,9 +24,9 @@
                     <div class = "title-bar-title">{% trans 'Keyform' %}</div>
                 </div>
             {% endblock %}
-                {% block content %}
+            {% block content %}
                 
-                {% endblock %}
+            {% endblock %}
         {% endblock %}
     </body>
 </html>
