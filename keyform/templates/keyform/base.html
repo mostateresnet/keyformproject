@@ -15,7 +15,7 @@
             <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery.tablesorter.widgets.js' %}"></script>
             <script type="text/javascript" src="{% static 'keyform/js/libraries/foundation.min.js' %}"></script>
         {% endblock %}
-        <title>{% block title %}Keyform{% endblock %}</title>
+        <title>{% block title %}{% trans 'Keyform' %}{% endblock %}</title>
     </head>
     <body>
         {% block body %}
