@@ -1,0 +1,32 @@
+{% load static %}
+{% load i18n %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block css %}
+            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/foundation_css/foundation.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/font-awesome-4.6.3/css/font-awesome.min.css' %}"/>
+            <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/base.css' %}"/>
+        {% endblock %}
+        {% block javascript %}
+            <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery-2.1.4.min.js' %}"></script>
+            <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery.tablesorter.js' %}"></script>
+            <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery.tablesorter.widgets.js' %}"></script>
+            <script type="text/javascript" src="{% static 'keyform/js/libraries/foundation.min.js' %}"></script>
+        {% endblock %}
+        <title>{% block title %}{% trans 'Keyform' %}{% endblock %}</title>
+    </head>
+    <body>
+        {% block body %}
+            {% block header %}
+                <div class="title-bar">
+                    <div class="title-bar-title">{% trans 'Keyform' %}</div>
+                </div>
+            {% endblock %}
+            {% block content %}
+                
+            {% endblock %}
+        {% endblock %}
+    </body>
+</html>

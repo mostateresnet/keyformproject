@@ -1,10 +1,8 @@
-<html>
-    <head>
-        <title>Keyform</title>
-    </head>
-    <body>
-        {% for object in object_list %}
-            {{ object }} 
-        {% endfor %}
-    </body>
-</html>
+{% extends "keyform/base.html" %}
+{% load i18n %}
+
+{% block content %}
+    {% for object in object_list %}
+        {{ object }}
+    {% endfor %}
+{% endblock %}
