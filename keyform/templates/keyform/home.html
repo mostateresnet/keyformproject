@@ -1,8 +1,61 @@
 {% extends "keyform/base.html" %}
 {% load i18n %}
+{% load static %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' type='text/css' href="{% static 'keyform/css/home.css' %}"/>
+{% endblock %}
 
 {% block content %}
-    {% for object in object_list %}
-        {{ object }}
-    {% endfor %}
+    <h2 class="title">Keyform Requests</h2>
+    <div class="object-list">
+            <div class="header row">
+                <div class="large-3 columns text-center">
+                    {% trans 'Date Submitted' %}
+                </div>
+                <div class="large-2 columns text-center">
+                    {% trans 'Residence Hall' %}
+                </div>
+                <div class="large-2 columns text-center">
+                    {% trans 'Room #' %}
+                </div>
+                <div class="large-2 columns text-center">
+                    {% trans 'Core #' %}
+                </div>
+                <div class="large-1 columns text-center">
+                    {% trans 'Comments' %}
+                </div>
+                <div class="large-2 columns text-center">
+                    {% trans 'Status' %}
+                </div>
+            </div>
+            <div class="bigobject">
+            {% for object in object_list %}
+                <div class="object row">
+                    <div class="large-3 columns text-center">
+                        {{ object.created_timestamp }}
+                    </div>
+                    <div class="large-2 columns text-center">
+                        {{ object.building }}
+                    </div>
+                    <div class="large-2 columns text-center">
+                        {% for key in object.keydata_set.all %}
+                            {{ key.room_number }}
+                        {% endfor %}
+                    </div>
+                    <div class="large-2 columns text-center">
+                        {% for key in object.keydata_set.all %}
+                            {{ key.new_core_number }}
+                        {% endfor %}
+                    </div>
+                    <div class="large-1 column text-center">
+                        {{ object.comment_set.all.count }}
+                    </div>
+                    <div class="large-2 columns text-center">
+                        Status
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+    </div>
 {% endblock %}

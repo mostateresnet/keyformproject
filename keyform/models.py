@@ -27,6 +27,12 @@ class Request(models.Model):
         ('ch', _('Check')),
     )
 
+    STATUS_TYPES = (
+        ('pr', _('Processing')),
+        ('ks', _('Key Sent')),
+        ('kd', _('Key Distributed')),
+    )
+
     building = models.ForeignKey(Building)
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
@@ -37,6 +43,7 @@ class Request(models.Model):
     bpn = models.CharField(max_length=9)
     created_timestamp = models.DateTimeField(default=now, blank=True)
     charged_on_rcr = models.BooleanField(default=False)
+    status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')
 
     def __str__(self):
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
