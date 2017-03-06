@@ -9,53 +9,51 @@
 {% block content %}
     <h2 class="title">{% trans 'Keyform Requests' %}</h2>
     <div class="object-list">
-            <div class="header row">
+        <div class="header row">
+            <div class="large-3 columns text-center">
+                {% trans 'Date Submitted' %}
+            </div>
+            <div class="large-2 columns text-center">
+                {% trans 'Residence Hall' %}
+            </div>
+            <div class="large-2 columns text-center">
+                {% trans 'Room #' %}
+            </div>
+            <div class="large-2 columns text-center">
+                {% trans 'Core #' %}
+            </div>
+            <div class="large-1 columns text-center">
+                {% trans 'Comments' %}
+            </div>
+            <div class="large-2 columns text-center">
+                {% trans 'Status' %}
+            </div>
+        </div>
+        {% for object in object_list %}
+            <div class="object row">
                 <div class="large-3 columns text-center">
-                    {% trans 'Date Submitted' %}
+                    {{ object.created_timestamp|date:"m/d/Y" }}
                 </div>
                 <div class="large-2 columns text-center">
-                    {% trans 'Residence Hall' %}
+                    {{ object.building }}
                 </div>
                 <div class="large-2 columns text-center">
-                    {% trans 'Room #' %}
+                    {% for key in object.keydata_set.all %}
+                        {{ key.room_number }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
                 </div>
                 <div class="large-2 columns text-center">
-                    {% trans 'Core #' %}
+                    {% for key in object.keydata_set.all %}
+                        {{ key.new_core_number }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
                 </div>
-                <div class="large-1 columns text-center">
-                    {% trans 'Comments' %}
+                <div class="large-1 column text-center">
+                    {{ object.comment_set.all.count }}
                 </div>
                 <div class="large-2 columns text-center">
-                    {% trans 'Status' %}
+                    {{ object.get_status_display }}
                 </div>
             </div>
-            <div class="bigobject">
-            {% for object in object_list %}
-                <div class="object row">
-                    <div class="large-3 columns text-center">
-                        {{ object.created_timestamp|date:"m/d/Y"}}
-                    </div>
-                    <div class="large-2 columns text-center">
-                        {{ object.building }}
-                    </div>
-                    <div class="large-2 columns text-center">
-                        {% for key in object.keydata_set.all %}
-                            {{ key.room_number }}
-                        {% endfor %}
-                    </div>
-                    <div class="large-2 columns text-center">
-                        {% for key in object.keydata_set.all %}
-                            {{ key.new_core_number }}
-                        {% endfor %}
-                    </div>
-                    <div class="large-1 column text-center">
-                        {{ object.comment_set.all.count }}
-                    </div>
-                    <div class="large-2 columns text-center">
-                        {{ object.get_status_display }}
-                    </div>
-                </div>
-            {% endfor %}
-            </div>
+        {% endfor %}
     </div>
 {% endblock %}
