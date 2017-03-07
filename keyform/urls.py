@@ -6,5 +6,4 @@ import debug_toolbar
 
 urlpatterns = [
     url(r'^$', views.HomeView.as_view()),
-    url(r'^__debug__/', include(debug_toolbar.urls)),
 ]
