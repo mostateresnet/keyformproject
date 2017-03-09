@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.shortcuts import render
-from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
+from keyform.models import Request
 
-class HomeView(TemplateView):
-	template_name = "keyform/home.html"
+
+class HomeView(ListView):
+    model = Request
+    template_name = "keyform/home.html"
