@@ -20,9 +20,18 @@
     <body>
         {% block body %}
             {% block header %}
+            <div class = "main-menu">
                 <div class="title-bar">
+                    <img class="headerImage" src="{% static 'keyform/logo.jpg' %}"/>
                     <div class="title-bar-title">{% trans 'Keyform' %}</div>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Home</a></li><span class="divider">|</span>
+                        <li>New</li><span class="divider">|</span>
+                        <li>Search</li><span class="divider">|</span>
+                        <li>Test</li><span class="divider">|</span>
+                    </ul>
                 </div>
+            </div>
             {% endblock %}
             {% block content %}
 

@@ -1,0 +1,38 @@
+.title-bar {
+    background-color: #74020C;
+}
+
+.title-bar-title {
+    font-size: 2em;
+}
+
+.headerImage {
+    width: 85px;
+    height: 65px;
+}
+
+.title-bar ul {
+    display: inline;
+    height: 1em;
+}
+
+.title-bar li {
+    display: inline;
+    padding: .75em;
+    font-size: 1.5em;
+}
+
+
+
+.title-bar a:hover {
+    color: #afafaf;
+    cursor: pointer;
+}
+
+.title-bar a {
+    color: white;
+}
+
+span.divider {
+    font-size: 1.5em;
+}
