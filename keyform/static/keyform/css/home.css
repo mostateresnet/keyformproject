@@ -1,5 +1,6 @@
 .object-list {
-    padding: 20px;
+    margin-top: 2em;
+    padding: 1em;
 }
 
 .header {
@@ -15,6 +16,41 @@
 }
 
 .title {
-    padding-top: 75px;
-    text-align: center;
+    margin: auto;
+    width: 60%;
+    margin-right: .5em;
+}
+
+.searchform {
+    margin: auto;
+    border: 1px solid black;
+    width: 50%;
+    display: none;
+    overflow: hidden;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.searchcontent {
+    padding: 1em;
+}
+
+#searchbut {
+    position: absolute;
+    right: 38%;
+    top: 9%;
+}
+
+#gen {
+
+}
+.searchbutton {
+}
+
+
+.content {
+    background-color: white;
+    width: 75%;
+    margin: auto;
+    margin-top: 3em;
 }
