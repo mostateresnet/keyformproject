@@ -4,5 +4,5 @@ from keyform import views
 
 urlpatterns = [
     url(r'^$', views.HomeView.as_view()),
-    url(r'^search', views.SearchView.as_view(), name = "search"),
+    url(r'^search', views.SearchView.as_view(), name="search"),
 ]

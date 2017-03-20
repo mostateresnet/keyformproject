@@ -43,7 +43,7 @@ class Request(models.Model):
     bpn = models.CharField(max_length=9)
     created_timestamp = models.DateTimeField(default=now, blank=True)
     charged_on_rcr = models.BooleanField(default=False)
-    status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')
+    status = models.CharField(max_length=2, choices=STATUS_TYPES, default='pr')
 
     def __str__(self):
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
