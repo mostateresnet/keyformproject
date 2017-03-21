@@ -5,6 +5,7 @@ from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from django.forms.widgets import (CheckboxInput, Select, SelectMultiple,)
 
 
 class Building(models.Model):
@@ -31,7 +32,7 @@ class Request(models.Model):
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
     amt_recieved = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True)
-    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES)
+    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True)
     charge_amount = models.DecimalField(max_digits=7, decimal_places=2)
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
     bpn = models.CharField(max_length=9)
