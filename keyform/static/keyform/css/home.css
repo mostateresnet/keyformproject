@@ -1,0 +1,20 @@
+.object-list {
+    padding: 20px;
+}
+
+.header {
+    border-bottom: 1px solid black;
+}
+
+.object {
+    padding: 3px;
+}
+
+.object:hover {
+    background-color: #cecece;
+}
+
+.title {
+    padding-top: 75px;
+    text-align: center;
+}
