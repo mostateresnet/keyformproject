@@ -13,7 +13,6 @@ class HomeView(TemplateView):
 class NewForm(CreateView):
 	template_name = "keyform/add_form.html"
 	model = Request
-	# fields = ['building', 'student_name', 'reason_for_request', 'amt_recieved', 'payment_method', 'charge_amount', 'staff', 'bpn', 'created_timestamp', 'charged_on_rcr']
 	success_url = "/"
 
 	def get_form_class(self):
