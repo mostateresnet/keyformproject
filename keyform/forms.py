@@ -8,10 +8,6 @@ class CreateForm(forms.ModelForm):
         model = Request
         fields = ['building', 'student_name', 'reason_for_request', 'amt_recieved', 'payment_method', 'charge_amount', 'staff', 'bpn', 'created_timestamp', 'charged_on_rcr']
 
-
-    def clean(self):
-        cleaned_data = super(CreateForm, self).clean()
-
     def __init__(self, *args, **kwargs):
         super(CreateForm, self).__init__(*args, **kwargs)
         #removes blank choices from Radio Select options

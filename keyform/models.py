@@ -5,7 +5,6 @@ from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
-from django.forms.widgets import (CheckboxInput, Select, SelectMultiple,)
 
 
 class Building(models.Model):

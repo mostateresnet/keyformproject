@@ -13,9 +13,7 @@ class HomeView(ListView):
     template_name = "keyform/home.html"
 
 class NewForm(CreateView):
-	template_name = "keyform/add_form.html"
-	model = Request
-	success_url = "/"
-
-	def get_form_class(self):
-		return CreateForm
+    template_name = "keyform/add_form.html"
+    model = Request
+    success_url = "/"
+    form_class = CreateForm
