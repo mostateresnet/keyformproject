@@ -1,0 +1,37 @@
+.content-header {
+    font-size: 2em;
+    width: 75%;
+    margin: auto;
+    text-align: center;
+    margin-top: 2em;
+}
+
+.content {
+    width: 75%;
+    margin: auto;
+}
+
+.info-row {
+    width: 70%;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
+
+.info {
+    margin-top: 3em;
+}
+
+.section {
+    border: .1em solid black;
+    border-radius: .75em;
+    padding: .5em;
+    margin-top: .2em;
+}
+
+a {
+    color: black;
+}
+
+select {
+    width: 30%;
+}

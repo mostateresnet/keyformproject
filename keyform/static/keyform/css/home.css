@@ -2,6 +2,10 @@
     padding: 20px;
 }
 
+.object-list a {
+    color: black;
+}
+
 .header {
     border-bottom: 1px solid black;
 }
