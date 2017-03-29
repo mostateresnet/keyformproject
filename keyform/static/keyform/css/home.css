@@ -24,7 +24,7 @@
 .searchform {
     margin: auto;
     border: 1px solid black;
-    width: 50%;
+    width: 60%;
     display: none;
     overflow: hidden;
     margin-top: 2em;
@@ -36,21 +36,15 @@
 }
 
 #searchbut {
-    position: absolute;
-    right: 38%;
-    top: 9%;
 }
-
-#gen {
-
-}
-.searchbutton {
-}
-
 
 .content {
     background-color: white;
     width: 75%;
     margin: auto;
     margin-top: 3em;
+}
+
+.searchform br {
+    line-height: .75;
 }

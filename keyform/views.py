@@ -9,6 +9,13 @@ class HomeView(ListView):
     model = Request
     template_name = "keyform/home.html"
 
+    def get_context_data(self):
+        context = super(HomeView, self).get_context_data()
+        context["request_types"] = Request.REQUEST_TYPES
+        context["status_types"] = Request.STATUS_TYPES
+        return context
+
+
 
 class SearchView(ListView):
     template_name = "keyform/home.html"
@@ -24,3 +31,9 @@ class SearchView(ListView):
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
         return qset
+
+    def get_context_data(self):
+        context = super(SearchView, self).get_context_data()
+        context["request_types"] = Request.REQUEST_TYPES
+        context["status_types"] = Request.STATUS_TYPES
+        return context

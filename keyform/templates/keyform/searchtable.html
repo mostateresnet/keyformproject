@@ -1,58 +1,62 @@
-<button id="searchbut">Search</button>
-<div class="searchform" id = "search">
+{% load i18n %}
+<div class="row">
+    <div class="large-12 columns">
+    <button id="searchbut">{% trans 'Search' %}</button>
+    </div>
+</div>
+<div class="searchform" id="search">
     <div class="searchcontent">
-        <form action = "{% url 'search' %}">
+        <form action="{% url 'search' %}">
             <fieldset>
                 <div class="row">
                     <div class="large-4 columns">
-                       Student Name <input type="text" name="student_name">
+                       {% trans 'Student Name' %} <input type="text" name="student_name"/>
                     </div>
                     <div class="large-4 columns">
-                       M-Number <input type="text" name="m_number">
+                        {% trans 'M-Number' %} <input type="text" name="m_number"/>
                     </div>
                     <div class="large-4 columns">
-                       Building <input type="text" name="building">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="large-4 columns">
-                       Room Number <input type="text" name="keydata__room_number">
-                    </div>
-                    <div class="large-4 columns">
-                       Core # <input type="text" name="keydata__core_number">
-                    </div>
-                    <div class="large-4 columns">
-                       Key # <input type="text" name="keydata__key_number">
+                       {% trans 'Building' %} <input type="text" name="building"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="large-4 columns">
-                       Staff Name <input type="text" name="staff_name">
+                       {% trans 'Room Number' %} <input type="text" name="keydata__room_number"/>
                     </div>
                     <div class="large-4 columns">
-                       Start Date <input type="text" name="start_date">
+                       {% trans 'Core #' %} <input type="text" name="keydata__core_number"/>
                     </div>
                     <div class="large-4 columns">
-                       End Date <input type="text" name="end_date">
+                       {% trans 'Key #' %} <input type="text" name="keydata__key_number"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                       {% trans 'Staff Name' %} <input type="text" name="staff_name"/>
+                    </div>
+                    <div class="large-4 columns">
+                       {% trans 'Start Date' %} <input type="text" name="start_date"/>
+                    </div>
+                    <div class="large-4 columns">
+                       {% trans 'End Date' %} <input type="text" name="end_date"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="large-6 columns">
-                       Key Request Type <br>
-                       <input type="radio" name="key_request_type" value="brokenkey"> Broken Key <br>
-                       <input type="radio" name="key_request_type" value="stolenkey"> Stolen Key <br>
-                       <input type="radio" name="key_request_type" value="staffkey"> Staff Key
+                       {% trans 'Key Request Type' %}<br/>
+                       {% for choice in request_types %}
+                           <input type="radio" name="req_type" value="{{choice.0}}"/> {{ choice.1 }}<br>
+                       {% endfor %}
                     </div>
                     <div class="large-6 columns">
-                       Status <br>
-                       <input type="radio" name="status" value="processing"> Processing <br>
-                       <input type="radio" name="status" value="keysent"> Key Sent <br>
-                       <input type="radio" name="status" value="keydistributed"> Key Distributed
+                       {% trans 'Status' %} <br/>
+                       {% for choice in status_types %}
+                           <input type="radio" name="status" value="{{choice.0}}"/> {{ choice.1 }}<br>
+                       {% endfor %}
                     </div>
                 </div>
-                <button class="searchbutton" type="submit">Generate</button>
+                <button class="searchbutton" type="submit">{% trans 'Generate' %}</button>
             </fieldset>
         </form>
-        <button class="searchbutton" id="backbut">Back</button>
     </div>
 </div>
