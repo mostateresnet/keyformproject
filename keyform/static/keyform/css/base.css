@@ -24,8 +24,6 @@
     vertical-align: middle;
 }
 
-
-
 .title-bar a:hover {
     color: #afafaf;
     cursor: pointer;
@@ -35,11 +33,7 @@
     color: white;
 }
 
-span.divider {
-    font-size: 1.75em;
-    vertical-align: middle;
-}
-ul{
+ul {
     list-style-type: none;
     margin: 0;
 }
