@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.views.generic import CreateView
 from django.views.generic.list import ListView
+from keyform.forms import CreateForm
 from keyform.models import Request
+from django.urls import reverse_lazy
 
 
 class HomeView(ListView):
@@ -14,7 +17,6 @@ class HomeView(ListView):
         context["request_types"] = Request.REQUEST_TYPES
         context["status_types"] = Request.STATUS_TYPES
         return context
-
 
 
 class SearchView(ListView):
@@ -37,3 +39,10 @@ class SearchView(ListView):
         context["request_types"] = Request.REQUEST_TYPES
         context["status_types"] = Request.STATUS_TYPES
         return context
+
+
+class NewForm(CreateView):
+    template_name = "keyform/add_form.html"
+    model = Request
+    success_url = reverse_lazy('home')
+    form_class = CreateForm

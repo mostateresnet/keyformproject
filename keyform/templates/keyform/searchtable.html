@@ -2,6 +2,7 @@
 <div class="row">
     <div class="large-12 columns">
     <button id="searchbut">{% trans 'Search' %}</button>
+    <br>
     </div>
 </div>
 <div class="searchform" id="search">
@@ -55,7 +56,10 @@
                        {% endfor %}
                     </div>
                 </div>
-                <button class="searchbutton" type="submit">{% trans 'Generate' %}</button>
+                <br>
+                <div class = 'row'>
+                    <button class="searchbutton" type="submit">{% trans 'Submit' %}</button>
+                </div>
             </fieldset>
         </form>
     </div>
