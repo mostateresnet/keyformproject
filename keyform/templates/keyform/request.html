@@ -86,6 +86,7 @@
                     </div>
                 </div>
             </div>
+            <br>
             <strong><i>{% trans 'Comments' %} </i></strong>
             <div class="section">
                 {% for comment in object.comment_set.all %}
@@ -101,12 +102,11 @@
         </div>
         <div class="row info-row">
             <div class="large-6 columns text-right">
-                {% trans 'Current Status' %}:
+                {% trans 'Current Status' %}: {{ object.get_status_display }}
                 {% trans 'Update' %}
                 {% trans 'Delete' %}
             </div>
             <div class="large-6 columns text-left">
-                <a href="{% url 'home' %}">{% trans 'Back' %}</a>
             </div>
         </div>
     </div>
