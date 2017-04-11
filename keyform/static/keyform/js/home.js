@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('#searchbut').click(function() {
+    $('#search-button').click(function() {
         $('#search').toggle("slow");
     });
 });
