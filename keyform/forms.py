@@ -13,3 +13,8 @@ class CreateForm(forms.ModelForm):
         #removes blank choices from Radio Select options
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
+
+class EditForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ['status']

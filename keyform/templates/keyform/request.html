@@ -100,12 +100,16 @@
                 {% endfor %}
             </div>
         </div>
+        <br>
         <div class="row info-row">
-            <div class="large-6 columns text-right">
-                {% trans 'Current Status' %}: {{ object.get_status_display }}
-                {% trans 'Update' %}
-                {% trans 'Delete' %}
-            </div>
+            <form method=POST> {% csrf_token %}
+                <center>
+                {% for field in form %}
+                    {{ field.label }}: {{ field }}
+                {% endfor %}
+                <input type="submit" value="Update"/>
+                </center>
+            </form>
             <div class="large-6 columns text-left">
             </div>
         </div>
