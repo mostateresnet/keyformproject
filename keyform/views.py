@@ -14,12 +14,6 @@ class HomeView(ListView):
     model = Request
     template_name = "keyform/home.html"
 
-class NewForm(CreateView):
-    template_name = "keyform/add_form.html"
-    model = Request, KeyData
-    success_url = reverse_lazy('home')
-    form_class = RequestFormSet
-
 def KeyRequest(request):
     if request.POST:
         form = CreateForm(request.POST)
@@ -29,7 +23,7 @@ def KeyRequest(request):
             if key_formset.is_valid():
                 create_new.save()
                 key_formset.save()
-                return HttpResponseRedirect(reverse('create'))
+                return HttpResponseRedirect(reverse('home'))
     else:
         form = CreateForm()
         key_formset = RequestFormSet(instance=Request())
