@@ -1,7 +1,9 @@
 from django import forms
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.forms import TypedChoiceField
-from keyform.models import Request
+from django.forms.models import inlineformset_factory
+from keyform.models import Request, KeyData
+from betterforms.multiform import MultiModelForm
 
 class CreateForm(forms.ModelForm):
     class Meta:
@@ -13,3 +15,18 @@ class CreateForm(forms.ModelForm):
         #removes blank choices from Radio Select options
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
+
+class OtherForm(forms.ModelForm):
+    class Meta:
+        model = KeyData
+        fields = ['new_core_number', 'key_type', 'room_number', 'lost_key_number', 'quantity']
+
+RequestFormSet = inlineformset_factory(Request, KeyData, extra=1, can_delete=False, exclude=[])
+
+
+class UserMultiForm(MultiModelForm):
+    form_classes = {
+        'Personal_data': CreateForm,
+        'Official_data': OtherForm,
+    }
+

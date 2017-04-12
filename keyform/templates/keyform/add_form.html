@@ -6,15 +6,12 @@
         {% csrf_token %}
         <div class="row">
             <div class="column">
-                {% for field in form %}
-                    <div class="fieldWrapper">
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
-                    </div>
-                {% endfor %}
+                <div class="fieldWrapper">
+                    {{ form.as_table }}
+                    {{ keydata_formset.as_table }}
+                    {{ keydata_formset.management_form }}
+                </div>
+                <button id="add another">Add New Field</button>
                 <input type="submit"/>
             </div>
         </div>
