@@ -3,7 +3,7 @@ from __future__ import unicode_literals
 
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, OtherForm, UserMultiForm, RequestFormSet
+from keyform.forms import CreateForm, KeyDataForm, MultiFormDisplay, RequestFormSet
 from keyform.models import Request, KeyData
 from django.urls import reverse_lazy
 from django.shortcuts import render
@@ -19,10 +19,6 @@ class NewForm(CreateView):
     model = Request, KeyData
     success_url = reverse_lazy('home')
     form_class = RequestFormSet
-    def get_context_data(self, *args, **kwargs):
-        context = super(NewForm, self).get_context_data(*args, **kwargs)
-        from pprint import pprint
-        pprint(context['form'].forms)
 
 def KeyRequest(request):
     if request.POST:

@@ -6,12 +6,12 @@
         {% csrf_token %}
         <div class="row">
             <div class="column">
-                <div class="fieldWrapper">
+                <div class="field-wrapper">
                     {{ form.as_table }}
                     {{ keydata_formset.as_table }}
                     {{ keydata_formset.management_form }}
                 </div>
-                <button id="add another">Add New Field</button>
+                <button id="add-another">{%trans "Add New Field" %}</button>
                 <input type="submit"/>
             </div>
         </div>

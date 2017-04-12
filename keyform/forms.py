@@ -16,7 +16,7 @@ class CreateForm(forms.ModelForm):
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
 
-class OtherForm(forms.ModelForm):
+class KeyDataForm(forms.ModelForm):
     class Meta:
         model = KeyData
         fields = ['new_core_number', 'key_type', 'room_number', 'lost_key_number', 'quantity']
@@ -24,9 +24,9 @@ class OtherForm(forms.ModelForm):
 RequestFormSet = inlineformset_factory(Request, KeyData, extra=1, can_delete=False, exclude=[])
 
 
-class UserMultiForm(MultiModelForm):
+class MultiFormDisplay(MultiModelForm):
     form_classes = {
         'Personal_data': CreateForm,
-        'Official_data': OtherForm,
+        'Official_data': KeyDataForm,
     }
 
