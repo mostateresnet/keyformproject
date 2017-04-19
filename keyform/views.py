@@ -31,12 +31,3 @@ def KeyRequest(request):
         "form": form,
         "keydata_formset": key_formset,
     })
-
-def myview(request):
-    if request.method == "POST":
-        formset = RequestFormSet(request.POST)
-        for form in formset.forms:
-            print("You've picked".format(form.cleaned_data['model']))
-    else:
-        formset = RequestFormSet()
-    return render(request, 'add_form.html', {'formset': formset})

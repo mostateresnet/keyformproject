@@ -3,8 +3,8 @@
 {% load i18n %}
 
 {% block javascript %}
-{{ block.super }}
-<script type="text/javascript" src="{% static 'keyform/js/add_form.js' %}"></script>
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'keyform/js/add_form.js' %}"></script>
 {% endblock %}
 {% block css %}
     {{ block.super }}
@@ -26,13 +26,14 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <input type="button" value="Add Another Key" id="generate_forms">
+                    {% blocktrans %}
+                    <input type="button" value="Add Another Key" id="generate_forms"/>
+                    {% endblocktrans %}
                     <div id="empty_form" style="display:none">
                         <div class="keydata-form">
                             {{ keydata_formset.empty_form.as_p }}
                         </div>
                     </div>
-                    <div id="forms"></div>
                 </div>
                 <input type="submit"/>
             </div>
