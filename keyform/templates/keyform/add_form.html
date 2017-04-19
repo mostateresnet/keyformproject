@@ -2,6 +2,10 @@
 {% load static %}
 {% load i18n %}
 
+{% block javascript %}
+{{ block.super }}
+<script type="text/javascript" src="{% static 'keyform/js/add_form.js' %}"></script>
+{% endblock %}
 {% block css %}
     {{ block.super }}
     <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/add_form.css' %}"/>
@@ -15,16 +19,16 @@
                 <div class="field-wrapper">
                     {{ form.as_p }}
                     {{ keydata_formset.management_form }}
-                    <div id="form_set">
+                    <div id="form-set">
                         {% for form in keydata_formset.forms %}
-                            <div class="keydata_form">
+                            <div class="keydata-form">
                                 {{ form.as_p }}
                             </div>
                         {% endfor %}
                     </div>
-                    <input type="button" value="Add More" id="generate_forms">
+                    <input type="button" value="Add Another Key" id="generate_forms">
                     <div id="empty_form" style="display:none">
-                        <div class="keydata_form">
+                        <div class="keydata-form">
                             {{ keydata_formset.empty_form.as_p }}
                         </div>
                     </div>
