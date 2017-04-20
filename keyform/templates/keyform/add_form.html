@@ -26,9 +26,7 @@
                             </div>
                         {% endfor %}
                     </div>
-                    {% blocktrans %}
-                    <input type="button" value="Add Another Key" id="generate_forms"/>
-                    {% endblocktrans %}
+                    <input type="button" value="{% trans 'Add Another Key' %}" id="generate_forms"/>
                     <div id="empty_form" style="display:none">
                         <div class="keydata-form">
                             {{ keydata_formset.empty_form.as_p }}
