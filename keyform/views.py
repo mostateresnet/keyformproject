@@ -14,7 +14,7 @@ class HomeView(ListView):
 class RequestView(UpdateView):
     model = Request
     template_name = "keyform/request.html"
-    fields = ['status']
+    form_class = EditForm
 
     def get_success_url(self):
         return reverse('home')

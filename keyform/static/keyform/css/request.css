@@ -35,3 +35,8 @@ a {
 select {
     width: 30%;
 }
+
+.section-header {
+    font-weight: bold;
+    font-style: italic;
+}

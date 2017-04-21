@@ -10,7 +10,7 @@
     <div class="content">
         <div class="content-header">{% trans 'Update Key Request' %}</div>
         <div class="info">
-            <strong><i>{% trans 'Info' %}</i></strong>
+            <span class="section-header">{% trans 'Info' %}</span>
             <div class="section">
                 <div class="row info-row">
                      <div class="large-6 columns">
@@ -87,7 +87,7 @@
                 </div>
             </div>
             <br>
-            <strong><i>{% trans 'Comments' %} </i></strong>
+            <span class="section-header">{% trans 'Comments' %} </span>
             <div class="section">
                 {% for comment in object.comment_set.all %}
                     <div class="row info-row">

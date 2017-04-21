@@ -8,7 +8,7 @@
 
 {% block content %}
     <h2 class="title">{% trans 'Keyform Requests' %}</h2>
-    <div class="object-list">
+    <div class="request-list">
         <div class="header row">
             <div class="small-3 large-3 columns text-center">
                 {% trans 'Date Submitted' %}
@@ -30,8 +30,8 @@
             </div>
         </div>
         {% for object in object_list %}
-            <a href = "{% url 'request' pk=object.pk %}">
-                <div class="object row">
+            <a href = "{% url 'edit-request' pk=object.pk %}">
+                <div class="row">
                     <div class="small-3 large-3 columns text-center">
                         {{ object.created_timestamp|date:"m/d/Y" }}
                     </div>
