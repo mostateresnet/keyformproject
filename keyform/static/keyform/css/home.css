@@ -10,11 +10,11 @@
     border-bottom: 1px solid black;
 }
 
-.object {
+.request {
     padding: 3px;
 }
 
-.object:hover {
+.request:hover {
     background-color: #cecece;
 }
 
