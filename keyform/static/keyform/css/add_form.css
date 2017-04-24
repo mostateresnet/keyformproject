@@ -3,3 +3,12 @@ div.keydata-form {
     border-width: 1px;
     border-radius: 5px;
 }
+
+div.field-wrapper{
+    margin: 5px;
+    padding: 5px;
+    max-width: 1000px;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
+}

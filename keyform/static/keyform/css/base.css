@@ -2,16 +2,3 @@ ul{
     list-style-type: none;
     margin: 0;
 }
-
-div.title-bar{
-    background-color: #5E0009;
-}
-
-div.field-wrapper{
-    margin: 5px;
-    padding: 5px;
-    max-width: 1000px;
-    border-style: solid;
-    border-width: 1px;
-    border-radius: 5px;
-}

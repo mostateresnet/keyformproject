@@ -15,9 +15,5 @@ class CreateForm(forms.ModelForm):
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
 
-class KeyDataForm(forms.ModelForm):
-    class Meta:
-        model = KeyData
-        fields = ['new_core_number', 'key_type', 'room_number', 'lost_key_number', 'quantity']
 
 RequestFormSet = inlineformset_factory(Request, KeyData, extra=1, can_delete=False, exclude=[])

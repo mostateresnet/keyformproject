@@ -3,8 +3,8 @@ from __future__ import unicode_literals
 
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, KeyDataForm, RequestFormSet
-from keyform.models import Request, KeyData
+from keyform.forms import CreateForm, RequestFormSet
+from keyform.models import Request
 from django.urls import reverse_lazy
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
@@ -14,7 +14,7 @@ class HomeView(ListView):
     model = Request
     template_name = "keyform/home.html"
 
-def KeyRequest(request):
+def key_request(request):
     if request.POST:
         form = CreateForm(request.POST)
         if form.is_valid():
