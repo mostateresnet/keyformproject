@@ -18,18 +18,19 @@
             <div class="column">
                 <div class="field-wrapper">
                     {{ form.as_p }}
-                    {{ keydata_formset.management_form }}
+                    {{ form.request_formset.management_form }}
                     <div id="form-set">
-                        {% for form in keydata_formset.forms %}
+                        {% for keydata_form in form.request_formset.forms %}
                             <div class="keydata-form">
-                                {{ form.as_p }}
+                                {{ keydata_form.as_p }}
                             </div>
                         {% endfor %}
                     </div>
                     <input type="button" value="{% trans 'Add Another Key' %}" id="generate_forms"/>
+                    <input type="button" value="{% trans 'Cancel' %}" id="delete_button"/>
                     <div id="empty_form" style="display:none">
                         <div class="keydata-form">
-                            {{ keydata_formset.empty_form.as_p }}
+                            {{ form.request_formset.empty_form.as_p }}
                         </div>
                     </div>
                 </div>
