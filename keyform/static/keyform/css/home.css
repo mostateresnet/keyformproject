@@ -16,9 +16,12 @@
 }
 
 .title {
+<<<<<<< HEAD
     margin: auto;
     width: 60%;
     margin-right: .5em;
+    padding-top: 1em;
+    text-align: center;
 }
 
 .searchform {
