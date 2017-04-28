@@ -87,20 +87,21 @@
                 </div>
             </div>
             <br>
-            {% if object.comment_set.all %}
-            <span class="section-header">{% trans 'Comments' %} </span>
-            <div class="section">
-                {% for comment in object.comment_set.all %}
-                    <div class="row info-row">
-                        <div class="large-12 columns end">
-                            {{ comment.created_timestamp|date:"m/d/Y" }}: <br>
-                            {{ comment.message }}
-                        </div>
+            {% with comments=object.comment_set.all}
+                {% if comments %}
+                    <span class="section-header">{% trans 'Comments' %} </span>
+                    <div class="section">
+                        {% for comment in comments %}
+                            <div class="row info-row">
+                                <div class="large-12 columns end">
+                                    {{ comment.created_timestamp|date:"m/d/Y" }}: <br>
+                                    {{ comment.message }}
+                                </div>
+                            </div>
+                            {% if not forloop.last %}<hr width="70%">{% endif %}
+                        {% endfor %}
                     </div>
-                    {% if not forloop.last %}<hr width="70%">{% endif %}
-                {% endfor %}
-            </div>
-            {% endif %}
+                {% endif %}
         </div>
         <br>
         <div class="row info-row">
