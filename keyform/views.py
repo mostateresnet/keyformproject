@@ -6,9 +6,7 @@ from django.views.generic.list import ListView
 from keyform.forms import CreateForm, RequestFormSet
 from keyform.models import Request
 from django.urls import reverse_lazy
-from django.shortcuts import render
 from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse_lazy
 
 class HomeView(ListView):
     model = Request

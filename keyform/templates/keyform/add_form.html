@@ -27,7 +27,7 @@
                         {% endfor %}
                     </div>
                     <input type="button" value="{% trans 'Add Another Key' %}" id="generate_forms"/>
-                    <input type="button" value="{% trans 'Cancel' %}" id="delete_button"/>
+                    <input type="button" value="{% trans 'Cancel' %}" id="delete-button"/>
                     <div id="empty_form" style="display:none">
                         <div class="keydata-form">
                             {{ form.request_formset.empty_form.as_p }}
