@@ -6,13 +6,12 @@
     <link rel='stylesheet' type='text/css' href="{% static 'keyform/css/home.css' %}"/>
 {% endblock %}
 {% block javascript %}
-    <script type="text/javascript" src="{% static 'keyform/js/libraries/jquery-2.1.4.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'keyform/js/home.js' %}"></script>
+    {{ block.super }}
 {% endblock %}
 {% block content %}
     <div class="content">
         <h2 class="title">{% trans 'Keyform Requests' %}</h2>
-        {% include './searchtable.html' %}
+        {% include 'keyform/searchtable.html' %}
         <div class="object-list">
             <div class="header row">
                 <div class="small-3 large-3 columns text-center">

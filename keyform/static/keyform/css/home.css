@@ -22,7 +22,7 @@
     text-align: center;
 }
 
-.searchform {
+.search-form {
     margin: auto;
     border: 1px solid black;
     width: 60%;
@@ -31,7 +31,7 @@
     margin-bottom: 2em;
 }
 
-.searchcontent {
+.search-content {
     padding: 1em;
 }
 
@@ -42,6 +42,6 @@
     margin-top: 3em;
 }
 
-.searchform br {
+.search-form br {
     line-height: .75;
 }
