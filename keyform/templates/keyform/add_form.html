@@ -1,20 +1,39 @@
 {% extends "keyform/base.html" %}
+{% load static %}
 {% load i18n %}
+
+{% block javascript %}
+    {{ block.super }}
+    <script type="text/javascript" src="{% static 'keyform/js/add_form.js' %}"></script>
+{% endblock %}
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/add_form.css' %}"/>
+{% endblock %}
 
 {% block content %}
     <form method=POST>
         {% csrf_token %}
         <div class="row">
             <div class="column">
-                {% for field in form %}
-                    <div class="fieldWrapper">
-                        {{ field.errors }}
-                        {{ field.label_tag }} {{ field }}
-                        {% if field.help_text %}
-                            <p class="help">{{ field.help_text|safe }}</p>
-                        {% endif %}
+                <div class="field-wrapper">
+                    {{ form.as_p }}
+                    {{ form.request_formset.management_form }}
+                    <div id="form-set">
+                        {% for keydata_form in form.request_formset.forms %}
+                            <div class="keydata-form">
+                                {{ keydata_form.as_p }}
+                            </div>
+                        {% endfor %}
                     </div>
-                {% endfor %}
+                    <input type="button" value="{% trans 'Add Another Key' %}" id="generate_forms"/>
+                    <input type="button" value="{% trans 'Cancel' %}" id="delete-button"/>
+                    <div id="empty_form" style="display:none">
+                        <div class="keydata-form">
+                            {{ form.request_formset.empty_form.as_p }}
+                        </div>
+                    </div>
+                </div>
                 <input type="submit"/>
             </div>
         </div>
