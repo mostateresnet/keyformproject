@@ -1,20 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-<<<<<<< HEAD
-from django.views.generic import ListView, UpdateView, CreateView
+from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, EditForm
-from keyform.models import Request
-from django.urls import reverse_lazy, reverse
-=======
-from django.views.generic import FormView
-from django.views.generic.list import ListView
-from keyform.forms import CreateForm, RequestFormSet
+from keyform.forms import CreateForm, RequestFormSet, EditForm
 from keyform.models import Request
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
->>>>>>> master
 
 class HomeView(ListView):
     model = Request
