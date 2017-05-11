@@ -36,15 +36,14 @@ class Request(models.Model):
     building = models.ForeignKey(Building)
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
-    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0,
-                                       blank=True, verbose_name=_('Amount received'))
+    amt_recieved = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name='Amount received', validators=[MinValueValidator(Decimal('0.00'))])
     payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True)
     charge_amount = models.DecimalField(max_digits=7, decimal_places=2)
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
-    bpn = models.CharField(max_length=9, verbose_name=_('M-Number'))
+    bpn = models.CharField(max_length=9, verbose_name='M-Number', validators=[bpn_validator])
     created_timestamp = models.DateTimeField(default=now, blank=True)
-    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'))
-    status = models.CharField(max_length=2, choices=STATUS_TYPES, default='pr')
+    charged_on_rcr = models.BooleanField(default=False, verbose_name='Charged on RCR')
+    status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')
 
     def __str__(self):
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
