@@ -40,3 +40,7 @@ select {
     font-weight: bold;
     font-style: italic;
 }
+
+.request-edit {
+    text-align: center;
+}

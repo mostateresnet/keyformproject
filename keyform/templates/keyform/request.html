@@ -107,12 +107,12 @@
         <br>
         <div class="row info-row">
             <form method=POST> {% csrf_token %}
-                <center>
+                <div class='request-edit'>
                     {% for field in form %}
                         {{ field.label }}: {{ field }}
                     {% endfor %}
                     <input type="submit" value="{% trans 'Update' %}"/>
-                </center>
+                </div>
             </form>
         </div>
     </div>
