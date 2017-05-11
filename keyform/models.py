@@ -36,7 +36,7 @@ class Request(models.Model):
     building = models.ForeignKey(Building)
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
-    amt_recieved = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name='Amount received', validators=[MinValueValidator(Decimal('0.00'))])
+    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name='Amount received', validators=[MinValueValidator(Decimal('0.00'))])
     payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True)
     charge_amount = models.DecimalField(max_digits=7, decimal_places=2)
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
