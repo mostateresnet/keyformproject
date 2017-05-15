@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.views.generic import FormView
+from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, RequestFormSet
+from keyform.forms import CreateForm, RequestFormSet, EditForm
 from keyform.models import Request
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -11,6 +11,14 @@ from django.http import HttpResponseRedirect
 class HomeView(ListView):
     model = Request
     template_name = "keyform/home.html"
+
+class RequestView(UpdateView):
+    model = Request
+    template_name = "keyform/request.html"
+    form_class = EditForm
+
+    def get_success_url(self):
+        return reverse('home')
 
 class KeyRequest(FormView):
     template_name = "keyform/add_form.html"
