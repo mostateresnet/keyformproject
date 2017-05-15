@@ -7,7 +7,11 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MinValueValidator
 from decimal import Decimal
+<<<<<<< HEAD
 from django.core.validators import RegexValidator
+=======
+from django.core.validators import RegexValidator 
+>>>>>>> master
 
 class Building(models.Model):
     name = models.CharField(max_length=256)
@@ -40,11 +44,19 @@ class Request(models.Model):
     building = models.ForeignKey(Building)
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
+<<<<<<< HEAD
     amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name='Amount received', validators=[MinValueValidator(Decimal('0.00'))])
+=======
+    amt_recieved = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, validators=[MinValueValidator(Decimal('0.00'))])
+>>>>>>> master
     payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True)
-    charge_amount = models.DecimalField(max_digits=7, decimal_places=2)
+    charge_amount = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
+<<<<<<< HEAD
     bpn = models.CharField(max_length=9, verbose_name='M-Number', validators=[bpn_validator])
+=======
+    bpn = models.CharField(max_length=9, validators=[bpn_validator])
+>>>>>>> master
     created_timestamp = models.DateTimeField(default=now, blank=True)
     charged_on_rcr = models.BooleanField(default=False, verbose_name='Charged on RCR')
     status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')

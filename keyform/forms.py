@@ -15,5 +15,9 @@ class CreateForm(forms.ModelForm):
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
 
+class EditForm(forms.ModelForm):
+    class Meta:
+        model = Request
+        fields = ['status']
 
 RequestFormSet = inlineformset_factory(Request, KeyData, extra=1, can_delete=False, exclude=[])

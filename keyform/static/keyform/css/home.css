@@ -1,20 +1,28 @@
-.object-list {
+.request-list {
     padding: 20px;
+}
+
+.request-list a {
+    color: black;
 }
 
 .header {
     border-bottom: 1px solid black;
 }
 
-.object {
+.request {
     padding: 3px;
 }
 
-.object:hover {
+.request:hover {
     background-color: #cecece;
 }
 
 .title {
     padding-top: 1em;
     text-align: center;
+}
+
+a {
+    text-decoration: none;
 }
