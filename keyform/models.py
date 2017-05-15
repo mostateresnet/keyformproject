@@ -9,7 +9,6 @@ from django.core.validators import MinValueValidator
 from decimal import Decimal
 from django.core.validators import RegexValidator
 
-
 class Building(models.Model):
     name = models.CharField(max_length=256)
 
