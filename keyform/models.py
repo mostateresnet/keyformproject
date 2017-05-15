@@ -5,6 +5,9 @@ from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from django.core.validators import MinValueValidator
+from decimal import Decimal
+from django.core.validators import RegexValidator
 
 
 class Building(models.Model):
@@ -33,14 +36,16 @@ class Request(models.Model):
         ('kd', _('Key Distributed')),
     )
 
+    bpn_validator = RegexValidator('[mM8]\d{8}', "Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits.'")
+
     building = models.ForeignKey(Building)
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
-    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name='Amount received')
+    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name='Amount received', validators=[MinValueValidator(Decimal('0.00'))])
     payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True)
     charge_amount = models.DecimalField(max_digits=7, decimal_places=2)
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
-    bpn = models.CharField(max_length=9, verbose_name='M-Number')
+    bpn = models.CharField(max_length=9, verbose_name='M-Number', validators=[bpn_validator])
     created_timestamp = models.DateTimeField(default=now, blank=True)
     charged_on_rcr = models.BooleanField(default=False, verbose_name='Charged on RCR')
     status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')
