@@ -38,15 +38,6 @@ class KeyRequest(FormView):
             return self.form_invalid(form)
 
     def get_form(self, form_class=None):
-        form = CreateForm(instance=Request(staff=get_user_model().objects.all()[0]), **self.get_form_kwargs())
+        form = CreateForm(instance=Request(staff=self.request.user), **self.get_form_kwargs())
         form.request_formset = RequestFormSet(**self.get_form_kwargs())
         return form
-
-    def get_form_kwaargs(self):
-        kwargs = super(KeyRequest, self).get_form_kwargs()
-        data = kwargs.get('data')
-        if data is not None:
-            data = data.copy()
-            data['staff'] = get_user_model().objects.all()[0].pk
-            kwargs['data'] = data
-        return kwargs
