@@ -7,7 +7,6 @@ from keyform.forms import CreateForm, RequestFormSet, EditForm
 from keyform.models import Request
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
-from django.contrib.auth import get_user_model
 
 class HomeView(ListView):
     model = Request
