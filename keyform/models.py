@@ -46,7 +46,7 @@ class Request(models.Model):
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
     bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator])
     created_timestamp = models.DateTimeField(default=now, blank=True)
-    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR')
+    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'))
     status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')
 
     def __str__(self):
