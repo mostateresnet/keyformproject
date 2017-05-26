@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+from django.views.generic.base import TemplateView
 from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, RequestFormSet, EditForm
-from keyform.models import Request
+from keyform.forms import CreateForm, RequestFormSet, EditForm, ContactForm
+from keyform.models import Request, Building, Contact
 from django.urls import reverse_lazy
+from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect
 
 class HomeView(ListView):
@@ -14,11 +16,42 @@ class HomeView(ListView):
 
 class RequestView(UpdateView):
     model = Request
+    success_url = reverse_lazy('home')
     template_name = "keyform/request.html"
     form_class = EditForm
 
     def get_success_url(self):
         return reverse('home')
+
+class ContactView(TemplateView):
+    template_name = "keyform/contact.html"
+
+    def get_context_data(self):
+        context = super(ContactView, self).get_context_data()
+        context["buildings"] = Building.objects.all()
+        return context
+
+class EditContactView(UpdateView):
+    template_name = "keyform/contact_form.html"
+    model = Contact
+    form_class = ContactForm
+    success_url = reverse_lazy('contact')
+
+    def get_context_data(self):
+        context = super(EditContactView, self).get_context_data()
+        context['title'] = 'Edit'
+        return context
+
+class NewContactView(CreateView):
+    template_name = "keyform/contact_form.html"
+    model = Contact
+    form_class = ContactForm
+    success_url = reverse_lazy('contact')
+
+    def get_context_data(self):
+        context = super(NewContactView, self).get_context_data()
+        context['title'] = 'Create'
+        return context
 
 class KeyRequest(FormView):
     template_name = "keyform/add_form.html"

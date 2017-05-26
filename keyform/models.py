@@ -13,6 +13,9 @@ class Building(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ['name']
+
 
 class Request(models.Model):
 
@@ -43,7 +46,10 @@ class Request(models.Model):
     bpn = models.CharField(max_length=9)
     created_timestamp = models.DateTimeField(default=now, blank=True)
     charged_on_rcr = models.BooleanField(default=False)
-    status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')
+    status = models.CharField(max_length=2, choices=STATUS_TYPES, default='pr')
+    previous_status = models.CharField(max_length=2, choices=STATUS_TYPES)
+    locksmith_email_sent = models.BooleanField(default="False")
+    updated = models.BooleanField(default="True")
 
     def __str__(self):
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
@@ -85,3 +91,11 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.created_timestamp)
+
+class Contact(models.Model):
+    building = models.ManyToManyField(Building)
+    name = models.CharField(max_length=30)
+    email = models.CharField(max_length=75)
+
+    def __str__(self):
+        return self.name
