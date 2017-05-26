@@ -37,6 +37,6 @@ class KeyRequest(FormView):
             return self.form_invalid(form)
 
     def get_form(self, form_class=None):
-        form = CreateForm(**self.get_form_kwargs())
+        form = CreateForm(instance=Request(staff=self.request.user), **self.get_form_kwargs())
         form.request_formset = RequestFormSet(**self.get_form_kwargs())
         return form
