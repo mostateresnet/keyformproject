@@ -1,16 +1,20 @@
-.object-list {
+.request-list {
     padding: 20px;
+}
+
+.request-list a {
+    color: black;
 }
 
 .header {
     border-bottom: 1px solid black;
 }
 
-.object {
+.request {
     padding: 3px;
 }
 
-.object:hover {
+.request:hover {
     background-color: #cecece;
 }
 
@@ -41,4 +45,7 @@
     border: .1em solid black;
     color: #74020C;
     padding: .25em;
+
+a {
+    text-decoration: none;
 }

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.views.generic import FormView
+from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, RequestFormSet
+from keyform.forms import CreateForm, RequestFormSet, EditForm
 from keyform.models import Request
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
@@ -23,6 +23,14 @@ class HomeView(ListView):
         return q_set
 
 
+class RequestView(UpdateView):
+    model = Request
+    template_name = "keyform/request.html"
+    form_class = EditForm
+
+    def get_success_url(self):
+        return reverse('home')
+
 class KeyRequest(FormView):
     template_name = "keyform/add_form.html"
     success_url = reverse_lazy("home")
@@ -40,6 +48,6 @@ class KeyRequest(FormView):
             return self.form_invalid(form)
 
     def get_form(self, form_class=None):
-        form = CreateForm(**self.get_form_kwargs())
+        form = CreateForm(instance=Request(staff=self.request.user), **self.get_form_kwargs())
         form.request_formset = RequestFormSet(**self.get_form_kwargs())
         return form
