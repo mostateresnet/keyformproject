@@ -21,7 +21,7 @@ class RequestView(UpdateView):
     form_class = EditForm
 
     def get_success_url(self):
-        return reverse('home')
+        return reverse_lazy('home')
 
 class ContactView(TemplateView):
     template_name = "keyform/contact.html"
@@ -31,16 +31,29 @@ class ContactView(TemplateView):
         context["buildings"] = Building.objects.all()
         return context
 
+    def post(self, request, *args, **kwargs):
+        print(request.POST)
+
+        pk = request.POST['pk']
+        print(pk)
+        Contact.objects.filter(pk=pk).delete();
+
+        print(Contact.objects.all())
+
+        context = self.get_context_data(**kwargs)
+        return self.render_to_response(context)
+
 class EditContactView(UpdateView):
     template_name = "keyform/contact_form.html"
     model = Contact
     form_class = ContactForm
     success_url = reverse_lazy('contact')
 
-    def get_context_data(self):
+    def get_context_data(self, **kwargs):
         context = super(EditContactView, self).get_context_data()
         context['title'] = 'Edit'
         return context
+
 
 class NewContactView(CreateView):
     template_name = "keyform/contact_form.html"
@@ -48,7 +61,7 @@ class NewContactView(CreateView):
     form_class = ContactForm
     success_url = reverse_lazy('contact')
 
-    def get_context_data(self):
+    def get_context_data(self, **kwargs):
         context = super(NewContactView, self).get_context_data()
         context['title'] = 'Create'
         return context

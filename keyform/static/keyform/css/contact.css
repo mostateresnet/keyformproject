@@ -21,7 +21,7 @@ h2.title {
 }
 
 .contact {
-    margin-top: .75em;
+    margin-top: 1em;
     border: 1px solid black;
     border-radius: 15px;
     width: 80%;
@@ -42,4 +42,10 @@ a:hover {
 
 .contact-info {
     font-size: 1.5em;
+}
+
+.delete {
+    color: red;
+    font-size: 1.25em;
+    width: 2em;
 }

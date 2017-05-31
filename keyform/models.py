@@ -5,6 +5,8 @@ from django.db import models
 from django.conf import settings
 from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
+from django.db.models.signals import pre_save, post_save
+from django.dispatch import receiver
 
 
 class Building(models.Model):
@@ -93,9 +95,16 @@ class Comment(models.Model):
         return str(self.created_timestamp)
 
 class Contact(models.Model):
-    building = models.ManyToManyField(Building)
+    building = models.ManyToManyField(Building, blank=False)
     name = models.CharField(max_length=30)
     email = models.CharField(max_length=75)
 
     def __str__(self):
         return self.name
+
+@receiver(pre_save, sender=Request)
+def handle(sender, instance, **kwargs):
+    request = Request.objects.get(pk=instance.pk)
+    if instance.status != request.status:
+        instance.updated = False
+        instance.previous_status = request.status
