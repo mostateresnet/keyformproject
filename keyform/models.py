@@ -7,7 +7,9 @@ from django.utils.timezone import now
 from django.utils.translation import ugettext_lazy as _
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-
+from django.core.validators import MinValueValidator
+from decimal import Decimal
+from django.core.validators import RegexValidator
 
 class Building(models.Model):
     name = models.CharField(max_length=256)
@@ -38,16 +40,18 @@ class Request(models.Model):
         ('kd', _('Key Distributed')),
     )
 
+    bpn_validator = RegexValidator('[mM8]\d{8}', "Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits.'")
+
     building = models.ForeignKey(Building)
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
-    amt_recieved = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True)
+    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name= _('Amount received'), validators=[MinValueValidator(Decimal('0.00'))])
     payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True)
-    charge_amount = models.DecimalField(max_digits=7, decimal_places=2)
+    charge_amount = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
-    bpn = models.CharField(max_length=9)
+    bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator])
     created_timestamp = models.DateTimeField(default=now, blank=True)
-    charged_on_rcr = models.BooleanField(default=False)
+    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'))
     status = models.CharField(max_length=2, choices=STATUS_TYPES, default='pr')
     previous_status = models.CharField(max_length=2, choices=STATUS_TYPES)
     locksmith_email_sent = models.BooleanField(default="False")
@@ -79,7 +83,7 @@ class KeyData(models.Model):
         return str(self.new_core_number)
 
     class Meta:
-        verbose_name_plural = 'Key Data'
+        verbose_name_plural = _('Key Data')
 
 
 class Comment(models.Model):
