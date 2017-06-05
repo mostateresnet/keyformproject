@@ -24,12 +24,12 @@
                 <div class="title-bar">
                     <img src="{% static 'keyform/logo.jpg' %}"/>
                     <div class="title-bar-title">{% trans 'Keyform' %}</div>
-                    {% block links %}
-                    <ul>
-                        <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
-                        <li><a href="{% url 'create' %}">{% trans 'Create' %}</a></li>
-                        <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
-                    </ul>
+                    {% block navigation %}
+                        <ul>
+                            <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
+                            <li><a href="{% url 'create' %}">{% trans 'Create' %}</a></li>
+                            <li><a href="{% url 'logout' %}">{% trans 'Logout' %}</a></li>
+                        </ul>
                     {% endblock %}
                 </div>
             </div>

@@ -7,12 +7,12 @@
     <link rel="stylesheet" type="text/css" href="{% static 'keyform/css/login.css' %}"/>
 {% endblock %}
 
-{% block links %}
+{% block navigation %}
 {% endblock %}
 
 {% block content %}
     <div class="row text-center">
-        <div class="large-4 large-offset-4 columns end">
+        <div class="large-4 large-offset-4 columns end login-container">
             {% load static %}
             <img src="{% static "keyform/bear-pass.png" %}" />
             <form method='post'>
