@@ -7,22 +7,29 @@ from keyform.forms import CreateForm, RequestFormSet, EditForm
 from keyform.models import Request
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class HomeView(ListView):
+class HomeView(LoginRequiredMixin, ListView):
     model = Request
     template_name = "keyform/home.html"
+    login_url = "login"
+    redirect_field_name = "redirect_to"
 
-class RequestView(UpdateView):
+class RequestView(LoginRequiredMixin, UpdateView):
     model = Request
     template_name = "keyform/request.html"
     form_class = EditForm
+    login_url = "login"
+    redirect_field_name = "redirect_to"
 
     def get_success_url(self):
         return reverse('home')
 
-class KeyRequest(FormView):
+class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"
     success_url = reverse_lazy("home")
+    login_url = "login"
+    redirect_field_name = "redirect_to"
 
     def form_valid(self, form):
         new_request = form.save(commit=False)

@@ -1,0 +1,17 @@
+div.large-4 {
+    padding: 20px;
+}
+
+.button:hover, .button:focus {
+    background-color: #80151b;
+    color: #fefefe;
+}
+
+.button {
+    background-color: #80151b;
+}
+
+li {
+    padding-top: 10px;
+    color: red;
+}
