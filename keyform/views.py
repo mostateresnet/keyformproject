@@ -3,10 +3,12 @@ from __future__ import unicode_literals
 
 from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, RequestFormSet, EditForm
-from keyform.models import Request
+from keyform.forms import CreateForm, RequestFormSet, EditForm, AddCommentForm
+from keyform.models import Request, Comment
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
+from django.shortcuts import get_object_or_404
+import json
 
 class HomeView(ListView):
     model = Request
@@ -19,6 +21,23 @@ class RequestView(UpdateView):
 
     def get_success_url(self):
         return reverse('home')
+
+class RequestCommentView(CreateView):
+    model = Comment
+    form_class = AddCommentForm
+
+    def get_success_url(self):
+        return reverse('home')
+
+    def post(self, request, *args, **kwargs):
+        message = request.POST['message']
+        pk = request.POST['pk']
+
+        req = get_object_or_404(Request, pk=pk)
+        req.comment_set.create(message=message, author=request.user)
+
+        return HttpResponse(json.dumps({}), content_type="application/json")
+
 
 class KeyRequest(FormView):
     template_name = "keyform/add_form.html"
