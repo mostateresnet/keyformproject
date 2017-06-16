@@ -9,12 +9,13 @@ from keyform.models import Request, Building, Contact
 from django.urls import reverse_lazy
 from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class HomeView(ListView):
+class HomeView(LoginRequiredMixin, ListView):
     model = Request
     template_name = "keyform/home.html"
 
-class RequestView(UpdateView):
+class RequestView(LoginRequiredMixin, UpdateView):
     model = Request
     success_url = reverse_lazy('home')
     template_name = "keyform/request.html"
@@ -66,7 +67,7 @@ class NewContactView(CreateView):
         context['title'] = 'Create'
         return context
 
-class KeyRequest(FormView):
+class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"
     success_url = reverse_lazy("home")
 
