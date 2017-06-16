@@ -1,17 +1,22 @@
-.object-list {
+
+.request-list {
     margin-top: 2em;
     padding: 1em;
+}
+
+.request-list a {
+    color: black;
 }
 
 .header {
     border-bottom: 1px solid black;
 }
 
-.object {
+.request {
     padding: 3px;
 }
 
-.object:hover {
+.request:hover {
     background-color: #cecece;
 }
 
@@ -44,4 +49,7 @@
 
 .search-form br {
     line-height: .75;
+
+a {
+    text-decoration: none;
 }
