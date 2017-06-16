@@ -5,6 +5,10 @@
     {{ block.super }}
     <link rel='stylesheet' type='text/css' href="{% static 'keyform/css/home.css' %}"/>
 {% endblock %}
+{% block javascript %}
+    {{ block.super }}
+    <script src="{% static 'keyform/js/home.js' %}"></script>
+{% endblock %}
 {% block content %}
     <h2 class="title">{% trans 'Keyform Requests' %}</h2>
     {% include 'keyform/searchtable.html' %}
