@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'keyform',
     'debug_toolbar',
-    'mathfilters'
 ]
 
 MIDDLEWARE = [

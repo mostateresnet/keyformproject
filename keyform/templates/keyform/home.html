@@ -1,7 +1,6 @@
 {% extends "keyform/base.html" %}
 {% load i18n %}
 {% load static %}
-{% load mathfilters %}
 {% block css %}
     {{ block.super }}
     <link rel='stylesheet' type='text/css' href="{% static 'keyform/css/home.css' %}"/>
@@ -74,7 +73,7 @@
                     <li class="disabled page"><span>&laquo;</span></li>
                 {% endif %}
                 {% if page_obj.number >= 3 %}
-                    <li class='page'><a href="?page={{ page_obj.number|sub:2 }}">{{ page_obj.number|sub:2 }}</a></li>
+                    <li class='page'><a href="?page={{ page_obj.number|add:"-2" }}">{{ page_obj.number|add:"-2" }}</a></li>
                 {% endif %}
                 {% if page_obj.has_previous %}
                     <li class="page"><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
@@ -89,8 +88,8 @@
                 {% else %}
                 <li class="disabled page"><span> &raquo;</span></li>
                 {% endif %}
-                {% if page_obj.number <= paginator.num_pages|sub:2 %}
-                    <li class='page'><a href="?page={{ page_obj.number|add:2 }}">{{ page_obj.number|add:2 }}</a></li>
+                {% if page_obj.number <= paginator.num_pages|add:"-2" %}
+                    <li class='page'><a href="?page={{ page_obj.number|add:"2" }}">{{ page_obj.number|add:2 }}</a></li>
                 {% endif %}
                 {% if page_obj.has_next %}
                     <li class='page'><a href="?page={{ page_obj.next_page_number }}"><span>&raquo;</span></a></li>

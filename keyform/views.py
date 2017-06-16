@@ -8,7 +8,6 @@ from keyform.models import Request
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.db.models import Count
-from django.core.paginator import Paginator
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 class HomeView(LoginRequiredMixin, ListView):
