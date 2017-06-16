@@ -50,6 +50,5 @@ def send_update_emails():
         message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
         message.attach_alternative(html_content, 'text/html')
         message.send()
-        print("Sent an email to", recipients)
         request.updated = True
         request.save()

@@ -54,8 +54,8 @@ class Request(models.Model):
     charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'))
     status = models.CharField(max_length=2, choices=STATUS_TYPES, default='pr')
     previous_status = models.CharField(max_length=2, choices=STATUS_TYPES)
-    locksmith_email_sent = models.BooleanField(default="False")
-    updated = models.BooleanField(default="True")
+    locksmith_email_sent = models.BooleanField(default=False)
+    updated = models.BooleanField(default=True)
 
     def __str__(self):
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
@@ -100,8 +100,8 @@ class Comment(models.Model):
 
 class Contact(models.Model):
     building = models.ManyToManyField(Building, blank=False)
-    name = models.CharField(max_length=30)
-    email = models.CharField(max_length=75)
+    name = models.CharField(max_length=50)
+    email = models.EmailField(max_length=75)
 
     def __str__(self):
         return self.name

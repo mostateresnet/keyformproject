@@ -1,8 +1,8 @@
 from django import forms
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
-from django.forms import TypedChoiceField, ChoiceField, MultipleChoiceField, ModelChoiceField
+from django.forms import TypedChoiceField
 from django.forms.models import inlineformset_factory
-from keyform.models import Request, KeyData, Contact, Building
+from keyform.models import Request, KeyData, Contact
 
 class CreateForm(forms.ModelForm):
     class Meta:
