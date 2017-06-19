@@ -94,7 +94,7 @@
                 {% if page_obj.has_next %}
                     <li class='page'><a href="?page={{ page_obj.next_page_number }}"><span>&raquo;</span></a></li>
                 {% endif %}
-                <li class='page'><a href="?page={{ paginator.num_pages }}">Last</a></li>
+                <li class='page'><a href="?page=last">Last</a></li>
             </ul>
         </div>
     {% endif %}
