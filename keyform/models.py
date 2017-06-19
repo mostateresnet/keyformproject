@@ -108,7 +108,10 @@ class Contact(models.Model):
 
 @receiver(pre_save, sender=Request)
 def handle(sender, instance, **kwargs):
-    request = Request.objects.get(pk=instance.pk)
-    if instance.status != request.status:
-        instance.updated = False
-        instance.previous_status = request.status
+    request = Request.objects.filter(pk=instance.pk).first()
+    if request != None:
+        if instance.status != request.status:
+            instance.previous_status = request.status
+            instance.updated = False
+    else:
+        instance.previous_status = instance.status
