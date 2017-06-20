@@ -7,11 +7,21 @@ from keyform.forms import CreateForm, RequestFormSet, EditForm
 from keyform.models import Request
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 class HomeView(LoginRequiredMixin, ListView):
     model = Request
     template_name = "keyform/home.html"
+    paginate_by = 25
+
+    def get_queryset(self):
+        q_set = super(HomeView, self).get_queryset()
+        q_set = q_set.select_related('building')
+        q_set = q_set.prefetch_related('keydata_set')
+        q_set = q_set.annotate(num_comments=Count('comment'))
+        return q_set
+
 
 class RequestView(LoginRequiredMixin, UpdateView):
     model = Request
