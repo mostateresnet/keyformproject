@@ -24,7 +24,7 @@ class RequestView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('home')
 
-class ContactView(TemplateView):
+class ContactView(LoginRequiredMixin, TemplateView):
     template_name = "keyform/contact.html"
 
     def get_context_data(self):
@@ -33,18 +33,14 @@ class ContactView(TemplateView):
         return context
 
     def post(self, request, *args, **kwargs):
-        print(request.POST)
 
         pk = request.POST['pk']
-        print(pk)
         Contact.objects.filter(pk=pk).delete();
-
-        print(Contact.objects.all())
 
         context = self.get_context_data(**kwargs)
         return self.render_to_response(context)
 
-class EditContactView(UpdateView):
+class EditContactView(LoginRequiredMixin, UpdateView):
     template_name = "keyform/contact_form.html"
     model = Contact
     form_class = ContactForm
@@ -56,7 +52,7 @@ class EditContactView(UpdateView):
         return context
 
 
-class NewContactView(CreateView):
+class NewContactView(LoginRequiredMixin, CreateView):
     template_name = "keyform/contact_form.html"
     model = Contact
     form_class = ContactForm

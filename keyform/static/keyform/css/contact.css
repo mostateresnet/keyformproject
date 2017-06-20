@@ -49,3 +49,12 @@ a:hover {
     font-size: 1.25em;
     width: 2em;
 }
+
+.button:hover, .button:focus {
+    background-color: #80151b;
+    color: #fefefe;
+}
+
+.button {
+    background-color: #80151b;
+}

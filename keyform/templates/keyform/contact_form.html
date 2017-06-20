@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block content %}
-    <h2 class='title'>{{ title }} {% trans 'Contact' %}</h2>
+    <h2 class='title'>{% if form.instance.pk %}{% trans 'Edit Contact' %}{% else %}{% trans 'Create Contact' %}{% endif %}</h2>
     <div class='contact-form'>
         <form method=POST> {% csrf_token %}
             {{ form }}
-            <button type='submit'>{% trans 'Submit' %} </button>
+            <a class='button'>{% trans 'Submit' %}</a>
         </form>
     </div>
 {% endblock %}

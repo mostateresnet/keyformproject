@@ -7,3 +7,12 @@
     padding-top: 1em;
     text-align: center;
 }
+
+.button {
+    background-color: #80151b;
+}
+
+.button:hover, .button:focus {
+    background-color: #80151b;
+    color: #fefefe;
+}

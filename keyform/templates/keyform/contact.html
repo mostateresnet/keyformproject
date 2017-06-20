@@ -22,7 +22,7 @@
                 </div>
                 {% for contact in building.contact_set.all %}
                     <div class="contact row" data-pk='{{ contact.pk }}'>
-                        <a href='{% url "edit_contact" pk=contact.pk %}'>
+                        <a href='{% url "edit-contact" pk=contact.pk %}'>
                             <div class="info">
                                 <div class='large-4 columns'>
                                     <span class='contact-info'>{{ contact.name }}</span>
@@ -36,7 +36,7 @@
                     </div>
 
                 {% endfor %}
-                <a href="{% url 'create_contact' %}"><button class='new'>{% trans 'Create Contact' %}</button></a>
+                <a href="{% url 'create-contact' %}"><button class='new button expand'>{% trans 'Create Contact' %}</button></a>
             {% endfor %}
         </div>
     </div>
