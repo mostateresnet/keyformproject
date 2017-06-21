@@ -50,6 +50,33 @@
 .search-form br {
     line-height: .75;
 
+}
+
+.page-bar {
+    width: 80%;
+    margin: auto;
+}
+
+.page-bar ul {
+    text-align: center;
+}
+
+.page {
+    display: inline;
+    padding: .5em;
+    text-align: center;
+}
+
+.page a {
+    color: black;
+}
+
+.current {
+    border: .1em solid black;
+    color: #74020C;
+    padding: .25em;
+}
+
 a {
     text-decoration: none;
 }
