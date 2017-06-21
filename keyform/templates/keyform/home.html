@@ -51,7 +51,7 @@
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
-                            {{ key.new_core_number }}{% if not forloop.last %}, {% endif %}
+                            {{ key.core_number }}{% if not forloop.last %}, {% endif %}
                         {% empty %}
                             &nbsp;
                         {% endfor %}

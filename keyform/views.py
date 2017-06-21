@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
 from keyform.forms import CreateForm, RequestFormSet, EditForm
-from keyform.models import Request
+from keyform.models import Request, Building
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -17,15 +17,13 @@ class HomeView(LoginRequiredMixin, ListView):
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
         context["status_types"] = Request.STATUS_TYPES
+        context["buildings"] = Building.objects.all()
+        context["data"] = self.request.GET
         return context
-
-
-class SearchView(LoginRequiredMixin, ListView):
-    template_name = "keyform/home.html"
 
     def get_queryset(self):
         qset = Request.objects.all()
-        valid = ['amt_recieved', 'bpn', 'building', 'building_id', 'charge_amount', 'charged_on_rcr',
+        valid = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
                  'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
                  'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status', 'student_name']
 
@@ -33,13 +31,12 @@ class SearchView(LoginRequiredMixin, ListView):
             if str(item) in valid:
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
+
+        if self.request.GET.get('start_date', '') != '' and self.request.GET.get('end_date', '') != '':
+            qset = qset.filter(created_timestamp__range=[self.request.GET['start_date'], self.request.GET['end_date']])
+
         return qset
 
-    def get_context_data(self):
-        context = super(SearchView, self).get_context_data()
-        context["request_types"] = Request.REQUEST_TYPES
-        context["status_types"] = Request.STATUS_TYPES
-        return context
 
 class RequestView(LoginRequiredMixin, UpdateView):
     model = Request

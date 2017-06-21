@@ -7,52 +7,70 @@
 </div>
 <div class="search-form" id="search">
     <div class="search-content">
-        <form action="{% url 'search' %}">
+        <form action="{% url 'home' %}">
             <fieldset>
                 <div class="row">
                     <div class="large-4 columns">
-                       {% trans 'Student Name' %} <input type="text" name="student_name"/>
+                       {% trans 'Student Name' %} <input type="text" name="student_name" value="{{ data.student_name }}"/>
                     </div>
                     <div class="large-4 columns">
-                        {% trans 'M-Number' %} <input type="text" name="m_number"/>
+                        {% trans 'M-Number' %} <input type="text" name="m_number" value="{{ data.m_number }}"/>
                     </div>
                     <div class="large-4 columns">
-                       {% trans 'Building' %} <input type="text" name="building"/>
+                        {% trans 'Building' %}
+                        <select name='building__name'>
+                            <option value=""></option>
+                            {% for building in buildings %}
+                                {% if data.building__name == building.name %}
+                                    <option selected value="{{ building.name }}">{{ building.name }}</option>
+                                {% else %}
+                                    <option value="{{ building.name }}">{{ building.name }}</option>
+                                {% endif %}
+                            {% endfor %}
+                        </select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="large-4 columns">
-                       {% trans 'Room Number' %} <input type="text" name="keydata__room_number"/>
+                       {% trans 'Room Number' %} <input type="text" name="keydata__room_number" value="{{ data.keydata__room_number }}"/>
                     </div>
                     <div class="large-4 columns">
-                       {% trans 'Core #' %} <input type="text" name="keydata__core_number"/>
+                       {% trans 'Core #' %} <input type="text" name="keydata__core_number" value="{{ data.keydata__core_number }}"/>
                     </div>
                     <div class="large-4 columns">
-                       {% trans 'Key #' %} <input type="text" name="keydata__key_number"/>
+                       {% trans 'Key #' %} <input type="text" name="keydata__key_number" value="{{ data.keydata__key_number }}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="large-4 columns">
-                       {% trans 'Staff Name' %} <input type="text" name="staff_name"/>
+                       {% trans 'Staff Name' %} <input type="text" name="staff_name" value="{{ data.staff_name }}"/>
                     </div>
                     <div class="large-4 columns">
-                       {% trans 'Start Date' %} <input type="text" name="start_date"/>
+                       {% trans 'Start Date' %} <input type="date" name="start_date" value="{{ data.start_date }}"/>
                     </div>
                     <div class="large-4 columns">
-                       {% trans 'End Date' %} <input type="text" name="end_date"/>
+                       {% trans 'End Date' %} <input type="date" name="end_date" value="{{ data.end_date }}"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="large-6 columns">
                        {% trans 'Key Request Type' %}<br/>
                        {% for choice in request_types %}
-                           <input type="radio" name="req_type" value="{{ choice.0 }}"/> {{ choice.1 }}<br>
+                           {% if data.req_type == choice.0 %}
+                               <input type="radio" name="req_type" id="{{ choice.0 }}" value="{{ choice.0 }}" checked/><label for="{{ choice.0 }}">{{ choice.1 }}</label><br>
+                           {% else %}
+                               <input type="radio" name="req_type" id="{{ choice.0 }}" value="{{ choice.0 }}"/><label for="{{ choice.0 }}">{{ choice.1 }}</label><br>
+                           {% endif %}
                        {% endfor %}
                     </div>
                     <div class="large-6 columns">
                        {% trans 'Status' %} <br/>
                        {% for choice in status_types %}
-                           <input type="radio" name="status" value="{{ choice.0 }}"/> {{ choice.1 }}<br>
+                           {% if data.status == choice.0 %}
+                               <input type="radio" name="status" id="{{ choice.0 }}" value="{{ choice.0 }}" checked/><label for="{{ choice.0 }}">{{ choice.1 }}</label><br>
+                           {% else %}
+                               <input type="radio" name="status" id="{{ choice.0 }}" value="{{ choice.0 }}"/><label for="{{ choice.0 }}">{{ choice.1 }}</label><br>
+                           {% endif %}
                        {% endfor %}
                     </div>
                 </div>

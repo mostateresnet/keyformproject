@@ -4,7 +4,6 @@ from django.contrib.auth.views import login, logout_then_login
 from keyform import views
 
 urlpatterns = [
-    url(r'^search', views.SearchView.as_view(), name="search"),
     url(r'^$', views.HomeView.as_view(), name='home'),
     url(r'^edit-request/(?P<pk>\d+)$', views.RequestView.as_view(), name='edit-request'),
     url(r'^create$', views.KeyRequest.as_view(), name='create'),

@@ -27,9 +27,9 @@
                 <hr width="70%">
                 <div class="row info-row">
                     <div class="large-12 columns">
-                        {% trans 'New Core #' %}:
+                        {% trans 'Core #' %}:
                         {% for data in object.keydata_set.all %}
-                            {{ data.new_core_number }}{% if not forloop.last %}, {% endif %}
+                            {{ data.core_number }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </div>
                 </div>
