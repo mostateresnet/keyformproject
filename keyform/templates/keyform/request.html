@@ -10,6 +10,11 @@
     <div class="content">
         <div class="content-header">{% trans 'Update Key Request' %}</div>
         <div class="info">
+            <div class="row">
+                <div class="large-12 columns text-right">
+                    <span class='created'> {% trans 'Created' %}: {{ object.created_timestamp }}</span>
+                </div>
+            </div>
             <div class="section">
                 <div class="row info-row">
                      <div class="large-6 columns">
@@ -20,7 +25,7 @@
                      </div>
                 </div>
                 <div class="row info-row">
-                    <div class="large-6 columns">
+                    <div class="large-12 columns">
                         {% trans 'Building Name' %}: {{ object.building }}
                     </div>
                 </div>
@@ -49,7 +54,7 @@
                     <div class="large-3 columns">
                         {% trans 'Key #' %}:
                         {% for data in object.keydata_set.all %}
-                            {{ data.lost_key_number }}{% if not forloop.last %}, {% endif %}
+                            {{ data.key_number }}{% if not forloop.last %}, {% endif %}
                         {% endfor %}
                     </div>
                     <div class="large-2 columns">

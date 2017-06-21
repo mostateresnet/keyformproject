@@ -44,3 +44,7 @@ select {
 .request-edit {
     text-align: center;
 }
+
+.created {
+    font-weight: bold;
+}

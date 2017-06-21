@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
+from datetime import datetime, timedelta
 from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
 from keyform.forms import CreateForm, RequestFormSet, EditForm
@@ -9,19 +9,12 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.dateparse import parse_date
 
 class HomeView(LoginRequiredMixin, ListView):
     model = Request
     template_name = "keyform/home.html"
     paginate_by = 25
-
-    def get_queryset(self):
-        q_set = super(HomeView, self).get_queryset()
-        q_set = q_set.select_related('building')
-        q_set = q_set.prefetch_related('keydata_set')
-        q_set = q_set.annotate(num_comments=Count('comment'))
-        return q_set
-
 
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
@@ -32,7 +25,10 @@ class HomeView(LoginRequiredMixin, ListView):
         return context
 
     def get_queryset(self):
-        qset = Request.objects.all()
+        qset = super(HomeView, self).get_queryset()
+        qset = qset.select_related('building')
+        qset = qset.prefetch_related('keydata_set')
+        qset = qset.annotate(num_comments=Count('comment'))
         valid = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
                  'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
                  'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status', 'student_name']
@@ -42,8 +38,13 @@ class HomeView(LoginRequiredMixin, ListView):
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
 
-        if self.request.GET.get('start_date', '') != '' and self.request.GET.get('end_date', '') != '':
-            qset = qset.filter(created_timestamp__range=[self.request.GET['start_date'], self.request.GET['end_date']])
+        converted_start_date = parse_date(self.request.GET.get('start_date', '')) or datetime.min
+        converted_end_date = parse_date(self.request.GET.get('end_date', '')) or datetime.max
+
+        if converted_end_date != datetime.max:
+            converted_end_date += timedelta(days=1)
+
+        qset = qset.filter(created_timestamp__range=[converted_start_date, converted_end_date])
 
         return qset
 
