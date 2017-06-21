@@ -11,17 +11,25 @@ from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.dateparse import parse_date
 
+
 class HomeView(LoginRequiredMixin, ListView):
     model = Request
     template_name = "keyform/home.html"
     paginate_by = 25
+    valid_params = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
+                    'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
+                    'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status', 'student_name']
 
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
         context["status_types"] = Request.STATUS_TYPES
         context["buildings"] = Building.objects.all()
-        context["data"] = self.request.GET
+        data = self.request.GET.copy()
+        for k, v in self.request.GET.items():
+            if k not in self.valid_params or not v:
+                del data[k]
+        context["data"] = data
         return context
 
     def get_queryset(self):
@@ -29,12 +37,9 @@ class HomeView(LoginRequiredMixin, ListView):
         qset = qset.select_related('building')
         qset = qset.prefetch_related('keydata_set')
         qset = qset.annotate(num_comments=Count('comment'))
-        valid = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
-                 'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
-                 'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status', 'student_name']
 
         for item, value in self.request.GET.items():
-            if str(item) in valid:
+            if str(item) in self.valid_params:
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
 
@@ -53,9 +58,8 @@ class RequestView(LoginRequiredMixin, UpdateView):
     model = Request
     template_name = "keyform/request.html"
     form_class = EditForm
+    success_url = reverse_lazy("home")
 
-    def get_success_url(self):
-        return reverse('home')
 
 class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"

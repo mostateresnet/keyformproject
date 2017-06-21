@@ -21,7 +21,7 @@
                          {% trans 'Student Name' %}: {{ object.student_name }}
                      </div>
                      <div class="large-6 columns text-right">
-                         {% trans 'Request for: Lost/Stolen Key' %}
+                         {% trans 'Request for' %}: {{ object.get_reason_for_request_display }}
                      </div>
                 </div>
                 <div class="row info-row">

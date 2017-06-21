@@ -70,17 +70,17 @@
     {% if is_paginated %}
         <div class='page-bar'>
             <ul>
-                <li class='page'><a href="?page=1">First</a></li>
+                <li class='page'><a href="?page=1&{{ data.urlencode }}">First</a></li>
                 {% if page_obj.has_previous %}
-                    <li class='page'><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    <li class='page'><a href="?page={{ page_obj.previous_page_number }}&{{ data.urlencode }}">&laquo;</a></li>
                 {% else %}
                     <li class="disabled page"><span>&laquo;</span></li>
                 {% endif %}
                 {% if page_obj.number >= 3 %}
-                    <li class='page'><a href="?page={{ page_obj.number|add:"-2" }}">{{ page_obj.number|add:"-2" }}</a></li>
+                    <li class='page'><a href="?page={{ page_obj.number|add:'-2' }}&{{ data.urlencode }}">{{ page_obj.number|add:"-2" }}</a></li>
                 {% endif %}
                 {% if page_obj.has_previous %}
-                    <li class="page"><a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a></li>
+                    <li class="page"><a href="?page={{ page_obj.previous_page_number }}&{{ data.urlencode }}">{{ page_obj.previous_page_number }}</a></li>
                 {% endif %}
                 {% for i in paginator.page_range %}
                     {% if page_obj.number == i %}
@@ -88,17 +88,17 @@
                     {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                    <li class="page"><a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a></li>
+                    <li class="page"><a href="?page={{ page_obj.next_page_number }}&{{ data.urlencode }}">{{ page_obj.next_page_number }}</a></li>
                 {% else %}
                 <li class="disabled page"><span> &raquo;</span></li>
                 {% endif %}
                 {% if page_obj.number <= paginator.num_pages|add:"-2" %}
-                    <li class='page'><a href="?page={{ page_obj.number|add:"2" }}">{{ page_obj.number|add:2 }}</a></li>
+                    <li class='page'><a href="?page={{ page_obj.number|add:2 }}&{{ data.urlencode }}">{{ page_obj.number|add:2 }}</a></li>
                 {% endif %}
                 {% if page_obj.has_next %}
-                    <li class='page'><a href="?page={{ page_obj.next_page_number }}"><span>&raquo;</span></a></li>
+                    <li class='page'><a href="?page={{ page_obj.next_page_number }}&{{ data.urlencode }}"><span>&raquo;</span></a></li>
                 {% endif %}
-                <li class='page'><a href="?page=last">Last</a></li>
+                <li class='page'><a href="?page=last&{{ data.urlencode }}">Last</a></li>
             </ul>
         </div>
     {% endif %}
