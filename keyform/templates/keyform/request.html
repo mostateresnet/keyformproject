@@ -8,6 +8,9 @@
 {% block javascript %}
     {{ block.super }}
     <script src="{% static 'keyform/js/request.js' %}"></script>
+    <script>
+        var COMMENT_URL = "{% url 'add-comment' %}";
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -90,7 +93,8 @@
                 </div>
             </div>
             <br>
-            <form method=POST> {% csrf_token %}
+            <form method="POST">
+                {% csrf_token %}
                 <div class='request-edit'>
                     {% for field in form %}
                         {{ field.label }}: {{ field }}
@@ -98,6 +102,8 @@
                     <input type="submit" value="{% trans 'Update' %}"/>
                 </div>
             </form>
+        </div>
+        <div id='comments'>
             {% with comments=object.comment_set.all %}
                 {% if comments %}
                     <span class="section-header">{% trans 'Comments' %} </span>
@@ -105,8 +111,8 @@
                         {% for comment in comments %}
                             <div class="row info-row">
                                 <div class="large-12 columns end">
-                                    {{ comment.created_timestamp|date:"m/d/Y" }} - {{ comment.author }}: <br>
-                                    {{ comment.message }}
+                                    <div class="section-header">{{ comment.author }} - {{ comment.created_timestamp }}:</div>
+                                    <p>{{ comment.message|linebreaksbr }}</p>
                                 </div>
                             </div>
                             {% if not forloop.last %}<hr width="70%">{% endif %}
@@ -114,11 +120,13 @@
                     </div>
                 {% endif %}
             {% endwith %}
+            <div id='comment-form'>
+                <p>New Comment:</p>
+                <textarea id="comment-text" cols="40" rows="4"></textarea>
+                <span class='button small' type='button' id='submit'>Submit</span>
+                <span class='button small' type='button' id='cancel'>Cancel</span>
+            </div>
+            <span class='button small' type='button' id='add'>Add a comment</span>
         </div>
-        <div id='comments'>
-        </div>
-        <span class='button small' type='button' id='add'>Add a comment</span>
-        <span class='button small' type='button' id='submit'>Submit</span>
-        <span class='button small' type='button' id='cancel'>Cancel</span>
     </div>
 {% endblock %}

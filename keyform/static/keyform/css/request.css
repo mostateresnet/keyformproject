@@ -58,3 +58,11 @@ select {
 .button:hover {
     background-color: #842929;
 }
+
+#comment-form, .add-comment #add {
+    display: none;
+}
+
+.add-comment #comment-form {
+    display: block;
+}
