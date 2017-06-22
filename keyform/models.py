@@ -72,7 +72,7 @@ class KeyData(models.Model):
     quantity = models.IntegerField()
 
     def __str__(self):
-        return str(self.new_core_number)
+        return str(self.core_number)
 
     class Meta:
         verbose_name_plural = _('Key Data')
