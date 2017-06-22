@@ -11,8 +11,17 @@ $(document).ready(function() {
         if(confirm("Are you sure you want to add this comment?")) {
             var message = $('#comment-text').val();
             var pk = $('#key-section').data('pk');
-            $.post(COMMENT_URL, { message:message, pk:pk }, function() {
-                location.reload();
+            $.post(COMMENT_URL, { message:message, pk:pk }, function(data) {
+                var comment_element = $(COMMENT_HTML);
+                comment_element.find('.author').text(data.author);
+                comment_element.find('.timestamp').text(data.timestamp);
+                comment_element.find('.message').html(data.message.replace(/\n/g, '<br />'));
+
+                $('#comment-list').append(comment_element);
+
+            })
+            .fail(function() {
+                alert('There was a POST error!');
             });
         }
     });

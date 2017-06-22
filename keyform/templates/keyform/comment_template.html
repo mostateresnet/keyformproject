@@ -1,0 +1,7 @@
+<hr width="90%">
+<div class="row info-row">
+    <div class="large-12 columns end">
+        <div class="section-header"><span class='author'>{{ comment.author }}</span> - <span class='timestamp'>{{ comment.created_timestamp|date:'F d, Y, h:i A' }}</span>:</div>
+        <p class='message'>{{ comment.message|linebreaksbr }}</p>
+    </div>
+</div>

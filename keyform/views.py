@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
+import json
 from django.views.generic import FormView, UpdateView, CreateView
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, RequestFormSet, EditForm, AddCommentForm
-from keyform.models import Request, Comment
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
 from django.shortcuts import get_object_or_404
-import json
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.timezone import localtime
+from keyform.forms import CreateForm, RequestFormSet, EditForm, AddCommentForm
+from keyform.models import Request, Comment
 
 class HomeView(LoginRequiredMixin, ListView):
     model = Request
@@ -35,9 +36,11 @@ class RequestCommentView(CreateView):
         pk = request.POST['pk']
 
         req = get_object_or_404(Request, pk=pk)
-        req.comment_set.create(message=message, author=request.user)
+        comment = req.comment_set.create(message=message, author=request.user)
 
-        return HttpResponse(json.dumps({}), content_type="application/json")
+        timestamp = localtime(comment.created_timestamp).strftime('%B %d, %Y, %I:%M %p')
+
+        return HttpResponse(json.dumps({'author': str(comment.author), 'timestamp': timestamp, 'message': comment.message}), content_type="application/json")
 
 class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"

@@ -10,6 +10,7 @@
     <script src="{% static 'keyform/js/request.js' %}"></script>
     <script>
         var COMMENT_URL = "{% url 'add-comment' %}";
+        var COMMENT_HTML = "{% filter escapejs %}{% include 'keyform/comment_template.html' %}{% endfilter %}";
     </script>
 {% endblock %}
 
@@ -107,15 +108,9 @@
             {% with comments=object.comment_set.all %}
                 {% if comments %}
                     <span class="section-header">{% trans 'Comments' %} </span>
-                    <div class="section">
+                    <div id="comment-list" class="section">
                         {% for comment in comments %}
-                            <div class="row info-row">
-                                <div class="large-12 columns end">
-                                    <div class="section-header">{{ comment.author }} - {{ comment.created_timestamp }}:</div>
-                                    <p>{{ comment.message|linebreaksbr }}</p>
-                                </div>
-                            </div>
-                            {% if not forloop.last %}<hr width="70%">{% endif %}
+                            {% include 'keyform/comment_template.html' %}
                         {% endfor %}
                     </div>
                 {% endif %}
