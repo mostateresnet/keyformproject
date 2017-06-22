@@ -9,7 +9,7 @@ from keyform.models import Request, Building, Contact
 from django.urls import reverse_lazy
 from django.forms import modelformset_factory
 from django.http import HttpResponseRedirect
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 
 class HomeView(LoginRequiredMixin, ListView):
     model = Request
@@ -34,17 +34,20 @@ class ContactView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
 
-        pk = request.POST['pk']
-        Contact.objects.filter(pk=pk).delete();
+        if request.user.has_perm('keyform.delete_user'):
+            pk = request.POST['pk']
+            Contact.objects.filter(pk=pk).delete();
 
-        context = self.get_context_data(**kwargs)
-        return self.render_to_response(context)
+            context = self.get_context_data(**kwargs)
+            return self.render_to_response(context)
 
-class EditContactView(LoginRequiredMixin, UpdateView):
+class EditContactView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = "keyform/contact_form.html"
     model = Contact
     form_class = ContactForm
     success_url = reverse_lazy('contact')
+    permission_required = 'keyform.change_contact'
+    raise_exception = True
 
     def get_context_data(self, **kwargs):
         context = super(EditContactView, self).get_context_data()
@@ -52,11 +55,12 @@ class EditContactView(LoginRequiredMixin, UpdateView):
         return context
 
 
-class NewContactView(LoginRequiredMixin, CreateView):
+class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = "keyform/contact_form.html"
     model = Contact
     form_class = ContactForm
     success_url = reverse_lazy('contact')
+    permission_required = 'keyform.add_contact'
 
     def get_context_data(self, **kwargs):
         context = super(NewContactView, self).get_context_data()

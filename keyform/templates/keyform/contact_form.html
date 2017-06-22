@@ -11,7 +11,7 @@
     <div class='contact-form'>
         <form method=POST> {% csrf_token %}
             {{ form }}
-            <a class='button'>{% trans 'Submit' %}</a>
+            <button type='submit' class='button'>{% trans 'Submit' %}</buttton>
         </form>
     </div>
 {% endblock %}

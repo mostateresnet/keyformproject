@@ -50,11 +50,6 @@ a:hover {
     width: 2em;
 }
 
-.button:hover, .button:focus {
-    background-color: #80151b;
-    color: #fefefe;
-}
-
 .button {
-    background-color: #80151b;
+    margin-top: 1em;
 }
