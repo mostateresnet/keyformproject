@@ -5,7 +5,7 @@ import json
 from django.views.generic import FormView, UpdateView, View
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -45,7 +45,7 @@ class RequestCommentView(LoginRequiredMixin, View):
 
         timestamp = localtime(comment.created_timestamp).strftime('%B %d, %Y, %I:%M %p')
 
-        return HttpResponse(json.dumps({'author': str(comment.author), 'timestamp': timestamp, 'message': comment.message}), content_type="application/json")
+        return JsonResponse({'author': str(comment.author), 'timestamp': timestamp, 'message': comment.message})
 
 class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"
