@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
 
 def send_locksmith_emails():
-    email_requests = Request.objects.filter(locksmith_email_sent=False)
+    email_requests = Request.objects.filter(locksmith_email_sent=False).select_related('building')
     buildings = Building.objects.all().prefetch_related('contact_set')
 
     recipient_dict = {b:b.contact_set.all() for b in buildings}
@@ -31,7 +31,6 @@ def send_locksmith_emails():
         message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
         message.attach_alternative(html_content, 'text/html')
         message.send()
-        print("Sent an email to", recipients)
         request.locksmith_email_sent = True
         request.save()
 
