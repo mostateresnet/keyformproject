@@ -5,6 +5,7 @@ from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.conf import settings
+from django.utils.translation import ugettext_lazy as _
 
 class Command(BaseCommand):
 
@@ -20,16 +21,17 @@ def send_locksmith_emails():
     recipient_dict = {b:b.contact_set.all() for b in buildings}
 
     for request in email_requests:
-        recipients = recipient_dict[request.building]
-        subject = settings.EMAIL_SUBJECT_PREFIX + ': A request has been created'
+        recipients = [c.email for c in recipient_dict[request.building]]
+        subject = settings.EMAIL_SUBJECT_PREFIX + _('A request has been created')
         from_email = settings.SERVER_EMAIL
 
         html_content = render_to_string('keyform/emails/status_update.html', {'request': request})
         text_content = strip_tags(html_content)
 
-        message = EmailMultiAlternatives(subject, text_content, from_email, [recipients])
+        message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
         message.attach_alternative(html_content, 'text/html')
         message.send()
+        print("Sent an email to", recipients)
         request.locksmith_email_sent = True
         request.save()
 
@@ -40,8 +42,8 @@ def send_update_emails():
     recipient_dict = {b:b.contact_set.all() for b in buildings}
 
     for request in email_requests:
-        recipients = recipient_dict[request.building].values_list('email', flat=True)
-        subject = settings.EMAIL_SUBJECT_PREFIX + ': A request has been updated from ' + str(request.get_previous_status_display()) + ' to ' + str(request.get_status_display())
+        recipients = [c.email for c in recipient_dict[request.building]]
+        subject = settings.EMAIL_SUBJECT_PREFIX + _('A request has been updated from %(previous_status)s to %(status)s.') % {'previous_status': request.get_previous_status_display(), 'status': request.get_status_display()}
         from_email = settings.SERVER_EMAIL
 
         html_content = render_to_string('keyform/emails/status_update.html', {'request': request})

@@ -8,7 +8,7 @@ from keyform.forms import CreateForm, RequestFormSet, EditForm, ContactForm
 from keyform.models import Request, Building, Contact
 from django.urls import reverse_lazy
 from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Count
 
@@ -31,8 +31,6 @@ class RequestView(LoginRequiredMixin, UpdateView):
     template_name = "keyform/request.html"
     form_class = EditForm
 
-    def get_success_url(self):
-        return reverse_lazy('home')
 
 class ContactView(LoginRequiredMixin, TemplateView):
     template_name = "keyform/contact.html"
@@ -44,12 +42,13 @@ class ContactView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
 
+        success = False
         if request.user.has_perm('keyform.delete_contact'):
             pk = request.POST['pk']
             Contact.objects.filter(pk=pk).delete();
+            success = True
 
-            context = self.get_context_data(**kwargs)
-            return self.render_to_response(context)
+        return JsonResponse({'success': success})
 
 class EditContactView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = "keyform/contact_form.html"
@@ -59,24 +58,15 @@ class EditContactView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'keyform.change_contact'
     raise_exception = True
 
-    def get_context_data(self, **kwargs):
-        context = super(EditContactView, self).get_context_data()
-        context['title'] = 'Edit'
-        return context
-
 
 class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = "keyform/contact_form.html"
     model = Contact
     form_class = ContactForm
     success_url = reverse_lazy('contact')
+
+
     permission_required = 'keyform.add_contact'
-
-    def get_context_data(self, **kwargs):
-        context = super(NewContactView, self).get_context_data()
-        context['title'] = 'Create'
-        return context
-
 class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"
     success_url = reverse_lazy("home")
