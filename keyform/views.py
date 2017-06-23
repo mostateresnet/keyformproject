@@ -34,7 +34,7 @@ class RequestView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('home')
 
-class RequestCommentView(CreateView):
+class RequestCommentView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = AddCommentForm
 

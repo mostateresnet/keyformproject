@@ -116,12 +116,12 @@
                 {% endif %}
             {% endwith %}
             <div id='comment-form'>
-                <p>New Comment:</p>
+                <p>{% trans 'New Comment:' %}</p>
                 <textarea id="comment-text" cols="40" rows="4"></textarea>
-                <span class='button small' type='button' id='submit'>Submit</span>
-                <span class='button small' type='button' id='cancel'>Cancel</span>
+                <span class='button small' type='button' id='submit'>{% trans 'Submit' %}</span>
+                <span class='button small' type='button' id='cancel'>{% trans 'Cancel' %}</span>
             </div>
-            <span class='button small' type='button' id='add'>Add a comment</span>
+            <span class='button small' type='button' id='add'>{% trans 'Add a comment' %}</span>
         </div>
     </div>
 {% endblock %}

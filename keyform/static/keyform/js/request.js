@@ -21,7 +21,7 @@ $(document).ready(function() {
 
             })
             .fail(function() {
-                alert('There was a POST error!');
+                alert('Oops we were unable to save your comment, the error has been logged and we are looking into it!');
             });
         }
     });
