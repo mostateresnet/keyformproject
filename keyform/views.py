@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.db.models import Count
 
+
 class HomeView(LoginRequiredMixin, ListView):
     model = Request
     template_name = "keyform/home.html"
@@ -45,10 +46,11 @@ class ContactView(LoginRequiredMixin, TemplateView):
         success = False
         if request.user.has_perm('keyform.delete_contact'):
             pk = request.POST['pk']
-            Contact.objects.filter(pk=pk).delete();
+            Contact.objects.filter(pk=pk).delete()
             success = True
 
         return JsonResponse({'success': success})
+
 
 class EditContactView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     template_name = "keyform/contact_form.html"
@@ -65,8 +67,9 @@ class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     form_class = ContactForm
     success_url = reverse_lazy('contact')
 
-
     permission_required = 'keyform.add_contact'
+
+
 class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"
     success_url = reverse_lazy("home")
