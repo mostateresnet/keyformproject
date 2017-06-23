@@ -1,5 +1,7 @@
+
 .request-list {
-    padding: 20px;
+    margin-top: 2em;
+    padding: 1em;
 }
 
 .request-list a {
@@ -19,14 +21,45 @@
 }
 
 .title {
+    margin: auto;
+    width: 60%;
     padding-top: 1em;
     text-align: center;
+}
+
+.search-form.search-active {
+    display: block;
+}
+
+.search-form {
+    margin: auto;
+    border: 1px solid black;
+    width: 60%;
+    display: none;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.search-content {
+    padding: 1em;
+}
+
+.content {
+    background-color: white;
+    width: 75%;
+    margin: auto;
+    margin-top: 3em;
+}
+
+.search-form br {
+    line-height: .75;
 }
 
 .page-bar {
     width: 80%;
     margin: auto;
 }
+
 .page-bar ul {
     text-align: center;
 }
@@ -45,6 +78,7 @@
     border: .1em solid black;
     color: #74020C;
     padding: .25em;
+}
 
 a {
     text-decoration: none;

@@ -4,7 +4,9 @@ from django.forms import TypedChoiceField
 from django.forms.models import inlineformset_factory
 from keyform.models import Request, KeyData
 
+
 class CreateForm(forms.ModelForm):
+
     class Meta:
         model = Request
         fields = ['building', 'student_name', 'reason_for_request', 'amt_received', 'payment_method', 'charge_amount', 'bpn', 'charged_on_rcr']
