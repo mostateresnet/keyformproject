@@ -44,7 +44,7 @@ class ContactView(LoginRequiredMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
 
-        if request.user.has_perm('keyform.delete_user'):
+        if request.user.has_perm('keyform.delete_contact'):
             pk = request.POST['pk']
             Contact.objects.filter(pk=pk).delete();
 
