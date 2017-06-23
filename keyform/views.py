@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect
 from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.dateparse import parse_date
+from django.utils.timezone import utc
 
 
 class HomeView(LoginRequiredMixin, ListView):
@@ -29,7 +30,7 @@ class HomeView(LoginRequiredMixin, ListView):
         for k, v in self.request.GET.items():
             if k not in self.valid_params or not v:
                 del data[k]
-        context["data"] = data
+        context["search_data"] = data
         return context
 
     def get_queryset(self):
@@ -43,8 +44,8 @@ class HomeView(LoginRequiredMixin, ListView):
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
 
-        converted_start_date = parse_date(self.request.GET.get('start_date', '')) or datetime.min
-        converted_end_date = parse_date(self.request.GET.get('end_date', '')) or datetime.max
+        converted_start_date = parse_date(self.request.GET.get('start_date', '')) or datetime.min.replace(tzinfo=utc)
+        converted_end_date = parse_date(self.request.GET.get('end_date', '')) or datetime.max.replace(tzinfor=utc)
 
         if converted_end_date != datetime.max:
             converted_end_date += timedelta(days=1)
