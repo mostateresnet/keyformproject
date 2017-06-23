@@ -1,6 +1,7 @@
 $(document).ready(function() {
     $('#add').click(function() {
         $('#comments').toggleClass('add-comment', true);
+        $('#comment-text').focus()
     });
 
     $('#cancel').click(function() {
@@ -18,6 +19,8 @@ $(document).ready(function() {
                 comment_element.find('.message').html(data.message.replace(/\n/g, '<br />'));
 
                 $('#comment-list').append(comment_element);
+                $('#comment-text').val('');
+
 
             })
             .fail(function() {

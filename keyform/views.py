@@ -2,7 +2,7 @@
 from __future__ import unicode_literals
 
 import json
-from django.views.generic import FormView, UpdateView, CreateView
+from django.views.generic import FormView, UpdateView, View
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, HttpResponse
@@ -10,8 +10,8 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.timezone import localtime
-from keyform.forms import CreateForm, RequestFormSet, EditForm, AddCommentForm
-from keyform.models import Request, Comment
+from keyform.forms import CreateForm, RequestFormSet, EditForm
+from keyform.models import Request
 
 class HomeView(LoginRequiredMixin, ListView):
     model = Request
@@ -34,12 +34,7 @@ class RequestView(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse('home')
 
-class RequestCommentView(LoginRequiredMixin, CreateView):
-    model = Comment
-    form_class = AddCommentForm
-
-    def get_success_url(self):
-        return reverse('home')
+class RequestCommentView(LoginRequiredMixin, View):
 
     def post(self, request, *args, **kwargs):
         message = request.POST['message']
