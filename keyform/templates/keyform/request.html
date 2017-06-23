@@ -104,16 +104,14 @@
                 </div>
             </form>
         </div>
-        <div id='comments'>
+        <div id='comments' class="section">
             {% with comments=object.comment_set.all %}
-                {% if comments %}
-                    <span class="section-header">{% trans 'Comments' %} </span>
-                    <div id="comment-list" class="section">
-                        {% for comment in comments %}
-                            {% include 'keyform/comment_template.html' %}
-                        {% endfor %}
-                    </div>
-                {% endif %}
+                <span class="section-header">{% trans 'Comments' %} </span>
+                <div id="comment-list">
+                    {% for comment in comments %}
+                        {% include 'keyform/comment_template.html' %}
+                    {% endfor %}
+                </div>
             {% endwith %}
             <div id='comment-form'>
                 <p>{% trans 'New Comment:' %}</p>
