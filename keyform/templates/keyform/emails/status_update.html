@@ -389,7 +389,7 @@
                                             </table>
                                             <br>
                                             {% url 'edit-request' pk=request.pk as edit_url %}
-                                            <p>{% blocktrans %} The request can be found <a href='{{ edit_url }}'>here</a>{% endblocktrans %}</p>
+                                            <p>{% blocktrans %} The request can be found <a href='{{ url_prefix }}{{ edit_url }}'>here</a>{% endblocktrans %}</p>
                                         </td>
                                     </tr>
                                 </table>

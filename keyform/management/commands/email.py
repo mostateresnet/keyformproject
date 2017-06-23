@@ -22,10 +22,10 @@ def send_locksmith_emails():
 
     for request in email_requests:
         recipients = [c.email for c in recipient_dict[request.building]]
-        subject = settings.EMAIL_SUBJECT_PREFIX + _('A request has been created')
+        subject = _('%(subject_prefix)sA request has been created') % {'subject_prefix': settings.EMAIL_SUBJECT_PREFIX}
         from_email = settings.SERVER_EMAIL
 
-        html_content = render_to_string('keyform/emails/status_update.html', {'request': request})
+        html_content = render_to_string('keyform/emails/status_update.html', {'request': request, 'url_prefix': settings.URL_PREFIX})
         text_content = strip_tags(html_content)
 
         message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
@@ -43,10 +43,10 @@ def send_update_emails():
 
     for request in email_requests:
         recipients = [c.email for c in recipient_dict[request.building]]
-        subject = settings.EMAIL_SUBJECT_PREFIX + _('A request has been updated from %(previous_status)s to %(status)s.') % {'previous_status': request.get_previous_status_display(), 'status': request.get_status_display()}
+        subject = _('%(subject_prefix)sA request has been updated from %(previous_status)s to %(status)s.') % {'subject_prefix': settings.EMAIL_SUBJECT_PREFIX, 'previous_status': request.get_previous_status_display(), 'status': request.get_status_display()}
         from_email = settings.SERVER_EMAIL
 
-        html_content = render_to_string('keyform/emails/status_update.html', {'request': request})
+        html_content = render_to_string('keyform/emails/status_update.html', {'request': request, 'url_prefix': settings.URL_PREFIX})
         text_content = strip_tags(html_content)
 
         message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
