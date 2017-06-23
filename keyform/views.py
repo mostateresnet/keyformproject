@@ -47,7 +47,7 @@ class HomeView(LoginRequiredMixin, ListView):
         converted_start_date = parse_date(self.request.GET.get('start_date', '')) or datetime.min.replace(tzinfo=utc)
         converted_end_date = parse_date(self.request.GET.get('end_date', '')) or datetime.max.replace(tzinfor=utc)
 
-        if converted_end_date != datetime.max:
+        if converted_end_date != datetime.max.replace(tzinfor=utc):
             converted_end_date += timedelta(days=1)
 
         qset = qset.filter(created_timestamp__range=[converted_start_date, converted_end_date])
