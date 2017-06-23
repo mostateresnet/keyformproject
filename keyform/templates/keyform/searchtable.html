@@ -1,0 +1,80 @@
+{% load i18n %}
+<div class="row">
+    <div class="large-12 columns">
+        <button id="search-button" class="button">{% trans 'Search' %}</button>
+        <br>
+    </div>
+</div>
+
+<div class="search-form{% if search_data %} search-active {% endif %}" id="search">
+
+    <div class="search-content">
+        <form action="{% url 'home' %}">
+            <fieldset>
+                <div class="row">
+                    <div class="large-4 columns">
+                       {% trans 'Student Name' %} <input type="text" name="student_name" value="{{ search_data.student_name }}"/>
+                    </div>
+                    <div class="large-4 columns">
+                        {% trans 'M-Number' %} <input type="text" name="m_number" value="{{ search_data.m_number }}"/>
+                    </div>
+                    <div class="large-4 columns">
+                        {% trans 'Building' %}
+                        <select name='building__name'>
+                            <option value=""></option>
+                            {% for building in buildings %}
+                                <option {% if search_data.building__name == building.name %} selected {% endif %} value="{{ building.name }}">{{ building.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                       {% trans 'Room Number' %} <input type="text" name="keydata__room_number" value="{{ search_data.keydata__room_number }}"/>
+                    </div>
+                    <div class="large-4 columns">
+                       {% trans 'Core #' %} <input type="text" name="keydata__core_number" value="{{ search_data.keydata__core_number }}"/>
+                    </div>
+                    <div class="large-4 columns">
+                       {% trans 'Key #' %} <input type="text" name="keydata__key_number" value="{{ search_data.keydata__key_number }}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-4 columns">
+                       {% trans 'Staff Name' %} <input type="text" name="staff_name" value="{{ search_data.staff_name }}"/>
+                    </div>
+                    <div class="large-4 columns">
+                       {% trans 'Start Date' %} <input type="date" name="start_date" value="{{ search_data.start_date }}"/>
+                    </div>
+                    <div class="large-4 columns">
+                       {% trans 'End Date' %} <input type="date" name="end_date" value="{{ search_data.end_date }}"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="large-6 columns">
+                       {% trans 'Key Request Type' %}
+                       <select name='reason_for_request'>
+                           <option value=""></option>
+                           {% for choice in request_types %}
+                               <option {% if search_data.reason_for_request == choice.0 %} selected {% endif %} value="{{ choice.0 }}">{{ choice.1 }}</option>
+                           {% endfor %}
+                       </select>
+                    </div>
+                    <div class="large-6 columns">
+                       {% trans 'Status' %} <br/>
+                       <select name='status'>
+                           <option value=""></option>
+                           {% for choice in status_types %}
+                               <option {% if search_data.status == choice.0 %} selected {% endif %} value="{{ choice.0 }}">{{ choice.1 }}</option>
+                           {% endfor %}
+                       </select>
+                    </div>
+                </div>
+                <br>
+                <div class='row'>
+                    <button class="button" type="submit">{% trans 'Submit' %}</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</div>

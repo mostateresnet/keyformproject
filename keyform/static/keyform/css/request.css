@@ -66,3 +66,7 @@ select {
 .add-comment #comment-form {
     display: block;
 }
+
+.created {
+    font-weight: bold;
+}
