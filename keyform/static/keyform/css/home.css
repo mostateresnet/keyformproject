@@ -21,9 +21,9 @@
 }
 
 .title {
+    padding-top: .5em;
     margin: auto;
     width: 60%;
-    padding-top: 1em;
     text-align: center;
 }
 

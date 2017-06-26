@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
+
 from datetime import datetime, timedelta
-from django.views.generic import FormView, UpdateView, CreateView
+from django.views.generic import FormView, UpdateView, View
 from django.views.generic.list import ListView
-from keyform.forms import CreateForm, RequestFormSet, EditForm
-from keyform.models import Request, Building
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404
 from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.utils.timezone import localtime, utc
 from django.utils.dateparse import parse_date
-from django.utils.timezone import utc
+from keyform.forms import CreateForm, RequestFormSet, EditForm
+from keyform.models import Request, Building
 
 
 class HomeView(LoginRequiredMixin, ListView):
@@ -61,6 +63,19 @@ class RequestView(LoginRequiredMixin, UpdateView):
     form_class = EditForm
     success_url = reverse_lazy("home")
 
+
+class RequestCommentView(LoginRequiredMixin, View):
+
+    def post(self, request, *args, **kwargs):
+        message = request.POST['message']
+        pk = request.POST['pk']
+
+        req = get_object_or_404(Request, pk=pk)
+        comment = req.comment_set.create(message=message, author=request.user)
+
+        timestamp = localtime(comment.created_timestamp).strftime('%B %d, %Y, %I:%M %p')
+
+        return JsonResponse({'author': str(comment.author), 'timestamp': timestamp, 'message': comment.message})
 
 class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"
