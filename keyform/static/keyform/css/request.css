@@ -3,7 +3,7 @@
     width: 75%;
     margin: auto;
     text-align: center;
-    margin-top: 2em;
+    margin-top: .5em;
 }
 
 .content {
@@ -26,6 +26,7 @@
     border-radius: .75em;
     padding: .5em;
     margin-top: .2em;
+    margin-bottom: 1em;
 }
 
 a {
@@ -43,4 +44,29 @@ select {
 
 .request-edit {
     text-align: center;
+}
+
+.comment-buttons {
+    border: 1px solid black;
+    cursor: pointer;
+}
+
+.button {
+    background-color: #74020C;
+}
+
+.button:hover {
+    background-color: #842929;
+}
+
+#comment-form, .add-comment #add {
+    display: none;
+}
+
+.add-comment #comment-form {
+    display: block;
+}
+
+.created {
+    font-weight: bold;
 }

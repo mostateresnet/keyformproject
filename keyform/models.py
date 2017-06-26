@@ -87,14 +87,14 @@ class KeyData(models.Model):
     )
 
     request = models.ForeignKey(Request)
-    new_core_number = models.CharField(max_length=35)
+    core_number = models.CharField(max_length=35)
     key_type = models.CharField(max_length=2, choices=KEY_TYPES)
     room_number = models.CharField(max_length=42)
-    lost_key_number = models.CharField(max_length=24)
+    key_number = models.CharField(max_length=24)
     quantity = models.IntegerField()
 
     def __str__(self):
-        return str(self.new_core_number)
+        return str(self.core_number)
 
     class Meta:
         verbose_name_plural = _('Key Data')
