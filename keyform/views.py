@@ -33,8 +33,17 @@ class HomeView(LoginRequiredMixin, ListView):
         for k, v in self.request.GET.items():
             if k not in self.valid_params or not v:
                 del data[k]
+        data["start_date"] = self.request.GET.get('start_date', '')
+        data["end_date"] = self.request.GET.get('end_date', '')
         context["search_data"] = data
         return context
+
+    def get_date_range(self):
+        self.converted_start_date = parse_date(self.request.GET.get('start_date', '')) or datetime.min.replace(tzinfo=utc)
+        self.converted_end_date = parse_date(self.request.GET.get('end_date', '')) or datetime.max.replace(tzinfo=utc)
+
+        if self.converted_end_date != datetime.max.replace(tzinfo=utc):
+            self.converted_end_date += timedelta(days=1)
 
     def get_queryset(self):
         qset = super(HomeView, self).get_queryset()
@@ -47,13 +56,8 @@ class HomeView(LoginRequiredMixin, ListView):
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
 
-        converted_start_date = parse_date(self.request.GET.get('start_date', '')) or datetime.min.replace(tzinfo=utc)
-        converted_end_date = parse_date(self.request.GET.get('end_date', '')) or datetime.max.replace(tzinfo=utc)
-
-        if converted_end_date != datetime.max.replace(tzinfo=utc):
-            converted_end_date += timedelta(days=1)
-
-        qset = qset.filter(created_timestamp__range=[converted_start_date, converted_end_date])
+        self.get_date_range()
+        qset = qset.filter(created_timestamp__range=[self.converted_start_date, self.converted_end_date])
 
         return qset
 
