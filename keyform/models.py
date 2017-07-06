@@ -68,7 +68,7 @@ class KeyData(models.Model):
     core_number = models.CharField(max_length=35)
     key_type = models.CharField(max_length=2, choices=KEY_TYPES)
     room_number = models.CharField(max_length=42)
-    key_number = models.CharField(max_length=24)
+    key_number = models.CharField(max_length=24, verbose_name='Lost/Stolen key number')
     quantity = models.IntegerField()
 
     def __str__(self):
