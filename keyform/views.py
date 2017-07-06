@@ -13,7 +13,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from django.utils.timezone import localtime, utc
 from django.utils.dateparse import parse_date
 from keyform.forms import CreateForm, RequestFormSet, EditForm, ContactForm
-from keyform.models import Request, Building, Contact
+from keyform.models import Request, Building, Contact, Status
 
 
 class HomeView(LoginRequiredMixin, ListView):
@@ -22,12 +22,12 @@ class HomeView(LoginRequiredMixin, ListView):
     paginate_by = 25
     valid_params = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
                     'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
-                    'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status', 'student_name']
+                    'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status__name', 'student_name']
 
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
-        context["status_types"] = Request.STATUS_TYPES
+        context["status_types"] = Status.STATUS_TYPES
         context["buildings"] = Building.objects.all()
         data = self.request.GET.copy()
         for k, v in self.request.GET.items():

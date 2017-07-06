@@ -31,9 +31,10 @@ class ContactForm(forms.ModelForm):
 
     class Meta:
         model = Contact
-        fields = ['name', 'email', 'building']
+        fields = ['name', 'email', 'building', 'alert_statuses']
         widgets = {
             'building': CheckboxSelectMultiple,
+            'alert_statuses': CheckboxSelectMultiple,
         }
 
 

@@ -44,17 +44,17 @@ def send_update_emails():
     recipient_dict = {b: b.contact_set.all() for b in buildings}
 
     for request in email_requests:
-        recipients = [c.email for c in recipient_dict[request.building]]
+        recipients = [c.email for c in recipient_dict[request.building] if request.status in c.alert_statuses.all()]
+
         subject = _('%(subject_prefix)sA request has been updated from %(previous_status)s to %(status)s.') % {
             'subject_prefix': settings.EMAIL_SUBJECT_PREFIX,
-            'previous_status': request.get_previous_status_display(),
-            'status': request.get_status_display()}
+            'previous_status': request.previous_status,
+            'status': request.status}
         from_email = settings.SERVER_EMAIL
 
         html_content = render_to_string('keyform/emails/status_update.html',
                                         {'request': request, 'url_prefix': settings.URL_PREFIX})
         text_content = strip_tags(html_content)
-
         message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
         message.attach_alternative(html_content, 'text/html')
         message.send()
