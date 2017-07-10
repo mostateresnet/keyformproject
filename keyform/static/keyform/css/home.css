@@ -8,7 +8,7 @@
     color: black;
 }
 
-.header {
+.header.row {
     border-bottom: 1px solid black;
 }
 
@@ -82,4 +82,8 @@
 
 a {
     text-decoration: none;
+}
+
+.header.row div.columns:hover {
+    background-color: #cecece;
 }
