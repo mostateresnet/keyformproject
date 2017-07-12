@@ -47,13 +47,11 @@
                     </table>
                     <div id="form-set">
                         {% for keydata_form in form.request_formset.forms %}
-                            {% include 'keyform/keydata_form.html' with include_buttons=True %}
+                            {% include 'keyform/includes/keydata_form.html' with include_buttons=True %}
                         {% endfor %}
                     </div>
                     <div id="empty_form" style="display:none">
-                        <div class="keydata-form">
-                            {% include 'keyform/keydata_form.html' with keydata_form=form.request_formset.empty_form %}
-                        </div>
+                        {% include 'keyform/includes/keydata_form.html' with keydata_form=form.request_formset.empty_form %}
                     </div>
                     <table>
                         <tr>
