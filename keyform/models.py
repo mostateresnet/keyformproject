@@ -19,9 +19,9 @@ class Building(models.Model):
 class Request(models.Model):
 
     REQUEST_TYPES = (
-        ('bk', _('Broken Key')),
-        ('sk', _('Stolen Key')),
-        ('wk', _('Worker Key')),
+        ('dk', _('Damaged Key')),
+        ('lk', _('Lost/Stolen Key')),
+        ('sk', _('Staff File Key')),
     )
 
     PAYMENT_TYPES = (
@@ -65,10 +65,10 @@ class KeyData(models.Model):
     )
 
     request = models.ForeignKey(Request)
-    core_number = models.CharField(max_length=35)
+    core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'))
     key_type = models.CharField(max_length=2, choices=KEY_TYPES)
     room_number = models.CharField(max_length=42)
-    key_number = models.CharField(max_length=24)
+    key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen Key Number'))
     quantity = models.IntegerField()
 
     def __str__(self):
