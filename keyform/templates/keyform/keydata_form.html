@@ -1,0 +1,55 @@
+{% load i18n %}
+
+<div class="keydata-form">
+    <table>
+        <tr>
+            <td>
+                {{ keydata_form.core_number.errors }}
+                {{ keydata_form.core_number.label_tag }}
+            </td>
+            <td>
+                {{ keydata_form.core_number }}
+            </td>
+            <td colspan="2">
+                {% if include_buttons %}
+                    <input type="button" value="{% trans 'Add Another Key' %}" id="generate_forms"/>
+                    <input type="button" value="{% trans 'Cancel' %}" id="delete_button"/>
+                {% else %}
+                    &nbsp;
+                {% endif %}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ keydata_form.key_type.errors }}
+                <p title="There's a thing here">{{ keydata_form.key_type.label_tag }}</p>
+            </td>
+            <td>
+                {{ keydata_form.key_type }}
+            </td>
+            <td>
+                {{ keydata_form.room_number.errors }}
+                {{ keydata_form.room_number.label_tag }}
+            </td>
+            <td>
+                {{ keydata_form.room_number }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ keydata_form.key_number.errors }}
+                {{ keydata_form.key_number.label_tag }}
+            </td>
+            <td>
+                {{ keydata_form.key_number }}
+            </td>
+            <td>
+                {{ keydata_form.quantity.errors }}
+                {{ keydata_form.quantity.label_tag }}
+            </td>
+            <td>
+                {{ keydata_form.quantity }}
+            </td>
+        </tr>
+    </table>
+</div>

@@ -24,6 +24,10 @@ class HomeView(LoginRequiredMixin, ListView):
                     'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
                     'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status__name', 'student_name']
 
+    def get_ordering(self):
+        self.order = self.request.GET.get('order') or '-created_timestamp'
+        return [self.order, '-created_timestamp']
+
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
@@ -36,6 +40,7 @@ class HomeView(LoginRequiredMixin, ListView):
         data["start_date"] = self.request.GET.get('start_date', '')
         data["end_date"] = self.request.GET.get('end_date', '')
         context["search_data"] = data
+        context["order"] = self.order
         return context
 
     def get_date_range(self):
@@ -132,6 +137,9 @@ class KeyRequest(LoginRequiredMixin, FormView):
         if form.request_formset.is_valid() and form.request_formset.has_changed():
             new_request.save()
             form.request_formset.save()
+            comment_text = self.request.POST.get('comment_text', '')
+            if comment_text.strip():
+                new_request.comment_set.create(message=comment_text, author=self.request.user)
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.form_invalid(form)
@@ -140,3 +148,8 @@ class KeyRequest(LoginRequiredMixin, FormView):
         form = CreateForm(instance=Request(staff=self.request.user), **self.get_form_kwargs())
         form.request_formset = RequestFormSet(**self.get_form_kwargs())
         return form
+
+    def get_context_data(self, **kwargs):
+        context = super(KeyRequest, self).get_context_data(**kwargs)
+        context['comment_text'] = self.request.POST.get('comment_text', '')
+        return context

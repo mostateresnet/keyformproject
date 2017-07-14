@@ -5,7 +5,7 @@ $(document).ready(function() {
         
     });
 
-    $('#delete-button').click(function() {
+    $('#delete_button').click(function() {
         if ($('#form-set .keydata-form').length > 1){
             $('#form-set .keydata-form:last-child').remove();
             $('#id_keydata_set-TOTAL_FORMS').val(parseInt(form_idx) - 1);

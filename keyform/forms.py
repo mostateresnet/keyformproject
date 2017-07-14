@@ -10,16 +10,7 @@ class CreateForm(forms.ModelForm):
 
     class Meta:
         model = Request
-        fields = [
-            'building',
-            'student_name',
-            'reason_for_request',
-            'amt_received',
-            'payment_method',
-            'charge_amount',
-            'bpn',
-            'charged_on_rcr',
-            'status']
+        fields = ['building', 'student_name', 'bpn', 'reason_for_request', 'amt_received', 'payment_method', 'charge_amount', 'charged_on_rcr', 'status']
 
     def __init__(self, *args, **kwargs):
         super(CreateForm, self).__init__(*args, **kwargs)

@@ -87,7 +87,7 @@ class Request(models.Model):
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
 
     class Meta:
-        ordering = ['created_timestamp']
+        ordering = ['-created_timestamp']
 
 
 class KeyData(models.Model):
