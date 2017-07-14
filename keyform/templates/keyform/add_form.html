@@ -27,7 +27,7 @@
                             <td>
                                 {{ form.building }}
                             </td>
-                            <td align="right"> 
+                            <td> 
                                 {{ form.bpn.errors }}
                                 {{ form.bpn.label_tag }}
                             </td>
@@ -40,7 +40,7 @@
                                 {{ form.student_name.errors }}
                                 {{ form.student_name.label_tag }}
                             </td>
-                            <td colspan="6">
+                            <td>
                                 {{ form.student_name }}
                             </td>
                         </tr>
@@ -60,53 +60,48 @@
                                 {{ form.reason_for_request.label_tag }}
                                 {{ form.reason_for_request }}
                             </td>
-                            <td align="left">
+                            <td>
                                 {{ form.payment_method.errors }}
                                 {{ form.payment_method.label_tag }}
                                 {{ form.payment_method }}
                             </td>
-                            <tr>
-                                <td>
-                                    {{ form.amt_received.errors }}
-                                    {{ form.amt_received.label_tag }}
-                                </td>
-                                <td colspan="6">
-                                    {{ form.amt_received }}
-                                </td>
-                                <tr>
-                                    <td>
-                                        {{ form.charge_amount.errors }}
-                                        {{ form.charge_amount.label_tag }}
-                                    </td>
-                                    <td colspan="6">
-                                        {{ form.charge_amount }}
-                                    </td>
-                                </tr>
-                                <td>
-                                    <div id='comments' class="section">
-                                        {% with comments=object.comment_set.all %}
-                                            <span class="section-header">{% trans 'Comments:' %} </span>
-                                            <div id="comment-list">
-                                                {% for comment in comments %}
-                                                    {% include 'keyform/comment_template.html' %}
-                                                {% endfor %}
-                                            </div>
-                                        {% endwith %}
-                                        <div id='comment-form'>
-                                            <textarea id="comment-text"></textarea>
-                                        </div>
-                                    </div>
-                                </td>
-                                <tr>
-                                    <td>
-                                        {{ form.charged_on_rcr.errors }}
-                                        {{ form.charged_on_rcr.label_tag }}
-                                    </td>
-                                    <td>
-                                    {{ form.charged_on_rcr }}
-                                    </td>
-                                </tr>
-                            </tr>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>
+                                {{ form.amt_received.errors }}
+                                {{ form.amt_received.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.amt_received }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ form.charge_amount.errors }}
+                                {{ form.charge_amount.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.charge_amount }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ form.charged_on_rcr.errors }}
+                                {{ form.charged_on_rcr.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.charged_on_rcr }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="section-header">{% trans 'Comments:' %}</span>
+                            </td>
+                            <td>
+                                <textarea name="comment_text">{{ comment_text }}</textarea>
+                            </td>
                         </tr>
                     </table>
                 </div>

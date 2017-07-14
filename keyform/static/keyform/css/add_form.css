@@ -10,3 +10,7 @@ div.field-wrapper{
 .errorlist{
 	color: red;
 }
+
+td {
+	text-align: left;
+}
