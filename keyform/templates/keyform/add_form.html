@@ -83,12 +83,29 @@
                                     </td>
                                 </tr>
                                 <td>
-                                    {{ form.charged_on_rcr.errors }}
-                                    {{ form.charged_on_rcr.label_tag }}
+                                    <div id='comments' class="section">
+                                        {% with comments=object.comment_set.all %}
+                                            <span class="section-header">{% trans 'Comments:' %} </span>
+                                            <div id="comment-list">
+                                                {% for comment in comments %}
+                                                    {% include 'keyform/comment_template.html' %}
+                                                {% endfor %}
+                                            </div>
+                                        {% endwith %}
+                                        <div id='comment-form'>
+                                            <textarea id="comment-text"></textarea>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>
+                                <tr>
+                                    <td>
+                                        {{ form.charged_on_rcr.errors }}
+                                        {{ form.charged_on_rcr.label_tag }}
+                                    </td>
+                                    <td>
                                     {{ form.charged_on_rcr }}
-                                </td>
+                                    </td>
+                                </tr>
                             </tr>
                         </tr>
                     </table>
