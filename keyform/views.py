@@ -94,6 +94,9 @@ class KeyRequest(LoginRequiredMixin, FormView):
         if form.request_formset.is_valid() and form.request_formset.has_changed():
             new_request.save()
             form.request_formset.save()
+            comment_text = self.request.POST.get('comment_text', '')
+            if comment_text.strip():
+                new_request.comment_set.create(message=comment_text, author=self.request.user)
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.form_invalid(form)
@@ -102,3 +105,8 @@ class KeyRequest(LoginRequiredMixin, FormView):
         form = CreateForm(instance=Request(staff=self.request.user), **self.get_form_kwargs())
         form.request_formset = RequestFormSet(**self.get_form_kwargs())
         return form
+
+    def get_context_data(self, **kwargs):
+        context = super(KeyRequest, self).get_context_data(**kwargs)
+        context['comment_text'] = self.request.POST.get('comment_text', '')
+        return context

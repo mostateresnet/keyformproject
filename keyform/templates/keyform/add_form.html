@@ -17,22 +17,93 @@
         <div class="row">
             <div class="column">
                 <div class="field-wrapper">
-                    {{ form.as_p }}
-                    {{ form.request_formset.management_form }}
+                    <table id="keyform_table" width="100%">
+                        <tr>
+                            <td>
+                                {{ form.request_formset.management_form }}
+                                {{ form.building.errors }}
+                                {{ form.building.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.building }}
+                            </td>
+                            <td> 
+                                {{ form.bpn.errors }}
+                                {{ form.bpn.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.bpn }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ form.student_name.errors }}
+                                {{ form.student_name.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.student_name }}
+                            </td>
+                        </tr>
+                    </table>
                     <div id="form-set">
                         {% for keydata_form in form.request_formset.forms %}
-                            <div class="keydata-form">
-                                {{ keydata_form.as_p }}
-                            </div>
+                            {% include 'keyform/includes/keydata_form.html' with include_buttons=True %}
                         {% endfor %}
                     </div>
-                    <input type="button" value="{% trans 'Add Another Key' %}" id="generate_forms"/>
-                    <input type="button" value="{% trans 'Cancel' %}" id="delete-button"/>
                     <div id="empty_form" style="display:none">
-                        <div class="keydata-form">
-                            {{ form.request_formset.empty_form.as_p }}
-                        </div>
+                        {% include 'keyform/includes/keydata_form.html' with keydata_form=form.request_formset.empty_form %}
                     </div>
+                    <table>
+                        <tr>
+                            <td>
+                                {{ form.reason_for_request.errors }}
+                                {{ form.reason_for_request.label_tag }}
+                                {{ form.reason_for_request }}
+                            </td>
+                            <td>
+                                {{ form.payment_method.errors }}
+                                {{ form.payment_method.label_tag }}
+                                {{ form.payment_method }}
+                            </td>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td>
+                                {{ form.amt_received.errors }}
+                                {{ form.amt_received.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.amt_received }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ form.charge_amount.errors }}
+                                {{ form.charge_amount.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.charge_amount }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{ form.charged_on_rcr.errors }}
+                                {{ form.charged_on_rcr.label_tag }}
+                            </td>
+                            <td>
+                                {{ form.charged_on_rcr }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span class="section-header">{% trans 'Comments:' %}</span>
+                            </td>
+                            <td>
+                                <textarea name="comment_text">{{ comment_text }}</textarea>
+                            </td>
+                        </tr>
+                    </table>
                 </div>
                 <input type="submit"/>
             </div>
