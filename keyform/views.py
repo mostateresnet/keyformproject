@@ -23,6 +23,10 @@ class HomeView(LoginRequiredMixin, ListView):
                     'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
                     'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status', 'student_name']
 
+    def get_ordering(self):
+        self.order = self.request.GET.get('order') or '-created_timestamp'
+        return [self.order, '-created_timestamp']
+
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
@@ -33,6 +37,7 @@ class HomeView(LoginRequiredMixin, ListView):
             if k not in self.valid_params or not v:
                 del data[k]
         context["search_data"] = data
+        context["order"] = self.order
         return context
 
     def get_queryset(self):
