@@ -31,12 +31,14 @@ class Status(models.Model):
     )
 
     name = models.CharField(max_length=2, choices=STATUS_TYPES, default='pr')
+    order = models.IntegerField()
 
     def __str__(self):
         return self.get_name_display()
 
     class Meta:
         verbose_name_plural = _('Statuses')
+        ordering = ['order']
 
 class Request(models.Model):
 
@@ -76,8 +78,8 @@ class Request(models.Model):
     bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator])
     created_timestamp = models.DateTimeField(default=now, blank=True)
     charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'))
-    status = models.ForeignKey(Status, related_name="status", default=Status.objects.all()[0])
-    previous_status = models.ForeignKey(Status, related_name="previous_status", default=Status.objects.all()[0])
+    status = models.ForeignKey(Status, related_name="status")
+    previous_status = models.ForeignKey(Status, related_name="previous_status")
     locksmith_email_sent = models.BooleanField(default=False)
     updated = models.BooleanField(default=True)
 

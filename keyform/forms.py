@@ -1,8 +1,8 @@
 from django import forms
-from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
-from django.forms import TypedChoiceField
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, HiddenInput
+from django.forms import TypedChoiceField, CharField
 from django.forms.models import inlineformset_factory
-from keyform.models import Request, KeyData, Contact
+from keyform.models import Request, KeyData, Contact, Status
 
 
 
@@ -18,13 +18,16 @@ class CreateForm(forms.ModelForm):
             'payment_method',
             'charge_amount',
             'bpn',
-            'charged_on_rcr']
+            'charged_on_rcr',
+            'status']
 
     def __init__(self, *args, **kwargs):
         super(CreateForm, self).__init__(*args, **kwargs)
         # removes blank choices from Radio Select options
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
+        self.initial['status'] = Status.objects.first()
+        self.fields['status'].widget = HiddenInput()
 
 
 class ContactForm(forms.ModelForm):
@@ -36,7 +39,6 @@ class ContactForm(forms.ModelForm):
             'building': CheckboxSelectMultiple,
             'alert_statuses': CheckboxSelectMultiple,
         }
-
 
 class EditForm(forms.ModelForm):
 
