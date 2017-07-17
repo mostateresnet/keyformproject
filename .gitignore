@@ -1,5 +1,6 @@
-#keyform db file
+#keyform files
 db.sqlite3
+keyformproject/settings_local.py
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

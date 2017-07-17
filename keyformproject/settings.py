@@ -129,3 +129,8 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+# override settings with settings_local
+try:
+    from keyformproject.settings_local import *
+except ImportError:
+    pass
