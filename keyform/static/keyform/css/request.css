@@ -7,12 +7,12 @@
 }
 
 .content {
-    width: 75%;
+    width: 90%;
     margin: auto;
 }
 
 .info-row {
-    width: 60%;
+    width: 95%;
     margin-top: .5em;
     margin-bottom: .5em;
 }
@@ -42,9 +42,6 @@ select {
     font-style: italic;
 }
 
-.request-edit {
-    text-align: center;
-}
 
 .comment-buttons {
     border: 1px solid black;
@@ -69,4 +66,8 @@ select {
 
 .created {
     font-weight: bold;
+}
+
+.content {
+    font-size: 1em;
 }

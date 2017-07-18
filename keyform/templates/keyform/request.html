@@ -19,95 +19,85 @@
         <div class="content-header">{% trans 'Update Key Request' %}</div>
         <div class="info">
             <div class="row">
-                <div class="large-12 columns text-right">
+                <div class="large-6 columns">
                     <span class='created'> {% trans 'Created' %}: {{ object.created_timestamp }}</span>
                 </div>
-            </div>
-            <div class="section" id='key-section' data-pk="{{ object.pk }}">
-                <div class="row info-row">
-                     <div class="large-6 columns">
-                         {% trans 'Student Name' %}: {{ object.student_name }}
-                     </div>
-                     <div class="large-6 columns text-right">
-                         {% trans 'Request for' %}: {{ object.get_reason_for_request_display }}
-                     </div>
-                </div>
-                <div class="row info-row">
-                    <div class="large-12 columns">
-                        {% trans 'Building Name' %}: {{ object.building }}
-                    </div>
-                </div>
-                <hr width="70%">
-                <div class="row info-row">
-                    <div class="large-12 columns">
-                        {% trans 'Core #' %}:
-                        {% for data in object.keydata_set.all %}
-                            {{ data.core_number }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="row info-row">
-                    <div class="large-3 columns">
-                        {% trans 'Key Type' %}:
-                        {% for data in object.keydata_set.all %}
-                            {{ data.get_key_type_display }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="large-4 columns">
-                        {% trans 'Room #' %}:
-                        {% for data in object.keydata_set.all %}
-                            {{ data.room_number }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="large-3 columns">
-                        {% trans 'Key #' %}:
-                        {% for data in object.keydata_set.all %}
-                            {{ data.key_number }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                    <div class="large-2 columns">
-                        {% trans 'Quantity' %}:
-                        {% for keydata in object.keydata_set.all %}
-                            {{ keydata.quantity }}{% if not forloop.last %}, {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
-                <hr width="70%">
-                <div class="row info-row">
-                    <div class="large-9 columns">
-                        {% trans 'Amount Received' %}: {{ object.amt_received }}
-                    </div>
-                    <div class="large-3 columns">
-                        {% trans 'Paid By' %}: {{ object.get_payment_method_display }}
-                    </div>
-                </div>
-                <div class="row info-row">
-                    <div class="large-9 columns">
-                        {% trans 'Bill to Account' %}: {{ object.charge_amount }}
-                    </div>
-                    <div class="large-3 columns">
-                        {% trans 'M-Number' %}: {{ object.bpn }}
-                    </div>
-                </div>
-                <div class="row info-row">
-                    <div class="large-9 columns">
-                        {% trans 'Staff Name' %}: {{ object.staff }}
-                    </div>
-                    <div class="large-3 columns">
-                        {% trans 'Charged on RCR' %}: {{ object.charged_on_rcr }}
-                    </div>
+                <div class="large-6 columns text-right">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class='request-edit'>
+                            {% for field in form %}
+                                {{ field.label }}: {{ field }}
+                            {% endfor %}
+                            <input type="submit" value="{% trans 'Update' %}"/>
+                        </div>
+                    </form>
                 </div>
             </div>
+            <div class="row">
+                <div class="large-6 columns">
+                    <div class="section" id='key-section' data-pk="{{ object.pk }}">
+                        <div class="row info-row">
+                             <div class="large-7 columns">
+                                 {% trans 'Student Name' %}: {{ object.student_name }}
+                             </div>
+                             <div class="large-5 columns">
+                                 {% trans 'Request for' %}: {{ object.get_reason_for_request_display }}
+                             </div>
+                        </div>
+                        <div class="row info-row">
+                            <div class="large-12 columns">
+                                {% trans 'Building Name' %}: {{ object.building }}
+                            </div>
+                        </div>
+                        <div class="row info-row">
+                            <div class="large-7 columns">
+                                {% trans 'Amount Received' %}: {{ object.amt_received }}
+                            </div>
+                            <div class="large-5 columns">
+                                {% trans 'Paid By' %}: {{ object.get_payment_method_display }}
+                            </div>
+                        </div>
+                        <div class="row info-row">
+                            <div class="large-7 columns">
+                                {% trans 'Bill to Account' %}: {{ object.charge_amount }}
+                            </div>
+                            <div class="large-5 columns">
+                                {% trans 'M-Number' %}: {{ object.bpn }}
+                            </div>
+                        </div>
+                        <div class="row info-row">
+                            <div class="large-7 columns">
+                                {% trans 'Staff Name' %}: {{ object.staff }}
+                            </div>
+                            <div class="large-5 columns">
+                                {% trans 'Charged on RCR' %}: {{ object.charged_on_rcr }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="large-6 columns">
+                    <div class="section">
+                        <div class="row info-row">
+                            <div class="large-12 columns">
+                                <span id="keydata">Keydata</span>
+                            </div>
+                        </div>
+                        {% for data in object.keydata_set.all %}
+                            <div class="row info-row">
+                                <div class="large-4 columns">{% trans 'Core #' %}:{{ data.core_number }}</div>
+                                <div class="large-4 columns">{% trans 'Room #' %}:{{ data.room_number }}</div>
+                                <div class="large-4 columns">{% trans 'Key #' %}:{{ data.key_number }}</div>
+                            </div>
+                            <div class="row info-row">
+                                <div class="large-8 columns">{% trans 'Key Type' %}:{{ data.get_key_type_display }}</div>
+                                <div class="large-4 columns">{% trans 'Quantity' %}:{{ data.quantity }}</div>
+                            </div>
+                            {% if not forloop.last %}<hr width="80%">{% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
             <br>
-            <form method="POST">
-                {% csrf_token %}
-                <div class='request-edit'>
-                    {% for field in form %}
-                        {{ field.label }}: {{ field }}
-                    {% endfor %}
-                    <input type="submit" value="{% trans 'Update' %}"/>
-                </div>
-            </form>
         </div>
         <div id='comments' class="section">
             {% with comments=object.comment_set.all %}
