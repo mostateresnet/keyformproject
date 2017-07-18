@@ -23,18 +23,11 @@ class Building(models.Model):
 
 class Status(models.Model):
 
-    STATUS_TYPES = (
-        ('pr', _('Processing')),
-        ('ks', _('Key Sent')),
-        ('kd', _('Key Distributed')),
-        ('rc', _('Request Cancelled')),
-    )
-
-    name = models.CharField(max_length=2, choices=STATUS_TYPES, default='pr')
+    name = models.CharField(max_length=32)
     order = models.IntegerField()
 
     def __str__(self):
-        return self.get_name_display()
+        return self.name
 
     class Meta:
         verbose_name_plural = _('Statuses')
@@ -126,8 +119,8 @@ class Comment(models.Model):
 
 
 class Contact(models.Model):
-    building = models.ManyToManyField(Building, blank=False)
-    alert_statuses = models.ManyToManyField(Status, blank=False)
+    buildings = models.ManyToManyField(Building)
+    alert_statuses = models.ManyToManyField(Status)
     name = models.CharField(max_length=50)
     email = models.EmailField(max_length=75)
 
