@@ -65,7 +65,7 @@
                        <select name='status__name'>
                            <option value=""></option>
                            {% for choice in status_types %}
-                               <option {% if search_data.status == choice %} selected {% endif %} value="{{ choice }}">{{ choice }}</option>
+                               <option {% if search_data.status == choice %} selected {% endif %} value="{{ choice }}">{{ choicex }}</option>
                            {% endfor %}
                        </select>
                     </div>

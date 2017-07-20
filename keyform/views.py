@@ -54,6 +54,7 @@ class HomeView(LoginRequiredMixin, ListView):
         qset = super(HomeView, self).get_queryset()
         qset = qset.select_related('building')
         qset = qset.prefetch_related('keydata_set')
+        qset = qset.select_related('status')
         qset = qset.annotate(num_comments=Count('comment'))
 
         for item, value in self.request.GET.items():
