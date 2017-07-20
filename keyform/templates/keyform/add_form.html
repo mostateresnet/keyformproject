@@ -14,97 +14,69 @@
 {% block content %}
     <form method=POST>
         {% csrf_token %}
-        <div class="row">
-            <div class="column">
-                <div class="field-wrapper">
-                    <table id="keyform_table" width="100%">
-                        <tr>
-                            <td>
-                                {{ form.request_formset.management_form }}
-                                {{ form.building.errors }}
-                                {{ form.building.label_tag }}
-                            </td>
-                            <td>
-                                {{ form.building }}
-                            </td>
-                            <td> 
-                                {{ form.bpn.errors }}
-                                {{ form.bpn.label_tag }}
-                            </td>
-                            <td>
-                                {{ form.bpn }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ form.student_name.errors }}
-                                {{ form.student_name.label_tag }}
-                            </td>
-                            <td>
-                                {{ form.student_name }}
-                            </td>
-                        </tr>
-                    </table>
-                    <div id="form-set">
-                        {% for keydata_form in form.request_formset.forms %}
-                            {% include 'keyform/includes/keydata_form.html' with include_buttons=True %}
-                        {% endfor %}
-                    </div>
-                    <div id="empty_form" style="display:none">
-                        {% include 'keyform/includes/keydata_form.html' with keydata_form=form.request_formset.empty_form %}
-                    </div>
-                    <table>
-                        <tr>
-                            <td>
-                                {{ form.reason_for_request.errors }}
-                                {{ form.reason_for_request.label_tag }}
-                                {{ form.reason_for_request }}
-                            </td>
-                            <td>
-                                {{ form.payment_method.errors }}
-                                {{ form.payment_method.label_tag }}
-                                {{ form.payment_method }}
-                            </td>
-                        </tr>
-                    </table>
-                    <table>
-                        <tr>
-                            <td>
-                                {{ form.amt_received.errors }}
-                                {{ form.amt_received.label_tag }}
-                            </td>
-                            <td>
-                                {{ form.amt_received }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ form.charge_amount.errors }}
-                                {{ form.charge_amount.label_tag }}
-                            </td>
-                            <td>
-                                {{ form.charge_amount }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                {{ form.charged_on_rcr.errors }}
-                                {{ form.charged_on_rcr.label_tag }}
-                            </td>
-                            <td>
-                                {{ form.charged_on_rcr }}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="section-header">{% trans 'Comments:' %}</span>
-                            </td>
-                            <td>
-                                <textarea name="comment_text">{{ comment_text }}</textarea>
-                            </td>
-                        </tr>
-                    </table>
+        <div class="row field-wrapper">
+            <div class="large-6 columns">
+                {{ form.request_formset.management_form }}
+                {{ form.building.errors }}
+                {{ form.building.label_tag }}
+                <span class="help-text">{{ form.building.help_text }}</span>
+                {{ form.building }}
+            </div>
+            <div class="large-6 columns">
+                {{ form.bpn.errors }}
+                {{ form.bpn.label_tag }}
+                <span class="help-text">{{ form.bpn.help_text }}</span>
+                {{ form.bpn }}
+            </div>
+            <div class="large-12 columns">
+                {{ form.student_name.errors }}
+                {{ form.student_name.label_tag }}
+                <span class="help-text">{{ form.student_name.help_text }}</span>
+                {{ form.student_name }}
+            </div>
+            <div id="form-set">
+                {% for keydata_form in form.request_formset.forms %}
+                    {% include 'keyform/includes/keydata_form.html' with include_buttons=True %}
+                {% endfor %}
+            </div>
+            <div id="empty_form" style="display:none">
+                {% include 'keyform/includes/keydata_form.html' with keydata_form=form.request_formset.empty_form %}
+            </div>
+            <div class="row">
+                <div class="large-6 columns">
+                    {{ form.reason_for_request.errors }}
+                    {{ form.reason_for_request.label_tag }}
+                    <span class="help-text">{{ form.reason_for_request.help_text }}</span>
+                    {{ form.reason_for_request }}
                 </div>
+                <div class="large-6 columns">
+                    {{ form.payment_method.errors }}
+                    {{ form.payment_method.label_tag }}
+                    <span class="help-text">{{ form.payment_method.help_text }}</span>
+                    {{ form.payment_method }}
+                </div>
+            </div>
+            <div class="large-6 columns">
+                {{ form.amt_received.errors }}
+                {{ form.amt_received.label_tag }}
+                <span class="help-text">{{ form.amt_received.help_text }}</span>
+                {{ form.amt_received }}
+            </div>
+            <div class="large-6 columns">
+                {{ form.charge_amount.errors }}
+                {{ form.charge_amount.label_tag }}
+                <span class="help-text">{{ form.charge_amount.help_text }}</span>
+                {{ form.charge_amount }}
+            </div>
+            <div class="large-12 columns">
+                {{ form.charged_on_rcr.errors }}
+                {{ form.charged_on_rcr.label_tag }}
+                <span class="help-text">{{ form.charged_on_rcr.help_text }}</span>
+                {{ form.charged_on_rcr }}
+            </div>
+            <div class="large-12 columns">
+                <span class="section-header">{% trans 'Comments:' %}</span>
+                <textarea name="comment_text">{{ comment_text }}</textarea>
                 <input type="submit"/>
             </div>
         </div>

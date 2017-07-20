@@ -35,18 +35,18 @@ class Request(models.Model):
         ('kd', _('Key Distributed')),
     )
 
-    bpn_validator = RegexValidator('[mM8]\d{8}', "Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits.'")
+    bpn_validator = RegexValidator('[mM8]\d{8}', "Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits.")
 
-    building = models.ForeignKey(Building)
-    student_name = models.CharField(max_length=128, blank=True)
-    reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
-    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name= _('Amount received'), validators=[MinValueValidator(Decimal('0.00'))])
-    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True)
-    charge_amount = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
+    building = models.ForeignKey(Building, help_text='Building key is relevant to')
+    student_name = models.CharField(max_length=128, blank=True, help_text='Name of student')
+    reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES, help_text='Sample help text')
+    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name= _('Amount received'), validators=[MinValueValidator(Decimal('0.00'))], help_text='Amount already paid')
+    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True, help_text='Sample help text')
+    charge_amount = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], help_text='X amount for one key, x amount for x many keys')
     staff = models.ForeignKey(settings.AUTH_USER_MODEL)
-    bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator])
+    bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator], blank=True, help_text='If none, leave blank')
     created_timestamp = models.DateTimeField(default=now, blank=True)
-    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'))
+    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'), help_text='Sample help text')
     status = models.CharField(max_length=2, choices=STATUS_TYPES, default = 'pr')
 
     def __str__(self):
@@ -65,11 +65,11 @@ class KeyData(models.Model):
     )
 
     request = models.ForeignKey(Request)
-    core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'))
-    key_type = models.CharField(max_length=2, choices=KEY_TYPES)
-    room_number = models.CharField(max_length=42)
-    key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen Key Number'))
-    quantity = models.IntegerField()
+    core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'), help_text='Sample help text')
+    key_type = models.CharField(max_length=2, choices=KEY_TYPES, help_text='The type of key')
+    room_number = models.CharField(max_length=42, help_text='Sample help text')
+    key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen Key Number'), help_text='Sample help text')
+    quantity = models.IntegerField(help_text='Sample help text')
 
     def __str__(self):
         return str(self.core_number)

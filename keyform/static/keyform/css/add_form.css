@@ -1,16 +1,15 @@
-div.field-wrapper{
-    margin: 5px;
-    padding: 5px;
-    max-width: 1000px;
+div.field-wrapper {
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
+    overflow: auto;
+    border-color: lightgray;
 }
 
-.errorlist{
-	color: red;
+div.row {
+    padding: 15px;
 }
 
-td {
-	text-align: left;
+.errorlist {
+    color: red;
 }
