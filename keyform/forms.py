@@ -2,6 +2,7 @@ from django import forms
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.forms import TypedChoiceField
 from django.forms.models import inlineformset_factory
+from django.utils.translation import ugettext_lazy as _
 from keyform.models import Request, KeyData
 
 
@@ -14,7 +15,7 @@ class CreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreateForm, self).__init__(*args, **kwargs)
         # removes blank choices from Radio Select options
-        self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
+        self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=[('', _('Not Applicable'))] + list(Request.PAYMENT_TYPES), required=False)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
 
 class EditForm(forms.ModelForm):
