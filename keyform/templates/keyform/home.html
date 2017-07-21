@@ -33,16 +33,14 @@
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
                             {{ key.room_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
                         {% endfor %}
+                        &nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
                             {{ key.core_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
                         {% endfor %}
+                        &nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {{ object.num_comments }}
