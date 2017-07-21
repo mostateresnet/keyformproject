@@ -21,8 +21,8 @@ class HomeView(LoginRequiredMixin, ListView):
     template_name = "keyform/home.html"
     paginate_by = 25
     valid_params = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
-                    'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
-                    'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status__name', 'student_name']
+                    'comment', 'created_timestamp', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
+                    'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status__id', 'student_name']
 
     def get_ordering(self):
         self.order = self.request.GET.get('order') or '-created_timestamp'
