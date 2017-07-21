@@ -8,9 +8,11 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
+from django.contrib.auth.models import User
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.timezone import localtime, utc
 from django.utils.dateparse import parse_date
+from django.db.models import Q
 from keyform.forms import CreateForm, RequestFormSet, EditForm
 from keyform.models import Request, Building
 
@@ -21,7 +23,7 @@ class HomeView(LoginRequiredMixin, ListView):
     paginate_by = 25
     valid_params = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
                     'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
-                    'payment_method', 'reason_for_request', 'staff', 'staff_id', 'status', 'student_name']
+                    'payment_method', 'reason_for_request', 'status', 'student_name', 'staff']
 
     def get_ordering(self):
         self.order = self.request.GET.get('order') or '-created_timestamp'
@@ -47,7 +49,7 @@ class HomeView(LoginRequiredMixin, ListView):
         qset = qset.annotate(num_comments=Count('comment'))
 
         for item, value in self.request.GET.items():
-            if str(item) in self.valid_params:
+            if str(item) in self.valid_params and str(item) != 'staff':
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
 
@@ -58,6 +60,18 @@ class HomeView(LoginRequiredMixin, ListView):
             converted_end_date += timedelta(days=1)
 
         qset = qset.filter(created_timestamp__range=[converted_start_date, converted_end_date])
+
+        staff_searched = self.request.GET.get('staff', '').split()
+
+        filter_Qs = Q()
+        for token in staff_searched:
+            print(token)
+            or_Qs = Q()
+            for field in ['first_name', 'last_name', 'username', 'email']:
+                or_Qs |= Q(**{'staff__' + field + '__icontains': token})
+            filter_Qs &= or_Qs
+
+        qset = qset.filter(filter_Qs)
 
         return qset
 
