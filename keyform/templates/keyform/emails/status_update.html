@@ -358,28 +358,27 @@
                                                                     </tr>
                                                                     <tr>
                                                                         <td>{% trans 'Room' %} #'s:</td>
-                                                                        {% for key in request.keydata_set.all %}
-                                                                            <td>{{ key.room_number }}</td>
-                                                                        {% endfor %}
+                                                                        <td>
+                                                                            {% for key in request.keydata_set.all %}
+                                                                                {{ key.room_number }}{% if not forloop.last %}, {% endif %}
+                                                                            {% endfor %}
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>{% trans 'Core' %} #'s:</td>
-                                                                        {% for key in request.keydata_set.all %}
-                                                                            <td>{{ key.new_core_number }}</td>
-                                                                        {% endfor %}
+                                                                        <td>
+                                                                            {% for key in request.keydata_set.all %}
+                                                                                {{ key.core_number }}{% if not forloop.last %}, {% endif %}
+                                                                            {% endfor %}
+                                                                        </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td>{% trans 'Key' %} #'s:</td>
-                                                                        {% for key in request.keydata_set.all %}
-                                                                            <td>{{ key.lost_key_number }}</td>
-                                                                        {% endfor %}
-                                                                    </tr>
-                                                                    <tr>
-                                                                        {% comment %}
-                                                                        <td>{% trans 'Comments' %}:</td>
-                                                                        {% for key in request.comment_set.all %}
-                                                                            <td>{{ comment.message }}</td>
-                                                                        {% endfor %} {% endcomment %}
+                                                                        <td>
+                                                                            {% for key in request.keydata_set.all %}
+                                                                                {{ key.key_number }}{% if not forloop.last %}, {% endif %}
+                                                                            {% endfor %}
+                                                                        </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>

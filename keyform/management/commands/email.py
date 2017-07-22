@@ -17,7 +17,7 @@ class Command(BaseCommand):
 
 def send_locksmith_emails():
     email_requests = Request.objects.filter(locksmith_email_sent=False).select_related('building')
-    buildings = Building.objects.all().prefetch_related('contact_set')
+    buildings = Building.objects.all().prefetch_related('contact_set__alert_statuses')
 
     recipient_dict = {b: b.contact_set.all() for b in buildings}
 
