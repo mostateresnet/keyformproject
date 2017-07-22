@@ -27,7 +27,7 @@ def send_locksmith_emails():
         from_email = settings.SERVER_EMAIL
 
         html_content = render_to_string('keyform/emails/status_update.html',
-                                        {'request': request, 'url_prefix': settings.URL_PREFIX})
+                                        {'request': request, 'url_prefix': settings.EMAIL_URL_PREFIX})
         text_content = strip_tags(html_content)
 
         message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
@@ -53,7 +53,7 @@ def send_update_emails():
         from_email = settings.SERVER_EMAIL
 
         html_content = render_to_string('keyform/emails/status_update.html',
-                                        {'request': request, 'url_prefix': settings.URL_PREFIX})
+                                        {'request': request, 'url_prefix': settings.EMAIL_URL_PREFIX})
         text_content = strip_tags(html_content)
         message = EmailMultiAlternatives(subject, text_content, from_email, recipients)
         message.attach_alternative(html_content, 'text/html')
