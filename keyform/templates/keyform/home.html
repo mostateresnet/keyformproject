@@ -11,32 +11,20 @@
 {% endblock %}
 {% block content %}
     <h2 class="title">{% trans 'Keyform Requests' %}</h2>
-    {% include 'keyform/searchtable.html' %}
+    {% include 'keyform/includes/searchtable.html' %}
     <div class="request-list">
         <div class="header row">
-            <div class="small-3 large-3 columns text-center">
-                {% trans 'Date Submitted' %}
-            </div>
-            <div class="small-2 large-2 columns text-center">
-                {% trans 'Residence Hall' %}
-            </div>
-            <div class="small-2 large-2 columns text-center">
-                {% trans 'Room #' %}
-            </div>
-            <div class="small-2 large-2 columns text-center">
-                {% trans 'Core #' %}
-            </div>
-            <div class="small-1 large-1 columns text-center">
-                {% trans 'Comments' %}
-            </div>
-            <div class="small-2 large-2 columns text-center">
-                {% trans 'Status' %}
-            </div>
+            <div class="small-2 large-2 columns text-center header">{% trans 'Date Submitted' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=created_timestamp">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-created_timestamp">&#9650;</a></span></div>
+            <div class="small-2 large-2 columns text-center header">{% trans 'Residence Hall' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=building__name">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-building__name">&#9650;</a></span></div>
+            <div class="small-2 large-2 columns text-center header">{% trans 'Room #' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=keydata__room_number">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-keydata__room_number">&#9650;</a></span></div>
+            <div class="small-2 large-2 columns text-center header">{% trans 'Core #' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=keydata__core_number">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-keydata__core_number">&#9650;</a></span></div>
+            <div class="small-2 large-2 columns text-center header">{% trans 'Comments' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=num_comments">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-num_comments">&#9650;</a></span></div>
+            <div class="small-2 large-2 columns text-center header">{% trans 'Status' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=status">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-status">&#9650;</a></span></div>
         </div>
         {% for object in object_list %}
             <a href = "{% url 'edit-request' pk=object.pk %}">
                 <div class="request row">
-                    <div class="small-3 large-3 columns text-center">
+                    <div class="small-2 large-2 columns text-center">
                         {{ object.created_timestamp|date:"m/d/Y" }}
                     </div>
                     <div class="small-2 large-2 columns text-center">
@@ -45,22 +33,20 @@
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
                             {{ key.room_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
                         {% endfor %}
+                        &nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
                             {{ key.core_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
                         {% endfor %}
+                        &nbsp;
                     </div>
-                    <div class="small-1 large-1 columns text-center">
+                    <div class="small-2 large-2 columns text-center">
                         {{ object.num_comments }}
                     </div>
                     <div class="small-2 large-2 columns text-center">
-                        {{ object.get_status_display }}
+                        {{ object.status }}
                     </div>
                 </div>
             </a>
@@ -70,17 +56,17 @@
     {% if is_paginated %}
         <div class='page-bar'>
             <ul>
-                <li class='page'><a href="?page=1&{{ search_data.urlencode }}">First</a></li>
+                <li class='page'><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order={{ order }}">First</a></li>
                 {% if page_obj.has_previous %}
-                    <li class='page'><a href="?page={{ page_obj.previous_page_number }}&{{ search_data.urlencode }}">&laquo;</a></li>
+                    <li class='page'><a href="?page={{ page_obj.previous_page_number }}&amp;{{ search_data.urlencode }}&amp;order={{ order }}">&laquo;</a></li>
                 {% else %}
                     <li class="disabled page"><span>&laquo;</span></li>
                 {% endif %}
                 {% if page_obj.number >= 3 %}
-                    <li class='page'><a href="?page={{ page_obj.number|add:'-2' }}&{{ search_data.urlencode }}">{{ page_obj.number|add:"-2" }}</a></li>
+                    <li class='page'><a href="?page={{ page_obj.number|add:'-2' }}&amp;{{ search_data.urlencode }}&amp;order={{ order }}">{{ page_obj.number|add:"-2" }}</a></li>
                 {% endif %}
                 {% if page_obj.has_previous %}
-                    <li class="page"><a href="?page={{ page_obj.previous_page_number }}&{{ search_data.urlencode }}">{{ page_obj.previous_page_number }}</a></li>
+                    <li class="page"><a href="?page={{ page_obj.previous_page_number }}&amp;{{ search_data.urlencode }}&amp;order={{ order }}">{{ page_obj.previous_page_number }}</a></li>
                 {% endif %}
                 {% for i in paginator.page_range %}
                     {% if page_obj.number == i %}
@@ -88,17 +74,17 @@
                     {% endif %}
                 {% endfor %}
                 {% if page_obj.has_next %}
-                    <li class="page"><a href="?page={{ page_obj.next_page_number }}&{{ search_data.urlencode }}">{{ page_obj.next_page_number }}</a></li>
+                    <li class="page"><a href="?page={{ page_obj.next_page_number }}&amp;{{ search_data.urlencode }}&amp;order={{ order }}">{{ page_obj.next_page_number }}</a></li>
                 {% else %}
-                <li class="disabled page"><span> &raquo;</span></li>
+                <li class="disabled page"><span>&raquo;</span></li>
                 {% endif %}
                 {% if page_obj.number <= paginator.num_pages|add:"-2" %}
-                    <li class='page'><a href="?page={{ page_obj.number|add:2 }}&{{ search_data.urlencode }}">{{ page_obj.number|add:2 }}</a></li>
+                    <li class='page'><a href="?page={{ page_obj.number|add:2 }}&amp;{{ search_data.urlencode }}&amp;order={{ order }}">{{ page_obj.number|add:2 }}</a></li>
                 {% endif %}
                 {% if page_obj.has_next %}
-                    <li class='page'><a href="?page={{ page_obj.next_page_number }}&{{ search_data.urlencode }}"><span>&raquo;</span></a></li>
+                    <li class='page'><a href="?page={{ page_obj.next_page_number }}&amp;{{ search_data.urlencode }}&amp;page={{ order }}"><span>&raquo;</span></a></li>
                 {% endif %}
-                <li class='page'><a href="?page=last&{{ search_data.urlencode }}">Last</a></li>
+                <li class='page'><a href="?page=last&amp;{{ search_data.urlencode }}&amp;order={{ order }}">Last</a></li>
             </ul>
         </div>
     {% endif %}

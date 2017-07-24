@@ -1,3 +1,5 @@
+<!-- Link: https://docs.djangoproject.com/en/1.11/ref/csrf/#acquiring-the-token-if-csrf-use-sessions-is-false -->
+
 $(document).ajaxSend(function(event, xhr, settings)
 {
     function getCookie(name)
