@@ -36,7 +36,7 @@
             </div>
             <div id="form-set">
                 {% for keydata_form in form.request_formset.forms %}
-                    {% include 'keyform/includes/keydata_form.html' with include_buttons=True %}
+                    {% include 'keyform/includes/keydata_form.html' %}
                 {% endfor %}
             </div>
             <div id="empty_form" style="display:none">

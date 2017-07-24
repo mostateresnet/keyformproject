@@ -46,12 +46,6 @@ class Request(models.Model):
         ('ch', _('Check')),
     )
 
-    STATUS_TYPES = (
-        ('pr', _('Processing')),
-        ('ks', _('Key Sent')),
-        ('kd', _('Key Distributed')),
-    )
-
     bpn_validator = RegexValidator('[mM8]\d{8}', "Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits.")
 
     building = models.ForeignKey(Building, help_text='')

@@ -13,3 +13,11 @@ div.row {
 .errorlist {
     color: red;
 }
+
+.keydata-form .generate_forms {
+    visibility: hidden;
+}
+
+.keydata-form:last-of-type .generate_forms {
+    visibility: visible;
+}
