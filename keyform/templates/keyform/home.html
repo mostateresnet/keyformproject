@@ -11,7 +11,7 @@
 {% endblock %}
 {% block content %}
     <h2 class="title">{% trans 'Keyform Requests' %}</h2>
-    {% include 'keyform/searchtable.html' %}
+    {% include 'keyform/includes/searchtable.html' %}
     <div class="request-list">
         <div class="header row">
             <div class="small-2 large-2 columns text-center header">{% trans 'Date Submitted' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=created_timestamp">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-created_timestamp">&#9650;</a></span></div>
@@ -33,22 +33,20 @@
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
                             {{ key.room_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
                         {% endfor %}
+                        &nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
                             {{ key.core_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
                         {% endfor %}
+                        &nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {{ object.num_comments }}
                     </div>
                     <div class="small-2 large-2 columns text-center">
-                        {{ object.get_status_display }}
+                        {{ object.status }}
                     </div>
                 </div>
             </a>
