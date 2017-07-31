@@ -129,3 +129,12 @@ LOGIN_URL = 'login'
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#This is the URL prefix for the link that emails use. BE SURE to include a trailing slash.
+EMAIL_URL_PREFIX = 'http://example.com/'
+
+# override settings with settings_local
+try:
+    from keyformproject.settings_local import *  # pylint: disable=wildcard-import,unused-wildcard-import,wrong-import-position
+except ImportError:
+    pass

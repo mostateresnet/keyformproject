@@ -1,0 +1,17 @@
+{% extends 'keyform/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block css %}
+    {{ block.super }}
+    <link rel='stylesheet' href='{% static "keyform/css/contact_form.css" %}'>
+{% endblock %}
+
+{% block content %}
+    <h2 class='title'>{% if form.instance.pk %}{% trans 'Edit Contact' %}{% else %}{% trans 'Create Contact' %}{% endif %}</h2>
+    <div class='contact-form'>
+        <form method=POST> {% csrf_token %}
+            {{ form }}
+            <button type='submit' class='button'>{% trans 'Submit' %}</button>
+        </form>
+    </div>
+{% endblock %}
