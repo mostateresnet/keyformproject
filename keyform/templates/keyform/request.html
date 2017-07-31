@@ -99,22 +99,24 @@
                 </div>
             <br>
         </div>
-        <div id='comments' class="section">
-            {% with comments=object.comment_set.all %}
-                <span class="section-header">{% trans 'Comments' %} </span>
-                <div id="comment-list">
-                    {% for comment in comments %}
-                        {% include 'keyform/comment_template.html' %}
-                    {% endfor %}
+        <div class="row">
+            <div id='comments' class="section">
+                {% with comments=object.comment_set.all %}
+                    <span class="section-header">{% trans 'Comments' %} </span>
+                    <div id="comment-list">
+                        {% for comment in comments %}
+                            {% include 'keyform/comment_template.html' %}
+                        {% endfor %}
+                    </div>
+                {% endwith %}
+                <div id='comment-form'>
+                    <p>{% trans 'New Comment:' %}</p>
+                    <textarea id="comment-text" cols="40" rows="4"></textarea>
+                    <span class='button small' type='button' id='submit'>{% trans 'Submit' %}</span>
+                    <span class='button small' type='button' id='cancel'>{% trans 'Cancel' %}</span>
                 </div>
-            {% endwith %}
-            <div id='comment-form'>
-                <p>{% trans 'New Comment:' %}</p>
-                <textarea id="comment-text" cols="40" rows="4"></textarea>
-                <span class='button small' type='button' id='submit'>{% trans 'Submit' %}</span>
-                <span class='button small' type='button' id='cancel'>{% trans 'Cancel' %}</span>
+                <span class='button small' type='button' id='add'>{% trans 'Add a comment' %}</span>
             </div>
-            <span class='button small' type='button' id='add'>{% trans 'Add a comment' %}</span>
         </div>
     </div>
 {% endblock %}
