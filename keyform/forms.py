@@ -15,7 +15,7 @@ class CreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(CreateForm, self).__init__(*args, **kwargs)
         # removes blank choices from Radio Select options
-        self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=[('', _('Not Applicable'))] + list(Request.PAYMENT_TYPES), required=False)
+        self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
 
 

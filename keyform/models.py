@@ -44,6 +44,7 @@ class Request(models.Model):
     PAYMENT_TYPES = (
         ('ca', _('Cash')),
         ('ch', _('Check')),
+        ('na', _('Not Applicable')),
     )
 
     bpn_validator = RegexValidator('[mM8]\d{8}', "Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits.")
