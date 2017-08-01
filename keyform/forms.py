@@ -2,7 +2,6 @@ from django import forms
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.forms import TypedChoiceField
 from django.forms.models import inlineformset_factory
-from django.utils.translation import ugettext_lazy as _
 from keyform.models import Request, KeyData, Contact
 
 
