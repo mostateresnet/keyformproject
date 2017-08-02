@@ -41,7 +41,12 @@ class HomeView(LoginRequiredMixin, ListView):
             if k not in self.valid_params or not v:
                 del data[k]
         data["start_date"] = self.request.GET.get('start_date', '')
+        if data["start_date"] == '':
+            del data["start_date"]
         data["end_date"] = self.request.GET.get('end_date', '')
+        if data["end_date"] == '':
+            del data["end_date"]
+
         context["search_data"] = data
         context["order"] = self.order
         return context
