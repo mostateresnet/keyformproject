@@ -51,9 +51,9 @@ class Request(models.Model):
 
     building = models.ForeignKey(Building, help_text='')
     student_name = models.CharField(max_length=128, blank=True, help_text='')
-    reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES, default='dk', help_text='')
+    reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES, help_text='')
     amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name= _('Amount received'), validators=[MinValueValidator(Decimal('0.00'))], help_text='')
-    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, null=True, blank=True, default='ca', help_text='')
+    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, help_text='')
     charge_amount = models.DecimalField(max_digits=7, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], help_text='')
     staff = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Staff member completing request'))
     bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator], blank=True, help_text='')
@@ -80,11 +80,11 @@ class KeyData(models.Model):
     )
 
     request = models.ForeignKey(Request)
-    core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'), help_text='')
+    core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'), blank=True, help_text='')
     key_type = models.CharField(max_length=2, choices=KEY_TYPES, help_text='')
     room_number = models.CharField(max_length=42, help_text='')
     key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen/Damaged Key Number'), help_text='')
-    quantity = models.IntegerField(help_text='')
+    quantity = models.IntegerField(validators=[MinValueValidator(0)],help_text='')
 
     def __str__(self):
         return str(self.core_number)

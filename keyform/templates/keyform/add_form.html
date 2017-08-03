@@ -15,6 +15,7 @@
     <form method=POST>
         {% csrf_token %}
         <div class="row field-wrapper">
+            {{ form.non_field_errors }}
             <div class="large-6 columns">
                 {{ form.request_formset.management_form }}
                 {{ form.building.errors }}
@@ -75,6 +76,13 @@
                 {{ form.charged_on_rcr }}
             </div>
             <div class="large-12 columns">
+                {% if comment_errors %}
+                    <ul class="errorlist">
+                        {% for error in comment_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
                 <span class="section-header">{% trans 'Comments:' %}</span>
                 <textarea name="comment_text">{{ comment_text }}</textarea>
                 <input type="submit"/>

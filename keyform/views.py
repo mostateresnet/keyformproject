@@ -12,6 +12,7 @@ from django.db.models import Count
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.utils.timezone import localtime, utc
 from django.utils.dateparse import parse_date
+from django.utils.translation import ugettext_lazy as _
 from keyform.forms import CreateForm, RequestFormSet, EditForm, ContactForm
 from keyform.models import Request, Building, Contact, Status
 
@@ -129,6 +130,7 @@ class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 class KeyRequest(LoginRequiredMixin, FormView):
     template_name = "keyform/add_form.html"
     success_url = reverse_lazy("home")
+    comment_errors = []
 
     def form_valid(self, form):
         new_request = form.save(commit=False)
@@ -141,6 +143,9 @@ class KeyRequest(LoginRequiredMixin, FormView):
             comment_text = self.request.POST.get('comment_text', '')
             if comment_text.strip():
                 new_request.comment_set.create(message=comment_text, author=self.request.user)
+            elif form.instance.reason_for_request in ("dk", "sk"):
+                self.comment_errors = [_("This field is required.")]
+                return self.form_invalid(form)
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.form_invalid(form)
@@ -152,5 +157,7 @@ class KeyRequest(LoginRequiredMixin, FormView):
 
     def get_context_data(self, **kwargs):
         context = super(KeyRequest, self).get_context_data(**kwargs)
-        context['comment_text'] = self.request.POST.get('comment_text', '')
+        if self.request.method == 'POST':
+            context['comment_errors'] = self.comment_errors
+            context['comment_text'] = self.request.POST.get('comment_text', '')
         return context

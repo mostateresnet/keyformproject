@@ -2,6 +2,7 @@ from django import forms
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.forms import TypedChoiceField
 from django.forms.models import inlineformset_factory
+from django.utils.translation import ugettext_lazy as _
 from keyform.models import Request, KeyData, Contact
 
 
@@ -16,6 +17,38 @@ class CreateForm(forms.ModelForm):
         # removes blank choices from Radio Select options
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES)
         self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
+
+    def clean(self):
+        cleaned_data = super(CreateForm, self).clean()
+        reason_for_request = cleaned_data.get("reason_for_request")
+        amt_received = cleaned_data.get("amt_received")
+        payment_method = cleaned_data.get("payment_method")
+        bpn = cleaned_data.get("bpn")
+        student_name = cleaned_data.get("student_name")
+        charge_amount = cleaned_data.get("charge_amount")
+        charged_on_rcr = cleaned_data.get("charged_on_rcr")
+
+        if reason_for_request == "lk":
+            #require new core number when staff key or lost key
+            if bpn == "":
+                error_msg = _("Must have Bearpass Number when Lost/Stolen Key.")
+                self.add_error('bpn', error_msg)
+
+            if student_name == "":
+                error_msg = _("Must have Student Name when Lost/Stolen Key.")
+                self.add_error('student_name', error_msg)
+
+            if amt_received <= 0 and charge_amount <= 0 and not charged_on_rcr:
+                error_msg = _("You must pick a billing method.")
+                self.add_error(None, error_msg)
+                error_msg = _("Choose one.")
+                self.add_error('amt_received', error_msg)
+                self.add_error('charge_amount', error_msg)
+                self.add_error('charged_on_rcr', error_msg)
+
+        if amt_received > 0 and payment_method == "na":
+            error_msg = _("If Amount Received is greater than zero, Payment Method must be selected.")
+            self.add_error('payment_method', error_msg)
 
 
 class ContactForm(forms.ModelForm):
@@ -34,6 +67,22 @@ class EditForm(forms.ModelForm):
     class Meta:
         model = Request
         fields = ['status']
+
+
+class KeyDataForm(forms.ModelForm):
+
+    class Meta:
+        model = Request
+        fields = ['status']
+
+    def clean(self):
+        cleaned_data = super(CreateForm, self).clean()
+        reason_for_request = cleaned_data.get("reason_for_request")
+
+        if reason_for_request in ("sk", "lk"):
+            #require new core number when staff key or lost key
+            error_msg = _("Must have new core number when Staff File Key or Lost/Stolen Key")
+            self.add_error('core_number', error_msg)
 
 
 RequestFormSet = inlineformset_factory(Request, KeyData, extra=1, can_delete=False, exclude=[])
