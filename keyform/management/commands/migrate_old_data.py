@@ -23,7 +23,7 @@ class Command(BaseCommand):
                 '3': Status.objects.get_or_create(name='Key Distributed', order=3)[0],
             }
             reasons = {'1': 'dk', '2': 'lk', '3': 'sk'}
-            payment_methods = {'1': None, '2': 'ca', '3': 'ch'}
+            payment_methods = {'1': 'na', '2': 'ca', '3': 'ch'}
             key_types = {'1': 'rm', '2': 'mb', '3': 'ot'}
 
             old_contact_types = {
