@@ -30,11 +30,11 @@ class CreateForm(forms.ModelForm):
 
         if reason_for_request == "lk":
             #require new core number when staff key or lost key
-            if bpn == "":
+            if not bpn:
                 error_msg = _("Must have Bearpass Number when Lost/Stolen Key.")
                 self.add_error('bpn', error_msg)
 
-            if student_name == "":
+            if not student_name:
                 error_msg = _("Must have Student Name when Lost/Stolen Key.")
                 self.add_error('student_name', error_msg)
 
@@ -67,22 +67,6 @@ class EditForm(forms.ModelForm):
     class Meta:
         model = Request
         fields = ['status']
-
-
-class KeyDataForm(forms.ModelForm):
-
-    class Meta:
-        model = Request
-        fields = ['status']
-
-    def clean(self):
-        cleaned_data = super(CreateForm, self).clean()
-        reason_for_request = cleaned_data.get("reason_for_request")
-
-        if reason_for_request in ("sk", "lk"):
-            #require new core number when staff key or lost key
-            error_msg = _("Must have new core number when Staff File Key or Lost/Stolen Key")
-            self.add_error('core_number', error_msg)
 
 
 RequestFormSet = inlineformset_factory(Request, KeyData, extra=1, can_delete=False, exclude=[])

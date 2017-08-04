@@ -138,17 +138,29 @@ class KeyRequest(LoginRequiredMixin, FormView):
         for request_form in form.request_formset.forms:
             request_form.empty_permitted = False
         if form.request_formset.is_valid() and form.request_formset.has_changed():
+            comment_text = self.check_comment(form) # This will generate any self.comment_errors for us
+            if self.comment_errors:
+                return self.form_invalid(form)
             new_request.save()
             form.request_formset.save()
-            comment_text = self.request.POST.get('comment_text', '')
-            if comment_text.strip():
+            if comment_text: # Create the comment AFTER saving new_request
                 new_request.comment_set.create(message=comment_text, author=self.request.user)
-            elif form.instance.reason_for_request in ("dk", "sk"):
-                self.comment_errors = [_("This field is required.")]
-                return self.form_invalid(form)
             return HttpResponseRedirect(self.get_success_url())
         else:
             return self.form_invalid(form)
+
+    def form_invalid(self, form):
+        # Generate any self.comment_errors
+        self.check_comment(form)
+        return super(KeyRequest, self).form_invalid(form)
+
+    def check_comment(self, form):
+        comment_text = self.request.POST.get('comment_text', '')
+        if comment_text.strip():
+            return comment_text
+        elif form.instance.reason_for_request in ("dk", "sk"):
+            self.comment_errors = [_("This field is required.")]
+        return ''
 
     def get_form(self, form_class=None):
         form = CreateForm(instance=Request(staff=self.request.user, status=Status.objects.first()), **self.get_form_kwargs())
