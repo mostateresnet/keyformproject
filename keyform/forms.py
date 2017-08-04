@@ -29,7 +29,6 @@ class CreateForm(forms.ModelForm):
         charged_on_rcr = cleaned_data.get("charged_on_rcr")
 
         if reason_for_request == "lk":
-            #require new core number when staff key or lost key
             if not bpn:
                 error_msg = _("Must have Bearpass Number when Lost/Stolen Key.")
                 self.add_error('bpn', error_msg)
@@ -49,6 +48,7 @@ class CreateForm(forms.ModelForm):
         if amt_received > 0 and payment_method == "na":
             error_msg = _("If Amount Received is greater than zero, Payment Method must be selected.")
             self.add_error('payment_method', error_msg)
+            return cleaned_data
 
 
 class ContactForm(forms.ModelForm):
