@@ -48,6 +48,10 @@ class CreateForm(forms.ModelForm):
         if amt_received > 0 and payment_method == "na":
             error_msg = _("If Amount Received is greater than zero, Payment Method must be selected.")
             self.add_error('payment_method', error_msg)
+
+        if amt_received == 0 and payment_method != "na":
+            error_msg = _("If a Payment Method is selected, Amount Received cannot be zero.")
+            self.add_error('amt_received', error_msg)
         return cleaned_data
 
 
