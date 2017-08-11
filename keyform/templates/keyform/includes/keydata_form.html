@@ -3,8 +3,7 @@
 <div class="keydata-form field-wrapper">
     <div class="large-3 columns text-left">
         {{ keydata_form.core_number.errors }}
-        {{ keydata_form.core_number.label_tag }}
-        <span class="help-text">{{ keydata_form.core_number.help_text }}</span>
+         <span class="has-tip help-text" title="{{ keydata_form.core_number.help_text }}">{{ keydata_form.core_number.label_tag }}</span>
     </div>
         <div class="large-9 columns">
         <input type="button" class="generate_forms" value="{% trans 'Add Another Key' %}"/>
@@ -16,25 +15,21 @@
     <div class="large-6 columns text-left">
         {{ keydata_form.key_type.errors }}
         {{ keydata_form.key_type.label_tag }}
-        <span class="help-text">{{ keydata_form.key_type.help_text }}</span>
         {{ keydata_form.key_type }}
     </div>
     <div class="large-6 columns">
         {{ keydata_form.room_number.errors }}
         {{ keydata_form.room_number.label_tag }}
-        <span class="help-text">{{ keydata_form.room_number.help_text }}</span>
         {{ keydata_form.room_number }}
     </div>
     <div class="large-6 columns">
         {{ keydata_form.key_number.errors }}
         {{ keydata_form.key_number.label_tag }}
-        <span class="help-text">{{ keydata_form.key_number.help_text }}</span>
         {{ keydata_form.key_number }}
     </div>
     <div class="large-6 columns">
         {{ keydata_form.quantity.errors }}
-        {{ keydata_form.quantity.label_tag }}
-        <span class="help-text">{{ keydata_form.quantity.help_text }}</span>
+        <span class="has-tip help-text" title="{{ keydata_form.quantity.help_text }}">{{ keydata_form.quantity.label_tag }}</span>
         {{ keydata_form.quantity }}
     </div>
 </div>
