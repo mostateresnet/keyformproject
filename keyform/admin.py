@@ -4,8 +4,13 @@ from __future__ import unicode_literals
 from django.contrib import admin
 from keyform import models
 
+class BuildingAdmin(admin.ModelAdmin):
+    def get_queryset(self, request):
+        qs = models.Building.all_buildings.all()
+        return qs
+
 admin.site.register(models.Request)
-admin.site.register(models.Building)
+admin.site.register(models.Building, BuildingAdmin)
 admin.site.register(models.KeyData)
 admin.site.register(models.Comment)
 admin.site.register(models.Contact)

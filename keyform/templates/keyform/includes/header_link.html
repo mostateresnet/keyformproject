@@ -1,0 +1,9 @@
+{% if order_codename == codename %}
+    {% if order_desc %}
+    <a class="desc small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}order={{ codename }}">
+    {% else %}
+    <a class="asc small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-{{ codename }}">
+    {% endif %}
+{% else %}
+    <a class="small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}&amp;order={{ codename }}">
+{% endif %}

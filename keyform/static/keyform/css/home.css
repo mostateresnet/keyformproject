@@ -87,3 +87,19 @@ a {
 .header.row div.columns:hover {
     background-color: #cecece;
 }
+
+.asc {
+    background-color: #cecece;
+}
+
+.desc {
+    background-color: #cecece;
+}
+
+.asc:after {
+    content: " \02191";
+}
+
+.desc:after {
+    content: " \02193";
+}

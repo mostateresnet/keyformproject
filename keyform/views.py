@@ -20,7 +20,7 @@ from keyform.models import Request, Building, Contact, Status
 
 
 class HomeView(LoginRequiredMixin, ListView):
-    model = Request
+    queryset = Request.active_objects
     template_name = "keyform/home.html"
     paginate_by = 25
     valid_params = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
@@ -34,6 +34,7 @@ class HomeView(LoginRequiredMixin, ListView):
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
+        context["requests"] = Request.objects.all()
         context["status_types"] = Status.objects.all()
         context["buildings"] = Building.objects.all()
         data = self.request.GET.copy()
@@ -49,6 +50,8 @@ class HomeView(LoginRequiredMixin, ListView):
 
         context["search_data"] = data
         context["order"] = self.order
+        context["order_desc"] = self.order[0] == '-'
+        context["order_codename"] = self.order[1:] if context["order_desc"] else self.order
         return context
 
     def get_date_range(self):

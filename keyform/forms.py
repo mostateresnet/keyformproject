@@ -25,9 +25,12 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = ['name', 'email', 'buildings', 'alert_statuses']
         widgets = {
-            'building': CheckboxSelectMultiple,
+            'buildings': CheckboxSelectMultiple,
             'alert_statuses': CheckboxSelectMultiple,
         }
+
+        def __init__(self, *args, **kwargs):
+            super(ContactForm, self).__init__(*args, **kwargs)
 
 
 class EditForm(forms.ModelForm):

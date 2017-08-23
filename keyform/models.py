@@ -11,9 +11,15 @@ from django.core.validators import MinValueValidator
 from decimal import Decimal
 from django.core.validators import RegexValidator
 
+class BuildingManager(models.Manager):
+    def get_queryset(self):
+        return super(BuildingManager, self).get_queryset().filter(deleted=False)
 
 class Building(models.Model):
     name = models.CharField(max_length=256)
+    deleted = models.BooleanField(default=False)
+    objects = BuildingManager()
+    all_buildings = models.Manager()
 
     def __str__(self):
         return self.name
@@ -25,6 +31,7 @@ class Status(models.Model):
 
     name = models.CharField(max_length=32)
     order = models.IntegerField()
+    visible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -32,6 +39,10 @@ class Status(models.Model):
     class Meta:
         verbose_name_plural = _('Statuses')
         ordering = ['order']
+
+class RequestManager(models.Manager):
+    def get_queryset(self):
+        return super(RequestManager, self).get_queryset().filter(status__visible=True)
 
 class Request(models.Model):
 
@@ -49,6 +60,9 @@ class Request(models.Model):
     bpn_validator = RegexValidator(
         '[mM8]\d{8}',
         "Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits.'")
+
+    objects = models.Manager()
+    active_objects = RequestManager()
 
     building = models.ForeignKey(Building)
     student_name = models.CharField(max_length=128, blank=True)
