@@ -35,63 +35,66 @@
                 </div>
             </div>
             <div class="row">
-                <div class="large-6 columns">
+                <div class="large-7 columns">
                     <div class="section" id='key-section' data-pk="{{ object.pk }}">
                         <div class="row info-row">
+                             <div class="large-12 columns">
+                                 <span class="section-header">{% trans 'Basic Info' %}</span>
+                             </div>
                              <div class="large-7 columns">
-                                 {% trans 'Student Name' %}: {{ object.student_name }}
+                                 {% trans 'Student Name' %}: <span class=".section-info">{{ object.student_name }}</span>
                              </div>
                              <div class="large-5 columns">
-                                 {% trans 'Request for' %}: {{ object.get_reason_for_request_display }}
+                                 {% trans 'Request for' %}: <span class=".section-info">{{ object.get_reason_for_request_display }}</span>
                              </div>
                         </div>
                         <div class="row info-row">
                             <div class="large-12 columns">
-                                {% trans 'Building Name' %}: {{ object.building }}
+                                {% trans 'Building Name' %}: <span class=".section-info">{{ object.building }}</span>
                             </div>
                         </div>
                         <div class="row info-row">
                             <div class="large-7 columns">
-                                {% trans 'Amount Received' %}: {{ object.amt_received }}
+                                {% trans 'Amount Received' %}: <span class=".section-info">{{ object.amt_received }}</span>
                             </div>
                             <div class="large-5 columns">
-                                {% trans 'Paid By' %}: {{ object.get_payment_method_display }}
+                                {% trans 'Paid By' %}: <span class=".section-info">{{ object.get_payment_method_display }}</span>
                             </div>
                         </div>
                         <div class="row info-row">
                             <div class="large-7 columns">
-                                {% trans 'Bill to Account' %}: {{ object.charge_amount }}
+                                {% trans 'Bill to Account' %}: <span class=".section-info">{{ object.charge_amount }}</span>
                             </div>
                             <div class="large-5 columns">
-                                {% trans 'M-Number' %}: {{ object.bpn }}
+                                {% trans 'M-Number' %}: <span class=".section-info">{{ object.bpn }}</span>
                             </div>
                         </div>
                         <div class="row info-row">
                             <div class="large-7 columns">
-                                {% trans 'Staff Name' %}: {{ object.staff }}
+                                {% trans 'Staff Name' %}: <span class=".section-info">{{ object.staff }}</span>
                             </div>
                             <div class="large-5 columns">
-                                {% trans 'Charged on RCR' %}: {{ object.charged_on_rcr }}
+                                {% trans 'Charged on RCR' %}: {% if object.charged_on_rcr %} <i class="fa fa-check .section-info" aria-hidden="true"> {% trans 'Yes' %}</i> {% else %} <i class="fa fa-times .section-info" aria-hidden="true"> {% trans 'No' %}</i> {% endif %}
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="large-6 columns">
+                <div class="large-5 columns">
                     <div class="section">
                         <div class="row info-row">
                             <div class="large-12 columns">
-                                <span id="keydata">Keydata</span>
+                                <span class='section-header'>{% trans 'Keydata' %}</span>
                             </div>
                         </div>
                         {% for data in object.keydata_set.all %}
                             <div class="row info-row">
-                                <div class="large-4 columns">{% trans 'Core #' %}:{{ data.core_number }}</div>
-                                <div class="large-4 columns">{% trans 'Room #' %}:{{ data.room_number }}</div>
-                                <div class="large-4 columns">{% trans 'Key #' %}:{{ data.key_number }}</div>
+                                <div class="large-4 columns">{% trans 'Core #' %}: <span class=".section-info">{{ data.core_number }}</span></div>
+                                <div class="large-4 columns">{% trans 'Room #' %}: <span class=".section-info">{{ data.room_number }}</span></div>
+                                <div class="large-4 columns">{% trans 'Key #' %}: <span class=".section-info">{{ data.key_number }}</span></div>
                             </div>
                             <div class="row info-row">
-                                <div class="large-8 columns">{% trans 'Key Type' %}:{{ data.get_key_type_display }}</div>
-                                <div class="large-4 columns">{% trans 'Quantity' %}:{{ data.quantity }}</div>
+                                <div class="large-8 columns">{% trans 'Key Type' %}: <span class=".section-info">{{ data.get_key_type_display }}</span></div>
+                                <div class="large-4 columns">{% trans 'Quantity' %}: <span class=".section-info">{{ data.quantity }}</span></div>
                             </div>
                             {% if not forloop.last %}<hr width="80%">{% endif %}
                         {% endfor %}
