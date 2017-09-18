@@ -1,55 +1,40 @@
 {% load i18n %}
 
-<div class="keydata-form">
-    <table>
-        <tr>
-            <td>
-                {{ keydata_form.core_number.errors }}
-                {{ keydata_form.core_number.label_tag }}
-            </td>
-            <td>
-                {{ keydata_form.core_number }}
-            </td>
-            <td colspan="2">
-                {% if include_buttons %}
-                    <input type="button" value="{% trans 'Add Another Key' %}" id="generate_forms"/>
-                    <input type="button" value="{% trans 'Cancel' %}" id="delete_button"/>
-                {% else %}
-                    &nbsp;
-                {% endif %}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{ keydata_form.key_type.errors }}
-                {{ keydata_form.key_type.label_tag }}
-            </td>
-            <td>
-                {{ keydata_form.key_type }}
-            </td>
-            <td>
-                {{ keydata_form.room_number.errors }}
-                {{ keydata_form.room_number.label_tag }}
-            </td>
-            <td>
-                {{ keydata_form.room_number }}
-            </td>
-        </tr>
-        <tr>
-            <td>
-                {{ keydata_form.key_number.errors }}
-                {{ keydata_form.key_number.label_tag }}
-            </td>
-            <td>
-                {{ keydata_form.key_number }}
-            </td>
-            <td>
-                {{ keydata_form.quantity.errors }}
-                {{ keydata_form.quantity.label_tag }}
-            </td>
-            <td>
-                {{ keydata_form.quantity }}
-            </td>
-        </tr>
-    </table>
+<div class="keydata-form field-wrapper">
+    <div class="large-3 columns text-left">
+        {{ keydata_form.core_number.errors }}
+        {{ keydata_form.core_number.label_tag }}
+        <span class="help-text">{{ keydata_form.core_number.help_text }}</span>
+    </div>
+        <div class="large-9 columns">
+        <input type="button" class="generate_forms" value="{% trans 'Add Another Key' %}"/>
+        <input type="button" class="delete_button" value="{% trans 'Delete' %}"/>
+    </div>
+    <div class="large-12 columns">
+        {{ keydata_form.core_number }}
+    </div>
+    <div class="large-6 columns text-left">
+        {{ keydata_form.key_type.errors }}
+        {{ keydata_form.key_type.label_tag }}
+        <span class="help-text">{{ keydata_form.key_type.help_text }}</span>
+        {{ keydata_form.key_type }}
+    </div>
+    <div class="large-6 columns">
+        {{ keydata_form.room_number.errors }}
+        {{ keydata_form.room_number.label_tag }}
+        <span class="help-text">{{ keydata_form.room_number.help_text }}</span>
+        {{ keydata_form.room_number }}
+    </div>
+    <div class="large-6 columns">
+        {{ keydata_form.key_number.errors }}
+        {{ keydata_form.key_number.label_tag }}
+        <span class="help-text">{{ keydata_form.key_number.help_text }}</span>
+        {{ keydata_form.key_number }}
+    </div>
+    <div class="large-6 columns">
+        {{ keydata_form.quantity.errors }}
+        {{ keydata_form.quantity.label_tag }}
+        <span class="help-text">{{ keydata_form.quantity.help_text }}</span>
+        {{ keydata_form.quantity }}
+    </div>
 </div>
