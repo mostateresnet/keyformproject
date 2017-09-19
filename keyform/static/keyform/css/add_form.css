@@ -23,9 +23,9 @@ div.row {
 }
 
 .help-text::after {
-	content: "\2754";
+    content: "\2754";
 }
 
 .help-text label {
-	display: inherit;
+    display: inherit;
 }
