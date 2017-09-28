@@ -9,7 +9,6 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
-from django.contrib.auth.models import User
 from django.utils.timezone import localtime, utc
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
@@ -81,7 +80,6 @@ class HomeView(LoginRequiredMixin, ListView):
 
         filter_Qs = Q()
         for token in staff_searched:
-            print(token)
             or_Qs = Q()
             for field in ['first_name', 'last_name', 'username', 'email']:
                 or_Qs |= Q(**{'staff__' + field + '__icontains': token})

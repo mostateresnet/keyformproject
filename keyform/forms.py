@@ -65,8 +65,6 @@ class ContactForm(forms.ModelForm):
             'alert_statuses': CheckboxSelectMultiple,
         }
 
-        def __init__(self, *args, **kwargs):
-            super(ContactForm, self).__init__(*args, **kwargs)
 
 
 class EditForm(forms.ModelForm):

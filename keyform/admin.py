@@ -6,8 +6,7 @@ from keyform import models
 
 class BuildingAdmin(admin.ModelAdmin):
     def get_queryset(self, request):
-        qs = models.Building.all_buildings.all()
-        return qs
+        return models.Building.all_buildings.all()
 
 admin.site.register(models.Request)
 admin.site.register(models.Building, BuildingAdmin)

@@ -24,32 +24,32 @@
         {% for object in object_list %}
             <div class="request row">
                 <a href = "{% url 'edit-request' pk=object.pk %}">
-                <div class="small-2 large-2 columns text-center">
+                    <div class="small-2 large-2 columns text-center">
                     {{ object.created_timestamp|date:"m/d/Y" }}
-                </div>
-                <div class="small-2 large-2 columns text-center">
-                    {{ object.building }}
-                </div>
-                <div class="small-2 large-2 columns text-center">
-                    {% for key in object.keydata_set.all %}
-                        {{ key.room_number }}{% if not forloop.last %}, {% endif %}
-                    {% empty %}
-                        &nbsp;
-                    {% endfor %}
-                </div>
-                <div class="small-2 large-2 columns text-center">
-                    {% for key in object.keydata_set.all %}
-                        {{ key.core_number }}{% if not forloop.last %}, {% endif %}
-                    {% empty %}
-                        &nbsp;
-                    {% endfor %}
-                </div>
-                <div class="small-2 large-2 columns text-center">
-                    {{ object.num_comments }}
-                </div>
-                <div class="small-2 large-2 columns text-center">
-                    {{ object.status }}
-                </div>
+                    </div>
+                    <div class="small-2 large-2 columns text-center">
+                        {{ object.building }}
+                    </div>
+                    <div class="small-2 large-2 columns text-center">
+                        {% for key in object.keydata_set.all %}
+                            {{ key.room_number }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            &nbsp;
+                        {% endfor %}
+                    </div>
+                    <div class="small-2 large-2 columns text-center">
+                        {% for key in object.keydata_set.all %}
+                            {{ key.core_number }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            &nbsp;
+                        {% endfor %}
+                    </div>
+                    <div class="small-2 large-2 columns text-center">
+                        {{ object.num_comments }}
+                    </div>
+                    <div class="small-2 large-2 columns text-center">
+                        {{ object.status }}
+                    </div>
                 </a>
             </div>
         {% endfor %}
