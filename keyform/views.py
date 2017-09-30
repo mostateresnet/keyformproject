@@ -9,7 +9,6 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Count
-from django.utils.timezone import localtime, utc
 from django.db.models import Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.utils.timezone import localtime, utc
