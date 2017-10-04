@@ -66,7 +66,6 @@ class ContactForm(forms.ModelForm):
         }
 
 
-
 class EditForm(forms.ModelForm):
 
     class Meta:

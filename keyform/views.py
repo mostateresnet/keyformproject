@@ -33,7 +33,6 @@ class HomeView(LoginRequiredMixin, ListView):
     def get_context_data(self):
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
-        context["requests"] = Request.objects.all()
         context["status_types"] = Status.objects.all()
         context["buildings"] = Building.objects.all()
         data = self.request.GET.copy()
