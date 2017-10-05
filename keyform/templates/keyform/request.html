@@ -91,7 +91,7 @@
                 </div>
                 <div class="row info-row">
                     <div class="large-9 columns">
-                        {% trans 'Staff Name' %}: {{ object.staff }}
+                        {% trans 'Staff Name' %}: {{ object.staff.get_full_name }}
                     </div>
                     <div class="large-3 columns">
                         {% trans 'Charged on RCR' %}: {{ object.charged_on_rcr }}

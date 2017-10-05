@@ -14,16 +14,16 @@
     {% include 'keyform/includes/searchtable.html' %}
     <div class="request-list">
         <div class="header row">
-            <div class="small-2 large-2 columns text-center header">{% trans 'Date Submitted' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=created_timestamp">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-created_timestamp">&#9650;</a></span></div>
-            <div class="small-2 large-2 columns text-center header">{% trans 'Residence Hall' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=building__name">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-building__name">&#9650;</a></span></div>
-            <div class="small-2 large-2 columns text-center header">{% trans 'Room #' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=keydata__room_number">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-keydata__room_number">&#9650;</a></span></div>
-            <div class="small-2 large-2 columns text-center header">{% trans 'Core #' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=keydata__core_number">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-keydata__core_number">&#9650;</a></span></div>
-            <div class="small-2 large-2 columns text-center header">{% trans 'Comments' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=num_comments">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-num_comments">&#9650;</a></span></div>
-            <div class="small-2 large-2 columns text-center header">{% trans 'Status' %}<span class="arrow"><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=status">&#9660;</a><a href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-status">&#9650;</a></span></div>
+            {% include 'keyform/includes/header_link.html' with codename='created_timestamp' title='Date Submitted' %}
+            {% include 'keyform/includes/header_link.html' with codename='building__name' title='Residence Hall' %}
+            {% include 'keyform/includes/header_link.html' with codename='keydata__room_number' title='Room #' %}
+            {% include 'keyform/includes/header_link.html' with codename='keydata__core_number' title='Core #' %}
+            {% include 'keyform/includes/header_link.html' with codename='num_comments' title='Comments' %}
+            {% include 'keyform/includes/header_link.html' with codename='status' title='Status' %}
         </div>
         {% for object in object_list %}
-            <a href = "{% url 'edit-request' pk=object.pk %}">
-                <div class="request row">
+            <div class="request row">
+                <a href = "{% url 'edit-request' pk=object.pk %}">
                     <div class="small-2 large-2 columns text-center">
                         {{ object.created_timestamp|date:"m/d/Y" }}
                     </div>
@@ -32,15 +32,13 @@
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
-                            {{ key.room_number }}{% if not forloop.last %}, {% endif %}
+                            {{ key.room_number }}{% if not forloop.last %},{% endif %}&nbsp;
                         {% endfor %}
-                        &nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
-                            {{ key.core_number }}{% if not forloop.last %}, {% endif %}
+                            {{ key.core_number }}{% if not forloop.last %},{% endif %}&nbsp;
                         {% endfor %}
-                        &nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {{ object.num_comments }}
@@ -48,8 +46,8 @@
                     <div class="small-2 large-2 columns text-center">
                         {{ object.status }}
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
         {% endfor %}
     </div>
 
