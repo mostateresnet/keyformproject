@@ -19,12 +19,11 @@ from keyform.models import Request, Building, Contact, Status
 
 
 class HomeView(LoginRequiredMixin, ListView):
-    queryset = Request.active_objects
     template_name = "keyform/home.html"
     paginate_by = 25
     valid_params = ['amt_recieved', 'bpn', 'building__name', 'building_id', 'charge_amount', 'charged_on_rcr',
                     'comment', 'created_timestamp', 'id', 'keydata__room_number', 'keydata__core_number', 'keydata__key_number',
-                    'payment_method', 'reason_for_request', 'status', 'student_name', 'staff']
+                    'payment_method', 'reason_for_request', 'status__id', 'student_name', 'staff']
 
     def get_ordering(self):
         self.order = self.request.GET.get('order') or '-created_timestamp'
@@ -60,6 +59,9 @@ class HomeView(LoginRequiredMixin, ListView):
             self.converted_end_date += timedelta(days=1)
 
     def get_queryset(self):
+        self.queryset = Request.active_objects
+        if 'status__id' in self.request.GET:
+            self.queryset = Request.objects
         qset = super(HomeView, self).get_queryset()
         qset = qset.select_related('building')
         qset = qset.prefetch_related('keydata_set')
@@ -67,6 +69,7 @@ class HomeView(LoginRequiredMixin, ListView):
         qset = qset.annotate(num_comments=Count('comment'))
 
         for item, value in self.request.GET.items():
+            print(item, value);
             if str(item) in self.valid_params and str(item) != 'staff':
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
