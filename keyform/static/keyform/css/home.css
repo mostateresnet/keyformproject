@@ -84,7 +84,7 @@ a {
     text-decoration: none;
 }
 
-.header.row div.columns:hover {
+.header.row div.columns:hover, .asc, .desc {
     background-color: #cecece;
 }
 
