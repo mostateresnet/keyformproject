@@ -8,8 +8,7 @@ from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
-from django.db.models import Count
-from django.db.models import Q
+from django.db.models import Count, Q
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.utils.timezone import localtime, utc
 from django.utils.dateparse import parse_date
@@ -69,7 +68,6 @@ class HomeView(LoginRequiredMixin, ListView):
         qset = qset.annotate(num_comments=Count('comment'))
 
         for item, value in self.request.GET.items():
-            print(item, value);
             if str(item) in self.valid_params and str(item) != 'staff':
                 if value != '':
                     qset = qset.filter(**{item + '__icontains': value})
