@@ -107,7 +107,7 @@ class RequestCommentView(LoginRequiredMixin, View):
         comment = req.comment_set.create(message=message, author=request.user)
 
         timestamp = localtime(comment.created_timestamp).strftime('%B %d, %Y, %I:%M %p')
-        return JsonResponse({'author': str(comment.author), 'timestamp': timestamp, 'message': comment.message})
+        return JsonResponse({'author': str(comment.author.get_full_name()), 'timestamp': timestamp, 'message': comment.message})
 
 
 class ContactView(LoginRequiredMixin, TemplateView):
