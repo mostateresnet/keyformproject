@@ -11,9 +11,15 @@ from django.core.validators import MinValueValidator
 from decimal import Decimal
 from django.core.validators import RegexValidator
 
+class BuildingManager(models.Manager):
+    def get_queryset(self):
+        return super(BuildingManager, self).get_queryset().filter(deleted=False)
 
 class Building(models.Model):
     name = models.CharField(max_length=256)
+    deleted = models.BooleanField(default=False)
+    objects = BuildingManager()
+    all_buildings = models.Manager()
 
     def __str__(self):
         return self.name
@@ -25,6 +31,7 @@ class Status(models.Model):
 
     name = models.CharField(max_length=32)
     order = models.IntegerField()
+    visible = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name
@@ -32,6 +39,10 @@ class Status(models.Model):
     class Meta:
         verbose_name_plural = _('Statuses')
         ordering = ['order']
+
+class RequestManager(models.Manager):
+    def get_queryset(self):
+        return super(RequestManager, self).get_queryset().filter(status__visible=True)
 
 class Request(models.Model):
 
@@ -47,18 +58,22 @@ class Request(models.Model):
         ('na', _('Not Applicable')),
     )
 
+    objects = models.Manager()
+    active_objects = RequestManager()
+
     bpn_validator = RegexValidator('[mM8]\d{8}', _("Bearpass number must start with an 'M,' 'm,' or '8,' and followed by eight digits."))
 
-    building = models.ForeignKey(Building, help_text='')
-    student_name = models.CharField(max_length=128, blank=True, help_text='')
-    reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES, help_text='')
-    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name= _('Amount received'), validators=[MinValueValidator(Decimal('0.00'))], help_text='')
-    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES, help_text='')
-    charge_amount = models.DecimalField(max_digits=7, default=0, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], help_text='')
+    building = models.ForeignKey(Building)
+    student_name = models.CharField(max_length=128, blank=True)
+    reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES)
+    amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name= _('Amount received'), validators=[MinValueValidator(Decimal('0.00'))], 
+        help_text=_('Core Change/Reprogram Fob Charge = $50, Room Key/Fob = $10, Mailbox Key = $10, Monroe Mailbox Key = $25'))
+    payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES)
+    charge_amount = models.DecimalField(max_digits=7, default=0, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))])
     staff = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Staff member completing request'))
-    bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator], blank=True, help_text='')
+    bpn = models.CharField(max_length=9, verbose_name=_('M-Number'), validators=[bpn_validator], blank=True)
     created_timestamp = models.DateTimeField(default=now, blank=True)
-    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'), help_text='')
+    charged_on_rcr = models.BooleanField(default=False, verbose_name=_('Charged on RCR'))
     status = models.ForeignKey(Status, related_name="status")
     previous_status = models.ForeignKey(Status, related_name="previous_status")
     locksmith_email_sent = models.BooleanField(default=False)
@@ -80,11 +95,13 @@ class KeyData(models.Model):
     )
 
     request = models.ForeignKey(Request)
-    core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'), blank=True, help_text='')
-    key_type = models.CharField(max_length=2, choices=KEY_TYPES, help_text='')
-    room_number = models.CharField(max_length=42, help_text='')
-    key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen/Damaged Key Number'), help_text='')
-    quantity = models.IntegerField(validators=[MinValueValidator(0)],help_text='')
+    core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'), blank=True, 
+        help_text=_('Use a comma to separate the list of cores (if suite style).'))
+    key_type = models.CharField(max_length=2, choices=KEY_TYPES)
+    room_number = models.CharField(max_length=42)
+    key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen/Damaged Key Number'))
+    quantity = models.IntegerField(validators=[MinValueValidator(0)], 
+        help_text=_("If you don't need to order more keys because there are enough already, you can mark zero."))
 
     def __str__(self):
         return str(self.core_number)

@@ -20,19 +20,16 @@
                 {{ form.request_formset.management_form }}
                 {{ form.building.errors }}
                 {{ form.building.label_tag }}
-                <span class="help-text">{{ form.building.help_text }}</span>
                 {{ form.building }}
             </div>
             <div class="large-6 columns">
                 {{ form.bpn.errors }}
                 {{ form.bpn.label_tag }}
-                <span class="help-text">{{ form.bpn.help_text }}</span>
                 {{ form.bpn }}
             </div>
             <div class="large-12 columns">
                 {{ form.student_name.errors }}
                 {{ form.student_name.label_tag }}
-                <span class="help-text">{{ form.student_name.help_text }}</span>
                 {{ form.student_name }}
             </div>
             <div id="form-set">
@@ -47,32 +44,27 @@
                 <div class="large-6 columns">
                     {{ form.reason_for_request.errors }}
                     {{ form.reason_for_request.label_tag }}
-                    <span class="help-text">{{ form.reason_for_request.help_text }}</span>
                     {{ form.reason_for_request }}
                 </div>
                 <div class="large-6 columns">
                     {{ form.payment_method.errors }}
-                    {{ form.payment_method.label_tag }}
-                    <span class="help-text">{{ form.payment_method.help_text }}</span>
+                    <span class="has-tip help-text" title="{{ form.payment_method.help_text }}">{{ form.payment_method.label_tag }}</span>
                     {{ form.payment_method }}
                 </div>
             </div>
             <div class="large-6 columns">
                 {{ form.amt_received.errors }}
-                {{ form.amt_received.label_tag }}
-                <span class="help-text">{{ form.amt_received.help_text }}</span>
+                <span class="has-tip help-text" title="{{ form.amt_received.help_text }}">{{ form.amt_received.label_tag }}</span>
                 {{ form.amt_received }}
             </div>
             <div class="large-6 columns">
                 {{ form.charge_amount.errors }}
                 {{ form.charge_amount.label_tag }}
-                <span class="help-text">{{ form.charge_amount.help_text }}</span>
                 {{ form.charge_amount }}
             </div>
             <div class="large-12 columns">
                 {{ form.charged_on_rcr.errors }}
                 {{ form.charged_on_rcr.label_tag }}
-                <span class="help-text">{{ form.charged_on_rcr.help_text }}</span>
                 {{ form.charged_on_rcr }}
             </div>
             <div class="large-12 columns">

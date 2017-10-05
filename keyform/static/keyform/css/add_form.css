@@ -21,3 +21,11 @@ div.row {
 .keydata-form:last-of-type .generate_forms {
     visibility: visible;
 }
+
+.help-text::after {
+    content: "\2754";
+}
+
+.help-text label {
+    display: inherit;
+}
