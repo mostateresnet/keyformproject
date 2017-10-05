@@ -88,10 +88,6 @@ a {
     background-color: #cecece;
 }
 
-.header.row div.columns:hover {
-    background-color: #cecece;
-}
-
 .asc:after {
     content: " \02191";
 }
