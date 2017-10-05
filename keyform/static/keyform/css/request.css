@@ -7,12 +7,13 @@
 }
 
 .content {
-    width: 75%;
+    width: 90%;
     margin: auto;
+    font-size: 1em;
 }
 
 .info-row {
-    width: 60%;
+    width: 95%;
     margin-top: .5em;
     margin-bottom: .5em;
 }
@@ -24,7 +25,7 @@
 .section {
     border: .1em solid black;
     border-radius: .75em;
-    padding: .5em;
+    padding: .25em;
     margin-top: .2em;
     margin-bottom: 1em;
 }
@@ -42,9 +43,6 @@ select {
     font-style: italic;
 }
 
-.request-edit {
-    text-align: center;
-}
 
 .comment-buttons {
     border: 1px solid black;
@@ -67,6 +65,6 @@ select {
     display: block;
 }
 
-.created {
+.created, .section-info {
     font-weight: bold;
 }
