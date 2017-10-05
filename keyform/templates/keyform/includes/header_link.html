@@ -1,9 +1,10 @@
+{% load i18n %}
 {% if order_codename == codename %}
     {% if order_desc %}
-        <a class="desc small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}order={{ codename }}">
+        <a class="desc small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}order={{ codename }}">{% blocktrans %}{{ title }}{% endblocktrans %}</a>
     {% else %}
-        <a class="asc small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-{{ codename }}">
+        <a class="asc small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}&amp;order=-{{ codename }}">{% blocktrans %}{{ title }}{% endblocktrans %}</a>
     {% endif %}
 {% else %}
-        <a class="small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}&amp;order={{ codename }}">
+        <a class="small-2 large-2 columns text-center header" href="?page=1&amp;{{ search_data.urlencode }}&amp;order={{ codename }}">{% blocktrans %}{{ title }}{% endblocktrans %}</a>
 {% endif %}

@@ -14,12 +14,12 @@
     {% include 'keyform/includes/searchtable.html' %}
     <div class="request-list">
         <div class="header row">
-            {% include 'keyform/includes/header_link.html' with codename='created_timestamp' %}{% trans 'Date Submitted' %}</a>
-            {% include 'keyform/includes/header_link.html' with codename='building__name' %}{% trans 'Residence Hall' %}</a>
-            {% include 'keyform/includes/header_link.html' with codename='keydata__room_number' %}{% trans 'Room #' %}</a>
-            {% include 'keyform/includes/header_link.html' with codename='keydata__core_number' %}{% trans 'Core #' %}</a>
-            {% include 'keyform/includes/header_link.html' with codename='num_comments' %}{% trans 'Comments' %}</a>
-            {% include 'keyform/includes/header_link.html' with codename='status' %}{% trans 'Status' %}</a>
+            {% include 'keyform/includes/header_link.html' with codename='created_timestamp' title='Date Submitted' %}
+            {% include 'keyform/includes/header_link.html' with codename='building__name' title='Residence Hall' %}
+            {% include 'keyform/includes/header_link.html' with codename='keydata__room_number' title='Room #' %}
+            {% include 'keyform/includes/header_link.html' with codename='keydata__core_number' title='Core #' %}
+            {% include 'keyform/includes/header_link.html' with codename='num_comments' title='Comments' %}
+            {% include 'keyform/includes/header_link.html' with codename='status' title='Status' %}
         </div>
         {% for object in object_list %}
             <div class="request row">
