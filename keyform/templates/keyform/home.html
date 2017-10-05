@@ -25,23 +25,19 @@
             <div class="request row">
                 <a href = "{% url 'edit-request' pk=object.pk %}">
                     <div class="small-2 large-2 columns text-center">
-                    {{ object.created_timestamp|date:"m/d/Y" }}
+                        {{ object.created_timestamp|date:"m/d/Y" }}
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {{ object.building }}
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
-                            {{ key.room_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
+                            {{ key.room_number }}{% if not forloop.last %},{% endif %}&nbsp;
                         {% endfor %}
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {% for key in object.keydata_set.all %}
-                            {{ key.core_number }}{% if not forloop.last %}, {% endif %}
-                        {% empty %}
-                            &nbsp;
+                            {{ key.core_number }}{% if not forloop.last %},{% endif %}&nbsp;
                         {% endfor %}
                     </div>
                     <div class="small-2 large-2 columns text-center">
