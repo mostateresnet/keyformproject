@@ -6,7 +6,7 @@
     margin-top: .5em;
 }
 
-.content {
+.content, .hide-for-print {
     width: 90%;
     margin: auto;
     font-size: 1em;

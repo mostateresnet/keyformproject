@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="large-7 columns">
+                <div class="large-7 small-6 columns">
                     <div class="section" id="key-section" data-pk="{{ object.pk }}">
                         <div class="row info-row">
                              <div class="large-12 columns">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="large-5 columns">
+                <div class="large-5 small-6 columns">
                     <div class="section">
                         <div class="row info-row">
                             <div class="large-12 columns">
@@ -88,9 +88,9 @@
                         </div>
                         {% for data in object.keydata_set.all %}
                             <div class="row info-row">
-                                <div class="large-4 columns">{% trans 'Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
+                                <div class="large-4 columns">{% trans 'New Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
                                 <div class="large-4 columns">{% trans 'Room #' %}: <span class="section-info">{{ data.room_number }}</span></div>
-                                <div class="large-4 columns">{% trans 'Key #' %}: <span class="section-info">{{ data.key_number }}</span></div>
+                                <div class="large-4 columns">{% trans 'Lost/Stolen/Damaged Key #' %}: <span class="section-info">{{ data.key_number }}</span></div>
                             </div>
                             <div class="row info-row">
                                 <div class="large-8 columns">{% trans 'Key Type' %}: <span class="section-info">{{ data.get_key_type_display }}</span></div>
@@ -118,7 +118,9 @@
                     <span class='button small' type='button' id='submit'>{% trans 'Submit' %}</span>
                     <span class='button small' type='button' id='cancel'>{% trans 'Cancel' %}</span>
                 </div>
-                <span class="button small" type="button" id="add">{% trans 'Add a comment' %}</span>
+                <div class="hide-for-print">
+                    <span class="button small" type="button" id="add">{% trans 'Add a comment' %}</span>
+                </div>
             </div>
         </div>
     </div>
