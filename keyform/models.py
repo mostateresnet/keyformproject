@@ -85,19 +85,19 @@ class Request(models.Model):
     class Meta:
         ordering = ['-created_timestamp']
 
+class KeyType(models.Model):
+    name = models.CharField(max_length=128)
+    hide_core_number = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
+
 
 class KeyData(models.Model):
-
-    KEY_TYPES = (
-        ('rm', _('Room/Apt.')),
-        ('mb', _('Mailbox')),
-        ('ot', _('Other (Specify)')),
-    )
-
     request = models.ForeignKey(Request)
     core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'), blank=True, 
         help_text=_('Use a comma to separate the list of cores (if suite style).'))
-    key_type = models.CharField(max_length=2, choices=KEY_TYPES)
+    key_type = models.ForeignKey(KeyType, null=True)
     room_number = models.CharField(max_length=42)
     key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen/Damaged Key Number'))
     quantity = models.IntegerField(validators=[MinValueValidator(0)], 
