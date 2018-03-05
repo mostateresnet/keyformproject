@@ -40,15 +40,15 @@
             {% block content %}
 
                 {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        {% if message.tags == "error" %}
-                            <li class="alert label">{{ message }}</li><br>
-                        {% else %}
-                            <li class="{{ message.tags }} label">{{ message }}</li><br>
-                        {% endif %}
-                    {% endfor %}
-                </ul>
+                    <ul class="messages">
+                        {% for message in messages %}
+                            {% if message.tags == "error" %}
+                                <li class="alert label">{{ message }}</li><br>
+                            {% else %}
+                                <li class="{{ message.tags }} label">{{ message }}</li><br>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
                 {% endif %}
 
             {% endblock %}
