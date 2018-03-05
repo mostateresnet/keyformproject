@@ -17,7 +17,6 @@ class CreateForm(forms.ModelForm):
         # removes blank choices from Radio Select options
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES,
             help_text=_("Cash/Check should only be accepted during camps and conferences, and also fill in the amount received. Use the Charge Amount box to charge to the student's account, or mark that the student was charged on the RCR if they are checking out."))
-        self.fields['reason_for_request'] = TypedChoiceField(widget=RadioSelect(), choices=Request.REQUEST_TYPES)
 
     def clean(self):
         cleaned_data = super(CreateForm, self).clean()

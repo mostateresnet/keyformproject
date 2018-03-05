@@ -1,35 +1,65 @@
 {% load i18n %}
 
 <div class="keydata-form field-wrapper">
-    <div class="large-3 columns text-left">
-        {{ keydata_form.core_number.errors }}
-         <span class="has-tip help-text" title="{{ keydata_form.core_number.help_text }}">{{ keydata_form.core_number.label_tag }}</span>
+    <div class="large-6 columns">
+        <div class="row">
+            <div class="large-3 medium-2 small-12 columns">
+                {{ keydata_form.key_type.label_tag }}
+            </div>
+            <div class="large-9 medium-10 small-12 columns">
+                {{ keydata_form.key_type.errors }}
+                {{ keydata_form.key_type }}
+            </div>
+        </div>
     </div>
-        <div class="large-9 columns">
+    <div class="large-6 columns">
+        <div class="row">
+            <div class="large-4 medium-2 small-12 columns">
+                {{ keydata_form.room_number.label_tag }}
+            </div>
+            <div class="large-8 medium-10 small-12 columns">
+                {{ keydata_form.room_number.errors }}
+                {{ keydata_form.room_number }}
+            </div>
+        </div>
+    </div>
+    <div class="large-5 columns">
+        <div class="row">
+            <div class="large-5 medium-2 small-12 columns">
+                <span class="has-tip help-text" title="{{ keydata_form.core_number.help_text }}">{{ keydata_form.core_number.label_tag }}</span>
+            </div>
+            <div class="large-7 medium-10 small-12 columns">
+                {{ keydata_form.core_number.errors }}
+                {{ keydata_form.core_number }}
+            </div>
+        </div>
+    </div>
+    <div class="large-5 columns">
+        <div class="row">
+            <div class="large-5 medium-12 small-12 columns">
+                {{ keydata_form.key_number.label_tag }}
+            </div>
+            <div class="large-7 medium-12 small-12 columns">
+                {{ keydata_form.key_number.errors }}
+                {{ keydata_form.key_number }}
+            </div>
+        </div>
+    </div>
+    <div class="large-2 columns">
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                {{ keydata_form.quantity.errors }}
+            </div>
+            <div class="large-7 medium-7 small-6 columns">
+                <span class="has-tip help-text" title="{{ keydata_form.quantity.help_text }}">{{ keydata_form.quantity.label_tag }}</span>
+            </div>
+            <div class="large-5 medium-5 small-6 columns">
+                {{ keydata_form.quantity }}
+            </div>
+        </div>
+    </div>
+    <div class="large-12 columns text-right">
         <input type="button" class="generate_forms" value="{% trans 'Add Another Key' %}"/>
         <input type="button" class="delete_button" value="{% trans 'Delete' %}"/>
-    </div>
-    <div class="large-12 columns">
-        {{ keydata_form.core_number }}
-    </div>
-    <div class="large-6 columns text-left">
-        {{ keydata_form.key_type.errors }}
-        {{ keydata_form.key_type.label_tag }}
-        {{ keydata_form.key_type }}
-    </div>
-    <div class="large-6 columns">
-        {{ keydata_form.room_number.errors }}
-        {{ keydata_form.room_number.label_tag }}
-        {{ keydata_form.room_number }}
-    </div>
-    <div class="large-6 columns">
-        {{ keydata_form.key_number.errors }}
-        {{ keydata_form.key_number.label_tag }}
-        {{ keydata_form.key_number }}
-    </div>
-    <div class="large-6 columns">
-        {{ keydata_form.quantity.errors }}
-        <span class="has-tip help-text" title="{{ keydata_form.quantity.help_text }}">{{ keydata_form.quantity.label_tag }}</span>
-        {{ keydata_form.quantity }}
     </div>
 </div>
