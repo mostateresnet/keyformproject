@@ -12,15 +12,28 @@
 {% endblock %}
 
 {% block content %}
+    {{ block.super }}
     <form method=POST>
         {% csrf_token %}
         <div class="row field-wrapper">
             {{ form.non_field_errors }}
+            <div class="large-12 columns">
+                <div class="row">
+                    <div class="large-6 columns">
+                        {{ form.reason_for_request.errors }}
+                        {{ form.reason_for_request.label_tag }}
+                        {{ form.reason_for_request }}
+                    </div>
+                    <div class="large-6 columns">
+                        <label>{% trans 'Filed by:' %}</label>
+                        {{ user.get_full_name }}
+                    </div>
+                </div>
+            </div>
             <div class="large-6 columns">
-                {{ form.request_formset.management_form }}
-                {{ form.building.errors }}
-                {{ form.building.label_tag }}
-                {{ form.building }}
+                {{ form.student_name.errors }}
+                {{ form.student_name.label_tag }}
+                {{ form.student_name }}
             </div>
             <div class="large-6 columns">
                 {{ form.bpn.errors }}
@@ -28,9 +41,10 @@
                 {{ form.bpn }}
             </div>
             <div class="large-12 columns">
-                {{ form.student_name.errors }}
-                {{ form.student_name.label_tag }}
-                {{ form.student_name }}
+                {{ form.request_formset.management_form }}
+                {{ form.building.errors }}
+                {{ form.building.label_tag }}
+                {{ form.building }}
             </div>
             <div id="form-set">
                 {% for keydata_form in form.request_formset.forms %}
@@ -41,33 +55,51 @@
                 {% include 'keyform/includes/keydata_form.html' with keydata_form=form.request_formset.empty_form %}
             </div>
             <div class="row">
-                <div class="large-6 columns">
-                    {{ form.reason_for_request.errors }}
-                    {{ form.reason_for_request.label_tag }}
-                    {{ form.reason_for_request }}
+                <div class="large-3 medium-4 columns end">
+                    <div class="large-8 medium-8 small-12 columns">
+                        {{ form.charge_amount.errors }}
+                        {{ form.charge_amount.label_tag }}
+                    </div>
+                    <div class="large-4 medium-4 small-12 columns">
+                        {{ form.charge_amount }}
+                    </div>
                 </div>
-                <div class="large-6 columns">
-                    {{ form.payment_method.errors }}
-                    <span class="has-tip help-text" title="{{ form.payment_method.help_text }}">{{ form.payment_method.label_tag }}</span>
-                    {{ form.payment_method }}
+            </div>
+            <div class="row">
+                <div class="large-3 medium-4 small-6 columns end">
+                    <div class="large-8 medium-8 small-9 columns">
+                        {{ form.charged_on_rcr.errors }}
+                        {{ form.charged_on_rcr.label_tag }}
+                    </div>
+                    <div class="large-4 medium-4 small-3 columns">
+                        {{ form.charged_on_rcr }}
+                    </div>
                 </div>
             </div>
             <div class="large-6 columns">
-                {{ form.amt_received.errors }}
-                <span class="has-tip help-text" title="{{ form.amt_received.help_text }}">{{ form.amt_received.label_tag }}</span>
-                {{ form.amt_received }}
+                <div class="row">
+                    <div class="large-4 medium-2 small-12 columns">
+                        <span class="has-tip help-text" title="{{ form.amt_received.help_text }}">{{ form.amt_received.label_tag }}</span>
+                    </div>
+                    <div class="large-8 medium-10 small-12 columns">
+                        {{ form.amt_received }}
+                        {{ form.amt_received.errors }}
+                    </div>
+                </div>
             </div>
             <div class="large-6 columns">
-                {{ form.charge_amount.errors }}
-                {{ form.charge_amount.label_tag }}
-                {{ form.charge_amount }}
+                <div class="row">
+                    <div class="large-4 medium-2 small-12 columns">
+                        {{ form.payment_method.errors }}
+                        <span class="has-tip help-text" title="{{ form.payment_method.help_text }}">{{ form.payment_method.label_tag }}</span>
+                    </div>
+                    <div class="large-8 medium-10 small-12 columns">
+                        {{ form.payment_method }}
+                    </div>
+                </div>
             </div>
             <div class="large-12 columns">
-                {{ form.charged_on_rcr.errors }}
-                {{ form.charged_on_rcr.label_tag }}
-                {{ form.charged_on_rcr }}
-            </div>
-            <div class="large-12 columns">
+                <span class="section-header">{% trans 'Comments:' %}</span>
                 {% if comment_errors %}
                     <ul class="errorlist">
                         {% for error in comment_errors %}
@@ -75,7 +107,6 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <span class="section-header">{% trans 'Comments:' %}</span>
                 <textarea name="comment_text">{{ comment_text }}</textarea>
                 <input type="submit"/>
             </div>

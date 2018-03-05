@@ -10,6 +10,7 @@
     <script src="{% static 'keyform/js/home.js' %}"></script>
 {% endblock %}
 {% block content %}
+    {{ block.super }}
     <h2 class="title">{% trans 'Keyform Requests' %}</h2>
     {% include 'keyform/includes/searchtable.html' %}
     <div class="request-list">

@@ -27,7 +27,7 @@
                     <img src="{% static 'keyform/logo.png' %}"/>
                     <div class="title-bar-title">{% trans 'Keyform' %}</div>
                     {% block navigation %}
-                        <ul>
+                        <ul class="hide-for-print">
                             <li><a href="{% url 'home' %}">{% trans 'Home' %}</a></li>
                             <li><a href="{% url 'create' %}">{% trans 'Create' %}</a></li>
                             <li><a href="{% url 'contact' %}">{% trans 'Contacts' %}</a></li>
@@ -38,6 +38,18 @@
             </div>
             {% endblock %}
             {% block content %}
+
+                {% if messages %}
+                    <ul class="messages">
+                        {% for message in messages %}
+                            {% if message.tags == "error" %}
+                                <li class="alert label">{{ message }}</li><br>
+                            {% else %}
+                                <li class="{{ message.tags }} label">{{ message }}</li><br>
+                            {% endif %}
+                        {% endfor %}
+                    </ul>
+                {% endif %}
 
             {% endblock %}
         {% endblock %}

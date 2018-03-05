@@ -2,12 +2,14 @@ div.field-wrapper {
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    overflow: auto;
+    overflow: hidden;
     border-color: lightgray;
 }
 
-div.row {
-    padding: 15px;
+.keydata-form {
+    margin: 0.9375rem;
+    padding-top: 0.9375rem;
+    padding-bottom: 0.9375rem;
 }
 
 .errorlist {
