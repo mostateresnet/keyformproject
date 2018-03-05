@@ -68,3 +68,7 @@ select {
 .created, .section-info {
     font-weight: bold;
 }
+
+.request-edit select {
+    min-width: 10.06rem;
+}

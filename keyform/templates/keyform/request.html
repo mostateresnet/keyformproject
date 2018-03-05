@@ -17,26 +17,26 @@
 {% block content %}
     {{ block.super }}
     <div class="content">
-        <div class="content-header">{% trans 'Update Key Request' %}</div>
+        <div class="content-header hide-for-print">{% trans 'Update Key Request' %}</div>
         <div class="info">
             <div class="row">
-                <div class="large-6 columns">
+                <div class="small-6 columns">
                     <span class='created'> {% trans 'Created' %}: {{ object.created_timestamp }}</span>
                 </div>
-                <div class="large-6 columns text-right">
+                <div class="small-6 columns text-right">
                     <form method="POST">
                         {% csrf_token %}
                         <div class="request-edit">
                             {% for field in form %}
                                 {{ field.label }}: {{ field }}
                             {% endfor %}
-                            <input type="submit" value="{% trans 'Update' %}"/>
+                            <input type="submit" value="{% trans 'Update' %}" class="hide-for-print"/>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="row">
-                <div class="large-7 columns">
+                <div class="medium-7 small-7 columns">
                     <div class="section" id="key-section" data-pk="{{ object.pk }}">
                         <div class="row info-row">
                              <div class="large-12 columns">
@@ -80,7 +80,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="large-5 columns">
+                <div class="medium-5 small-5 columns">
                     <div class="section">
                         <div class="row info-row">
                             <div class="large-12 columns">
@@ -89,9 +89,9 @@
                         </div>
                         {% for data in object.keydata_set.all %}
                             <div class="row info-row">
-                                <div class="large-4 columns">{% trans 'Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
+                                <div class="large-4 columns">{% trans 'New Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
                                 <div class="large-4 columns">{% trans 'Room #' %}: <span class="section-info">{{ data.room_number }}</span></div>
-                                <div class="large-4 columns">{% trans 'Key #' %}: <span class="section-info">{{ data.key_number }}</span></div>
+                                <div class="large-4 columns">{% trans 'Lost/Stolen/Damaged Key #' %}: <span class="section-info">{{ data.key_number }}</span></div>
                             </div>
                             <div class="row info-row">
                                 <div class="large-8 columns">{% trans 'Key Type' %}: <span class="section-info">{{ data.get_key_type_display }}</span></div>
@@ -119,7 +119,9 @@
                     <span class='button small' type='button' id='submit'>{% trans 'Submit' %}</span>
                     <span class='button small' type='button' id='cancel'>{% trans 'Cancel' %}</span>
                 </div>
-                <span class="button small" type="button" id="add">{% trans 'Add a comment' %}</span>
+                <div class="hide-for-print">
+                    <span class="button small" type="button" id="add">{% trans 'Add a comment' %}</span>
+                </div>
             </div>
         </div>
     </div>
