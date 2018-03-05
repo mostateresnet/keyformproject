@@ -2,7 +2,7 @@ div.field-wrapper {
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
-    overflow: auto;
+    overflow: hidden;
     border-color: lightgray;
 }
 
