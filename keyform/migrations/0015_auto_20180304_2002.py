@@ -13,6 +13,12 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
+        migrations.AlterField(
+            model_name='keydata',
+            name='key_type',
+            field=models.CharField(choices=[('rm', 'Room/Apt.'), ('mb', 'Mailbox'), ('ot', 'Other (Specify)')], max_length=2, default='ot', null=True),
+            preserve_default=False,
+        ),
         migrations.RemoveField(
             model_name='keydata',
             name='key_type',
