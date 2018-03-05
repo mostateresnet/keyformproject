@@ -17,9 +17,17 @@
         <div class="row field-wrapper">
             {{ form.non_field_errors }}
             <div class="large-12 columns">
-                {{ form.reason_for_request.errors }}
-                {{ form.reason_for_request.label_tag }}
-                {{ form.reason_for_request }}
+                <div class="row">
+                    <div class="large-6 columns">
+                        {{ form.reason_for_request.errors }}
+                        {{ form.reason_for_request.label_tag }}
+                        {{ form.reason_for_request }}
+                    </div>
+                    <div class="large-6 columns">
+                        <label>Filed by:</label>
+                        {{ user.get_full_name }}
+                    </div>
+                </div>
             </div>
             <div class="large-6 columns">
                 {{ form.student_name.errors }}
