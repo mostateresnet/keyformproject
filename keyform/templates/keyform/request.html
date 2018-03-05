@@ -16,26 +16,26 @@
 
 {% block content %}
     <div class="content">
-        <div class="content-header">{% trans 'Update Key Request' %}</div>
+        <div class="content-header hide-for-print">{% trans 'Update Key Request' %}</div>
         <div class="info">
             <div class="row">
-                <div class="large-6 columns">
+                <div class="medium-6 columns">
                     <span class='created'> {% trans 'Created' %}: {{ object.created_timestamp }}</span>
                 </div>
-                <div class="large-6 columns text-right">
+                <div class="medium-6 columns text-right">
                     <form method="POST">
                         {% csrf_token %}
                         <div class="request-edit">
                             {% for field in form %}
                                 {{ field.label }}: {{ field }}
                             {% endfor %}
-                            <input type="submit" value="{% trans 'Update' %}"/>
+                            <input type="submit" value="{% trans 'Update' %}" class="hide-for-print"/>
                         </div>
                     </form>
                 </div>
             </div>
             <div class="row">
-                <div class="large-7 small-6 columns">
+                <div class="medium-7 small-12 columns">
                     <div class="section" id="key-section" data-pk="{{ object.pk }}">
                         <div class="row info-row">
                              <div class="large-12 columns">
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="large-5 small-6 columns">
+                <div class="medium-5 small-12 columns">
                     <div class="section">
                         <div class="row info-row">
                             <div class="large-12 columns">

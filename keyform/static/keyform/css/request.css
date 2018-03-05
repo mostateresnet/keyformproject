@@ -6,7 +6,7 @@
     margin-top: .5em;
 }
 
-.content, .hide-for-print {
+.content {
     width: 90%;
     margin: auto;
     font-size: 1em;
@@ -67,4 +67,8 @@ select {
 
 .created, .section-info {
     font-weight: bold;
+}
+
+.request-edit select {
+    min-width: 10.06rem;
 }
