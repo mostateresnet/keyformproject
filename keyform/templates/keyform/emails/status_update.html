@@ -261,15 +261,14 @@
             margin-top: .75em;
         }
 
-        .author {
+        .author, .bold {
             font-weight: bold;
-
         }
 
         .message {
             padding-left: .75em;
-
         }
+
         /* -------------------------------------
           RESPONSIVE AND MOBILE FRIENDLY STYLES
       ------------------------------------- */
@@ -376,37 +375,37 @@
                                                                 <tbody>
                                                                     <tr><td colspan='2' class='emailHeader'>{% trans 'Basic Info' %}</td></tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Student Name' %}: {{ request.student_name }}</td>
-                                                                        <td>{% trans 'Request for' %}: {{ request.get_reason_for_request_display }}</td>
+                                                                        <td><span class='bold'>{% trans 'Student Name' %}</span>: {{ request.student_name }}</td>
+                                                                        <td><span class='bold'>{% trans 'Request for' %}</span>: {{ request.get_reason_for_request_display }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Residence Hall' %}: {{ request.building }}</td>
+                                                                        <td><span class='bold'>{% trans 'Residence Hall' %}</span>: {{ request.building }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Amount Recieved' %}: {{ request.amt_received }}</td>
-                                                                        <td>{% trans 'Paid By' %}: {{ request.get_payment_method_display }}</td>
+                                                                        <td><span class='bold'>{% trans 'Amount Recieved' %}</span>: {{ request.amt_received }}</td>
+                                                                        <td><span class='bold'>{% trans 'Paid By' %}</span>: {{ request.get_payment_method_display }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Bill to Account' %}: {{ request.charge_amount }}</td>
-                                                                        <td>{% trans 'M-Number' %}: {{ request.bpn }}</td>
+                                                                        <td><span class='bold'>{% trans 'Bill to Account' %}</span>: {{ request.charge_amount }}</td>
+                                                                        <td><span class='bold'>{% trans 'M-Number' %}</span>: {{ request.bpn }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Staff Name' %}: {{ request.staff.get_full_name }}</td>
-                                                                        <td>{% trans 'Charged on RCR' %}: {{ request.charged_on_rcr }}</td>
+                                                                        <td><span class='bold'>{% trans 'Staff Name' %}</span>: {{ request.staff.get_full_name }}</td>
+                                                                        <td><span class='bold'>{% trans 'Charged on RCR' %}</span>: {{ request.charged_on_rcr }}</td>
                                                                     </tr>
                                                                     <tr><td colspan='2' class='emailHeader'>{% trans 'Keydata' %}</td></tr>
                                                                     {% for key in request.keydata_set.all %}
                                                                             <table class='entry'>
                                                                                 <tr>
-                                                                                    <td>{% trans 'Core' %} #'s: {{ key.core_number }}</td>
-                                                                                    <td>{% trans 'Room' %} #'s: {{ key.room_number }}</td>
+                                                                                    <td><span class='bold'>{% trans 'Core' %} #'s</span>: {{ key.core_number }}</td>
+                                                                                    <td><span class='bold'>{% trans 'Room' %} #'s</span>: {{ key.room_number }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>{% trans 'Key' %} #'s: {{ key.key_number }}</td>
-                                                                                    <td>{% trans 'Key Type' %}: {{ key.get_key_type_display }}</td>
+                                                                                    <td><span class='bold'>{% trans 'Key' %} #'s</span>: {{ key.key_number }}</td>
+                                                                                    <td><span class='bold'>{% trans 'Key Type' %}</span>: {{ key.get_key_type_display }}</td>
                                                                                 </tr>
                                                                                 <tr>
-                                                                                    <td>{% trans 'Quantity' %}: {{ key.quantity }}</td>
+                                                                                    <td><span class='bold'>{% trans 'Quantity' %}</span>: {{ key.quantity }}</td>
                                                                                 </tr>
                                                                             </table>
                                                                     {% endfor %}
