@@ -6,8 +6,10 @@ div.field-wrapper {
     border-color: lightgray;
 }
 
-div.row {
-    padding: 15px;
+.keydata-form {
+    margin: 0.9375rem;
+    padding-top: 0.9375rem;
+    padding-bottom: 0.9375rem;
 }
 
 .errorlist {
