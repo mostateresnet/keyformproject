@@ -66,6 +66,11 @@ class ContactForm(forms.ModelForm):
             'alert_statuses': CheckboxSelectMultiple,
         }
 
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        return email.lower()
+
+
 
 class EditForm(forms.ModelForm):
 
