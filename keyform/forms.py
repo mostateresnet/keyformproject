@@ -3,7 +3,7 @@ from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.forms import TypedChoiceField
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
-from keyform.models import Request, KeyData, Contact
+from keyform.models import Request, KeyData, Contact, KeyType
 
 
 class CreateForm(forms.ModelForm):
@@ -54,7 +54,6 @@ class CreateForm(forms.ModelForm):
             self.add_error('amt_received', error_msg)
         return cleaned_data
 
-
 class ContactForm(forms.ModelForm):
 
     class Meta:
@@ -77,5 +76,14 @@ class EditForm(forms.ModelForm):
         model = Request
         fields = ['status']
 
+class KeyDataForm(forms.ModelForm):
 
-RequestFormSet = inlineformset_factory(Request, KeyData, extra=1, can_delete=False, exclude=[])
+    def __init__(self, *args, **kwargs):
+        super(KeyDataForm, self).__init__(*args, **kwargs)
+        key_type_attrs = {
+            'data-pks_with_hide_core_number': ','.join([str(kt.pk) for kt in self.fields['key_type'].queryset if kt.hide_core_number]),
+        }
+        self.fields['key_type'].widget.attrs.update(key_type_attrs)
+
+
+RequestFormSet = inlineformset_factory(Request, KeyData, form=KeyDataForm, extra=1, can_delete=False, exclude=[])
