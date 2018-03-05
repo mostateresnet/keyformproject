@@ -19,10 +19,10 @@
         <div class="content-header hide-for-print">{% trans 'Update Key Request' %}</div>
         <div class="info">
             <div class="row">
-                <div class="medium-6 columns">
+                <div class="small-6 columns">
                     <span class='created'> {% trans 'Created' %}: {{ object.created_timestamp }}</span>
                 </div>
-                <div class="medium-6 columns text-right">
+                <div class="small-6 columns text-right">
                     <form method="POST">
                         {% csrf_token %}
                         <div class="request-edit">
