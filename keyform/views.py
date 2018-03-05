@@ -5,10 +5,11 @@ from datetime import datetime, timedelta
 from django.views.generic import FormView, UpdateView, View, CreateView
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import get_object_or_404
 from django.db.models import Count, Q
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.utils.timezone import localtime, utc
 from django.utils.dateparse import parse_date
@@ -137,7 +138,6 @@ class EditContactView(LoginRequiredMixin, PermissionRequiredMixin, UpdateView):
     permission_required = 'keyform.change_contact'
     raise_exception = True
 
-
 class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     template_name = "keyform/contact_form.html"
     model = Contact
@@ -145,6 +145,16 @@ class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
     success_url = reverse_lazy('contact')
 
     permission_required = 'keyform.add_contact'
+
+
+
+    def form_invalid(self, form):
+        if list(filter(lambda e: e.code == 'unique', form.errors.as_data()['email'])):
+            messages.error(self.request, 'Error: This contact already exists, you have been redirected to it.')
+            preexisting_contact = Contact.objects.filter(email__iexact=form.instance.email).get()
+            return HttpResponseRedirect(reverse('edit-contact', kwargs={'pk': preexisting_contact.pk}))
+
+        return super().form_invalid(form)
 
 
 class KeyRequest(LoginRequiredMixin, FormView):
