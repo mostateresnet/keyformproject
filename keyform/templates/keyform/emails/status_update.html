@@ -248,6 +248,27 @@
             border-bottom: 1px solid #f6f6f6;
             Margin: 20px 0;
         }
+
+        .emailHeader {
+            border-bottom: 1px solid black;
+            font-size: 2em;
+            margin-top: 1em;
+        }
+
+        .entry {
+            border-left: 2px solid black;
+            padding-left: .25em;
+            margin-top: .75em;
+        }
+
+        .author, .bold {
+            font-weight: bold;
+        }
+
+        .message {
+            padding-left: .75em;
+        }
+
         /* -------------------------------------
           RESPONSIVE AND MOBILE FRIENDLY STYLES
       ------------------------------------- */
@@ -352,34 +373,53 @@
                                                         <td align="left">
                                                             <table border="0" cellpadding="3" cellspacing="1">
                                                                 <tbody>
+                                                                    <tr><td colspan='2' class='emailHeader'>{% trans 'Basic Info' %}</td></tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Residence Hall' %}:</td>
-                                                                        <td>{{ request.building }}</td>
+                                                                        <td><span class='bold'>{% trans 'Student Name' %}</span>: {{ request.student_name }}</td>
+                                                                        <td><span class='bold'>{% trans 'Request for' %}</span>: {{ request.get_reason_for_request_display }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Room' %} #'s:</td>
-                                                                        <td>
-                                                                            {% for key in request.keydata_set.all %}
-                                                                                {{ key.room_number }}{% if not forloop.last %}, {% endif %}
-                                                                            {% endfor %}
-                                                                        </td>
+                                                                        <td><span class='bold'>{% trans 'Residence Hall' %}</span>: {{ request.building }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Core' %} #'s:</td>
-                                                                        <td>
-                                                                            {% for key in request.keydata_set.all %}
-                                                                                {{ key.core_number }}{% if not forloop.last %}, {% endif %}
-                                                                            {% endfor %}
-                                                                        </td>
+                                                                        <td><span class='bold'>{% trans 'Amount Recieved' %}</span>: {{ request.amt_received }}</td>
+                                                                        <td><span class='bold'>{% trans 'Paid By' %}</span>: {{ request.get_payment_method_display }}</td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td>{% trans 'Key' %} #'s:</td>
-                                                                        <td>
-                                                                            {% for key in request.keydata_set.all %}
-                                                                                {{ key.key_number }}{% if not forloop.last %}, {% endif %}
-                                                                            {% endfor %}
-                                                                        </td>
+                                                                        <td><span class='bold'>{% trans 'Bill to Account' %}</span>: {{ request.charge_amount }}</td>
+                                                                        <td><span class='bold'>{% trans 'M-Number' %}</span>: {{ request.bpn }}</td>
                                                                     </tr>
+                                                                    <tr>
+                                                                        <td><span class='bold'>{% trans 'Staff Name' %}</span>: {{ request.staff.get_full_name }}</td>
+                                                                        <td><span class='bold'>{% trans 'Charged on RCR' %}</span>: {{ request.charged_on_rcr }}</td>
+                                                                    </tr>
+                                                                    <tr><td colspan='2' class='emailHeader'>{% trans 'Keydata' %}</td></tr>
+                                                                    {% for key in request.keydata_set.all %}
+                                                                            <table class='entry'>
+                                                                                <tr>
+                                                                                    <td><span class='bold'>{% trans 'Core' %} #'s</span>: {{ key.core_number }}</td>
+                                                                                    <td><span class='bold'>{% trans 'Room' %} #'s</span>: {{ key.room_number }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td><span class='bold'>{% trans 'Key' %} #'s</span>: {{ key.key_number }}</td>
+                                                                                    <td><span class='bold'>{% trans 'Key Type' %}</span>: {{ key.get_key_type_display }}</td>
+                                                                                </tr>
+                                                                                <tr>
+                                                                                    <td><span class='bold'>{% trans 'Quantity' %}</span>: {{ key.quantity }}</td>
+                                                                                </tr>
+                                                                            </table>
+                                                                    {% endfor %}
+                                                                    <tr><td colspan='2' class='emailHeader'>{% trans 'Comments' %}</td></tr>
+                                                                    {% for comment in request.comment_set.all %}
+                                                                        <tr>
+                                                                            <td colspan='2'>
+                                                                                <div class='entry'>
+                                                                                    <span class='author'>{{ comment.author.get_full_name }} - {{ comment.created_timestamp }}</span><br>
+                                                                                    <div class='message'>{{ comment.message }}</div>
+                                                                                </div>
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% endfor %}
                                                                 </tbody>
                                                             </table>
                                                         </td>
