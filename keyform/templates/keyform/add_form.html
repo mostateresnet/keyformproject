@@ -24,7 +24,7 @@
                         {{ form.reason_for_request }}
                     </div>
                     <div class="large-6 columns">
-                        <label>Filed by:</label>
+                        <label>{% trans 'Filed by:' %}</label>
                         {{ user.get_full_name }}
                     </div>
                 </div>
@@ -78,11 +78,11 @@
             <div class="large-6 columns">
                 <div class="row">
                     <div class="large-4 medium-2 small-12 columns">
-                        {{ form.amt_received.errors }}
                         <span class="has-tip help-text" title="{{ form.amt_received.help_text }}">{{ form.amt_received.label_tag }}</span>
                     </div>
                     <div class="large-8 medium-10 small-12 columns">
                         {{ form.amt_received }}
+                        {{ form.amt_received.errors }}
                     </div>
                 </div>
             </div>
@@ -98,6 +98,7 @@
                 </div>
             </div>
             <div class="large-12 columns">
+                <span class="section-header">{% trans 'Comments:' %}</span>
                 {% if comment_errors %}
                     <ul class="errorlist">
                         {% for error in comment_errors %}
@@ -105,7 +106,6 @@
                         {% endfor %}
                     </ul>
                 {% endif %}
-                <span class="section-header">{% trans 'Comments:' %}</span>
                 <textarea name="comment_text">{{ comment_text }}</textarea>
                 <input type="submit"/>
             </div>
