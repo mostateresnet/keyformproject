@@ -13,7 +13,7 @@ $(document).ready(function() {
         }
     });
 
-    function hide_keytype_field() {
+    function hide_keydata_field() {
         var key_type_selector = $(this);
         var pks_with_hide_core_number = key_type_selector.data('pks_with_hide_core_number');
         pks_with_hide_core_number = String(pks_with_hide_core_number).split(',');
@@ -21,5 +21,5 @@ $(document).ready(function() {
         key_type_selector.closest('.keydata-form').find('[id$=-core_number]').closest('.row').toggle($.inArray(current_key_type, pks_with_hide_core_number) == -1)
     }
 
-    $('#form-set').on('click change','.keydata-form select[data-pks_with_hide_core_number]', hide_keytype_field);
+    $('#form-set').on('click change','.keydata-form select[data-pks_with_hide_core_number]', hide_keydata_field);
 });
