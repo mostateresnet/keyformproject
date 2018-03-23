@@ -89,7 +89,9 @@
                         </div>
                         {% for data in object.keydata_set.all %}
                             <div class="row info-row">
-                                <div class="large-4 columns">{% trans 'New Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
+                                {% if not data.key_type.hide_core_number %}
+                                    <div class="large-4 columns">{% trans 'New Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
+                                {% endif %}
                                 <div class="large-4 columns">{% trans 'Room #' %}: <span class="section-info">{{ data.room_number }}</span></div>
                                 <div class="large-4 columns">{% trans 'Lost/Stolen/Damaged Key #' %}: <span class="section-info">{{ data.key_number }}</span></div>
                             </div>

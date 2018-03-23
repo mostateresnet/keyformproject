@@ -92,7 +92,6 @@ class KeyType(models.Model):
     def __str__(self):
         return self.name
 
-
 class KeyData(models.Model):
     request = models.ForeignKey(Request)
     core_number = models.CharField(max_length=35, verbose_name=_('New Core Number'), blank=True,
