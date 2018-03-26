@@ -116,10 +116,12 @@
                     </div>
                 {% endwith %}
                 <div id="comment-form">
-                    <p>{% trans 'New Comment:' %}</p>
-                    <textarea id="comment-text" cols="40" rows="4"></textarea>
-                    <span class='button small' type='button' id='submit'>{% trans 'Submit' %}</span>
-                    <span class='button small' type='button' id='cancel'>{% trans 'Cancel' %}</span>
+                    <div class="hide-for-print">
+                        <p>{% trans 'New Comment:' %}</p>
+                        <textarea id="comment-text" cols="40" rows="4"></textarea>
+                        <span class='button small' type='button' id='submit'>{% trans 'Submit' %}</span>
+                        <span class='button small' type='button' id='cancel'>{% trans 'Cancel' %}</span>
+                    </div>
                 </div>
                 <div class="hide-for-print">
                     <span class="button small" type="button" id="add">{% trans 'Add a comment' %}</span>
