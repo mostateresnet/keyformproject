@@ -89,12 +89,14 @@
                         </div>
                         {% for data in object.keydata_set.all %}
                             <div class="row info-row">
-                                <div class="large-4 columns">{% trans 'New Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
+                                {% if not data.key_type.hide_core_number %}
+                                    <div class="large-4 columns">{% trans 'New Core #' %}: <span class="section-info">{{ data.core_number }}</span></div>
+                                {% endif %}
                                 <div class="large-4 columns">{% trans 'Room #' %}: <span class="section-info">{{ data.room_number }}</span></div>
                                 <div class="large-4 columns">{% trans 'Lost/Stolen/Damaged Key #' %}: <span class="section-info">{{ data.key_number }}</span></div>
                             </div>
                             <div class="row info-row">
-                                <div class="large-8 columns">{% trans 'Key Type' %}: <span class="section-info">{{ data.get_key_type_display }}</span></div>
+                                <div class="large-8 columns">{% trans 'Key Type' %}: <span class="section-info">{{ data.key_type }}</span></div>
                                 <div class="large-4 columns">{% trans 'Quantity' %}: <span class="section-info">{{ data.quantity }}</span></div>
                             </div>
                             {% if not forloop.last %}<hr width="80%">{% endif %}
