@@ -46,7 +46,7 @@
                                  {% trans 'Student Name' %}: <span class="section-info">{{ object.student_name }}</span>
                              </div>
                              <div class="large-5 columns">
-                                 {% trans 'Request for' %}: <span class="section-info">{{ object.get_reason_for_request_display }}</span>
+                                 {% trans 'Request For' %}: <span class="section-info">{{ object.get_reason_for_request_display }}</span>
                              </div>
                         </div>
                         <div class="row info-row">
@@ -72,7 +72,7 @@
                         </div>
                         <div class="row info-row">
                             <div class="large-7 columns">
-                                {% trans 'Submitted by' %}: <span class="section-info">{{ object.staff.get_full_name }}</span>
+                                {% trans 'Submitted By' %}: <span class="section-info">{{ object.staff.get_full_name }}</span>
                             </div>
                             <div class="large-5 columns">
                                 {% trans 'Charged on RCR' %}: {% if object.charged_on_rcr %} <i class="fa fa-check section-info" aria-hidden="true"> {% trans 'Yes' %}</i> {% else %} <i class="fa fa-times section-info" aria-hidden="true"> {% trans 'No' %}</i> {% endif %}
