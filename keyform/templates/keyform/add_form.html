@@ -40,11 +40,16 @@
                 {{ form.bpn.label_tag }}
                 {{ form.bpn }}
             </div>
-            <div class="large-12 columns">
+            <div class="large-6 columns">
                 {{ form.request_formset.management_form }}
                 {{ form.building.errors }}
                 {{ form.building.label_tag }}
                 {{ form.building }}
+            </div>
+            <div class="large-6 columns">
+                {{ form.request_formset.empty_form.room_number.label_tag }}
+                {{ form.request_formset.empty_form.room_number.errors }}
+                {{ form.request_formset.empty_form.room_number }}
             </div>
             <div id="form-set">
                 {% for keydata_form in form.request_formset.forms %}
