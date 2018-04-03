@@ -79,6 +79,12 @@ class Request(models.Model):
     locksmith_email_sent = models.BooleanField(default=False)
     updated = models.BooleanField(default=True)
 
+    def core_number_list(self):
+        return [kd.core_number for kd in self.keydata_set.all() if kd.core_number]
+
+    def room_number_list(self):
+        return [kd.room_number for kd in self.keydata_set.all() if kd.room_number]
+
     def __str__(self):
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
 
