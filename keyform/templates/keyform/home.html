@@ -32,14 +32,10 @@
                         {{ object.building }}
                     </div>
                     <div class="small-2 large-2 columns text-center">
-                        {% for key in object.keydata_set.all %}
-                            {% if key.room_number != '' %}{{ key.room_number }}{% if not forloop.last %},{% endif %}&nbsp;{% endif %}
-                        {% endfor %}
+                        {{ object.core_number_list|join:", " }}&nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
-                        {% for key in object.keydata_set.all %}
-                            {% if key.core_number != '' %}{{ key.core_number }}{% if not forloop.last %},{% endif %}&nbsp;{% endif %}
-                        {% endfor %}
+                        {{ object.room_number_list|join:", " }}&nbsp;
                     </div>
                     <div class="small-2 large-2 columns text-center">
                         {{ object.num_comments }}
