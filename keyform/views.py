@@ -149,7 +149,7 @@ class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 
     def form_invalid(self, form):
-        if list(filter(lambda e: e.code == 'unique', form.errors.as_data()['email'])):
+        if list(filter(lambda e: e.code == 'unique', form.errors.as_data().get('email', []))):
             messages.error(self.request, 'Error: This contact already exists, you have been redirected to it.')
             preexisting_contact = Contact.objects.filter(email__iexact=form.instance.email).get()
             return HttpResponseRedirect(reverse('edit-contact', kwargs={'pk': preexisting_contact.pk}))
