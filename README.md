@@ -10,19 +10,8 @@
   ```shell
   cd keyformproject
   ```
-3. Create a new virtual environment for keyformproject
+3. Use uv to run manage.py commands (start the dev server)
 
   ```shell
-  mkvirtualenv --python=$(which python3) keyformproject
+  uv run manage.py runserver 0.0.0.0:8000
   ```
-4. Install the required Python packages
-
-  ```shell
-  pip install -U pip -r requirements/development.txt
-  ```
-5. Re-activate the Python virtual environment to ensure all the environment variables are reset to their proper values
-
-  ```shell
-  workon keyformproject
-  ```
-  

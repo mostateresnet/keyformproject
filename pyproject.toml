@@ -1,0 +1,14 @@
+[project]
+name = "keyformproject"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.7"
+dependencies = [
+    "django==1.11.29",
+]
+
+[tool.uv]
+dev-dependencies = [
+    "django-debug-toolbar>=2.2.1",
+]
