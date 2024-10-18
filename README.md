@@ -10,7 +10,13 @@
   ```shell
   cd keyformproject
   ```
-3. Use uv to run manage.py commands (start the dev server)
+3. Use [uv](https://docs.astral.sh/uv/getting-started/installation/) to run manage.py commands (create the database)
+
+  ```shell
+  uv run manage.py migrate
+  ```
+
+4. Start the dev server
 
   ```shell
   uv run manage.py runserver 0.0.0.0:8000
