@@ -37,7 +37,6 @@ $(document).ready(function() {
         room_list.push($(this).val());
     });
 
-
     var global_room_number = $("[name=keydata_set-__prefix__-room_number]");
     var previous_room = mode(room_list);
     global_room_number.val(previous_room);
@@ -54,4 +53,14 @@ $(document).ready(function() {
 
     global_room_number.on('keyup', synchronize_room_number);
 
+    function calculate_charge_amount() {
+        let sum = 0;
+        $('#id_charge_amount input:checked').each(function() {
+            sum += parseFloat($(this).val());
+        });
+        $('#charge_amount_total').text('$' + sum);
+    }
+
+    $('#id_charge_amount input').on('click change', calculate_charge_amount);
+    calculate_charge_amount();
 });

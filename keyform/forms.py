@@ -1,3 +1,5 @@
+from random import choices
+
 from django import forms
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
 from django.forms import TypedChoiceField
@@ -7,19 +9,50 @@ from keyform.models import Request, KeyData, Contact, KeyType
 
 
 class CreateForm(forms.ModelForm):
+    billing_items = (
+        (50, "Core Change = $50"),
+        (10, "Room Key = $10"),
+        (10, "Mailbox Key = $10"),
+        (25, "Monroe Mailbox Key = $25")
+    )
+
+    charge_amount = forms.MultipleChoiceField(
+        choices = billing_items,
+        widget = forms.CheckboxSelectMultiple,
+        label = "Bill to Account"
+    )
 
     class Meta:
         model = Request
-        fields = ['building', 'student_name', 'bpn', 'reason_for_request', 'amt_received', 'payment_method', 'charge_amount', 'charged_on_rcr']
+        fields = ['building', 'student_name', 'bpn', 'reason_for_request', 'amt_received', 'payment_method',
+                  'charge_amount', 'charged_on_rcr']
 
     def __init__(self, *args, **kwargs):
         super(CreateForm, self).__init__(*args, **kwargs)
         # removes blank choices from Radio Select options
-        self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES, label=_("Paid by:"),
-            help_text=_("Cash/Check should only be accepted during camps and conferences, and also fill in the amount received. Use the Charge Amount box to charge to the student's account, or mark that the student was charged on the RCR if they are checking out."))
+        self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES,
+                                                         label=_("Paid by:"),
+                                                         help_text=_(
+                                                             "Cash/Check should only be accepted during camps and"
+                                                             "conferences, and also fill in the amount received. Use the"
+                                                             "Charge Amount box to charge to the student's account, or "
+                                                             "mark that the student was charged on the RCR if they are "
+                                                             "checking out."))
 
     def clean(self):
         cleaned_data = super(CreateForm, self).clean()
+
+        get_items = list(cleaned_data.get("charge_amount", []))
+
+        checked_items = []
+        total_amt = 0
+        for each in get_items:
+            each = int(each)
+            checked_items.append(each)
+            total_amt += each
+        cleaned_data["charge_amount"] = total_amt
+        print(total_amt)
+
         reason_for_request = cleaned_data.get("reason_for_request")
         amt_received = cleaned_data.get("amt_received")
         payment_method = cleaned_data.get("payment_method")
@@ -54,8 +87,8 @@ class CreateForm(forms.ModelForm):
             self.add_error('amt_received', error_msg)
         return cleaned_data
 
-class ContactForm(forms.ModelForm):
 
+class ContactForm(forms.ModelForm):
     class Meta:
         model = Contact
         fields = ['name', 'email', 'buildings', 'alert_statuses']
@@ -69,19 +102,19 @@ class ContactForm(forms.ModelForm):
         return email.lower()
 
 
-
 class EditForm(forms.ModelForm):
-
     class Meta:
         model = Request
         fields = ['status']
+
 
 class KeyDataForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(KeyDataForm, self).__init__(*args, **kwargs)
         key_type_attrs = {
-            'data-pks_with_hide_core_number': ','.join([str(kt.pk) for kt in self.fields['key_type'].queryset if kt.hide_core_number]),
+            'data-pks_with_hide_core_number': ','.join(
+                [str(kt.pk) for kt in self.fields['key_type'].queryset if kt.hide_core_number]),
         }
         self.fields['key_type'].widget.attrs.update(key_type_attrs)
 

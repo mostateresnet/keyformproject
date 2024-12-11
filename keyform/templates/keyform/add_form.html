@@ -59,14 +59,16 @@
             <div id="empty_form" style="display:none">
                 {% include 'keyform/includes/keydata_form.html' with keydata_form=form.request_formset.empty_form %}
             </div>
+
             <div class="row">
-                <div class="large-3 medium-4 columns end">
-                    <div class="large-8 medium-8 small-12 columns">
+                <div class="large-12 medium-4 columns end">
+                    <div class="large-2 medium-8 small-12 columns">
                         {{ form.charge_amount.errors }}
                         {{ form.charge_amount.label_tag }}
                     </div>
-                    <div class="large-4 medium-4 small-12 columns">
+                    <div class="large-10 medium-4 small-12 columns">
                         {{ form.charge_amount }}
+                        Total: <span id="charge_amount_total"></span>
                     </div>
                 </div>
             </div>
