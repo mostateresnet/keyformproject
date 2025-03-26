@@ -69,9 +69,10 @@ class ChargeAmountField(MultiValueField):
 
     def compress(self, data_list):
         field_prices = [f.widget.attrs['data-charge-amt'] for f in self.fields]
+        total_amt = 0
         for price, count in zip(field_prices, data_list):
-            pass
-        return 0
+            total_amt += count * price
+        return total_amt
 
 class CreateForm(forms.ModelForm):
     billing_items = [
@@ -102,17 +103,7 @@ class CreateForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(CreateForm, self).clean()
-        print(cleaned_data.get("charge_amount"))
-
-
-        total_amt = 0
-        for price, label in self.billing_items:
-            field_name = f"item_{price}"
-            quantity = cleaned_data.get(field_name, 0)
-            if quantity:
-                total_amt += quantity * price
-
-        cleaned_data["charge_amount"] = total_amt
+        # print(cleaned_data.get("charge_amount"))
 
         reason_for_request = cleaned_data.get("reason_for_request")
         amt_received = cleaned_data.get("amt_received")

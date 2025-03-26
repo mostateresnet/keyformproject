@@ -56,7 +56,7 @@ $(document).ready(function() {
     function calculate_charge_amount() {
         let sum = 0;
         $('[name^=charge_amount_]').each(function() {
-            const price = parseFloat($(this).data('price'));
+            const price = parseFloat($(this).data('charge-amt'));
             const quantity = parseFloat($(this).val());
             if (!isNaN(price) && !isNaN(quantity)) {
                 sum += quantity * price;
@@ -65,6 +65,6 @@ $(document).ready(function() {
     $('#charge_amount_total').text('$' + sum.toFixed(2));
     }
 
-    $('#id_charge_amount input').on('click change', calculate_charge_amount);
+    $('[name^=charge_amount_]').on('click change keyup', calculate_charge_amount);
     calculate_charge_amount();
 });
