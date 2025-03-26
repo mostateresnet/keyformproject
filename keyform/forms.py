@@ -1,26 +1,78 @@
 from random import choices
 
 from django import forms
-from django.forms.widgets import RadioSelect, CheckboxSelectMultiple
-from django.forms import TypedChoiceField
+from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, NumberInput
+from django.forms import TypedChoiceField, MultiValueField, IntegerField, MultiWidget
+from django.core.validators import MinValueValidator
 from django.forms.models import inlineformset_factory
 from django.utils.translation import ugettext_lazy as _
 from keyform.models import Request, KeyData, Contact, KeyType
 
+class ChargeAmountWidget(MultiWidget):
+    def decompress(self, value):
+        print(value)
+        return []
+
+class ChargeAmountField(MultiValueField):
+    def __init__(self, *args, **kwargs):
+        core_change_field = IntegerField(
+            required=False,
+            initial=0,
+            validators=[MinValueValidator(0)],
+            label="Core Change",
+            help_text="If you don't need this, you can mark zero.",
+        )
+        core_change_field.widget.attrs = {'data-charge-amt': 50}
+
+        room_key_field = IntegerField(
+            required=False,
+            initial=0,
+            validators=[MinValueValidator(0)],
+            label="Room Key",
+            help_text="If you don't need this, you can mark zero.",
+        )
+        room_key_field.widget.attrs = {'data-charge-amt': 10}
+
+        mailbox_key_field = IntegerField(
+            required=False,
+            initial=0,
+            validators=[MinValueValidator(0)],
+            label="Mailbox Key",
+            help_text="If you don't need this, you can mark zero.",
+        )
+        mailbox_key_field.widget.attrs = {'data-charge-amt': 10}
+
+        monroe_mailbox_key_field = IntegerField(
+            required=False,
+            initial=0,
+            validators=[MinValueValidator(0)],
+            label="Monroe Mailbox Key",
+            help_text="If you don't need this, you can mark zero.",
+        )
+        monroe_mailbox_key_field.widget.attrs = {'data-charge-amt': 25}
+
+        fields = (
+            core_change_field,
+            room_key_field,
+            mailbox_key_field,
+            monroe_mailbox_key_field,
+        )
+        widgets = [field.widget for field in fields]
+
+        super(ChargeAmountField, self).__init__(
+            fields=fields, widget=ChargeAmountWidget(widgets),
+            require_all_fields=True, *args, **kwargs
+        )
 
 class CreateForm(forms.ModelForm):
-    billing_items = (
+    billing_items = [
         (50, "Core Change = $50"),
         (10, "Room Key = $10"),
         (10, "Mailbox Key = $10"),
         (25, "Monroe Mailbox Key = $25")
-    )
+    ]
 
-    charge_amount = forms.MultipleChoiceField(
-        choices = billing_items,
-        widget = forms.CheckboxSelectMultiple,
-        label = "Bill to Account"
-    )
+    charge_amount = ChargeAmountField()
 
     class Meta:
         model = Request
@@ -29,7 +81,7 @@ class CreateForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(CreateForm, self).__init__(*args, **kwargs)
-        # removes blank choices from Radio Select options
+
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES,
                                                          label=_("Paid by:"),
                                                          help_text=_(
@@ -42,16 +94,15 @@ class CreateForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super(CreateForm, self).clean()
 
-        get_items = list(cleaned_data.get("charge_amount", []))
-
-        checked_items = []
         total_amt = 0
-        for each in get_items:
-            each = int(each)
-            checked_items.append(each)
-            total_amt += each
+        for price, label in self.billing_items:
+            field_name = f"item_{price}"
+            quantity = cleaned_data.get(field_name, 0)
+            if quantity:
+                total_amt += quantity * price
+
         cleaned_data["charge_amount"] = total_amt
-        print(total_amt)
+        print(f"Total Amount: {total_amt}")
 
         reason_for_request = cleaned_data.get("reason_for_request")
         amt_received = cleaned_data.get("amt_received")

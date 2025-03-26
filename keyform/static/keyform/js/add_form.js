@@ -55,10 +55,14 @@ $(document).ready(function() {
 
     function calculate_charge_amount() {
         let sum = 0;
-        $('#id_charge_amount input:checked').each(function() {
-            sum += parseFloat($(this).val());
+        $('[name^=charge_amount_]').each(function() {
+            const price = parseFloat($(this).data('price'));
+            const quantity = parseFloat($(this).val());
+            if (!isNaN(price) && !isNaN(quantity)) {
+                sum += quantity * price;
+            }
         });
-        $('#charge_amount_total').text('$' + sum);
+    $('#charge_amount_total').text('$' + sum.toFixed(2));
     }
 
     $('#id_charge_amount input').on('click change', calculate_charge_amount);
