@@ -68,7 +68,6 @@ class Request(models.Model):
     student_name = models.CharField(max_length=128, blank=True)
     reason_for_request = models.CharField(max_length=2, choices=REQUEST_TYPES, verbose_name=_("Request for:"))
     amt_received = models.DecimalField(max_digits=7, decimal_places=2, default=0, blank=True, verbose_name= _('Amount received'), validators=[MinValueValidator(Decimal('0.00'))])
-        # help_text=_('Core Change/Reprogram Fob Charge = $50, Room Key/Fob = $10, Mailbox Key = $10, Monroe Mailbox Key = $25'))
     payment_method = models.CharField(max_length=2, choices=PAYMENT_TYPES)
     charge_amount = models.DecimalField(max_digits=7, default=0, decimal_places=2, validators=[MinValueValidator(Decimal('0.00'))], verbose_name=_("Bill to Account:"))
     staff = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name=_('Staff member completing request'))
@@ -106,7 +105,7 @@ class KeyData(models.Model):
     key_type = models.ForeignKey(KeyType, null=True)
     room_number = models.CharField(max_length=42)
     key_number = models.CharField(max_length=24, verbose_name=_('Lost/Stolen/Damaged Key Number'))
-    quantity = models.IntegerField(validators=[MinValueValidator(0)],
+    quantity = models.IntegerField(validators=[MinValueValidator(0)], verbose_name=_('Quantity to Order'),
         help_text=_("If you don't need to order more keys because there are enough already, you can mark zero."))
 
     def __str__(self):
