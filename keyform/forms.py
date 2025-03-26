@@ -9,8 +9,9 @@ from django.utils.translation import ugettext_lazy as _
 from keyform.models import Request, KeyData, Contact, KeyType
 
 class ChargeAmountWidget(MultiWidget):
+    template_name = 'keyform/includes/charge_amount_widget.html'
+
     def decompress(self, value):
-        print(value)
         return []
 
 class ChargeAmountField(MultiValueField):
@@ -19,7 +20,7 @@ class ChargeAmountField(MultiValueField):
             required=False,
             initial=0,
             validators=[MinValueValidator(0)],
-            label="Core Change",
+            label="Core Change(s)",
             help_text="If you don't need this, you can mark zero.",
         )
         core_change_field.widget.attrs = {'data-charge-amt': 50}
@@ -28,7 +29,7 @@ class ChargeAmountField(MultiValueField):
             required=False,
             initial=0,
             validators=[MinValueValidator(0)],
-            label="Room Key",
+            label="Room Key(s)",
             help_text="If you don't need this, you can mark zero.",
         )
         room_key_field.widget.attrs = {'data-charge-amt': 10}
@@ -37,7 +38,7 @@ class ChargeAmountField(MultiValueField):
             required=False,
             initial=0,
             validators=[MinValueValidator(0)],
-            label="Mailbox Key",
+            label="Mailbox Key(s)",
             help_text="If you don't need this, you can mark zero.",
         )
         mailbox_key_field.widget.attrs = {'data-charge-amt': 10}
@@ -46,7 +47,7 @@ class ChargeAmountField(MultiValueField):
             required=False,
             initial=0,
             validators=[MinValueValidator(0)],
-            label="Monroe Mailbox Key",
+            label="Monroe Mailbox Key(s)",
             help_text="If you don't need this, you can mark zero.",
         )
         monroe_mailbox_key_field.widget.attrs = {'data-charge-amt': 25}
@@ -57,12 +58,20 @@ class ChargeAmountField(MultiValueField):
             mailbox_key_field,
             monroe_mailbox_key_field,
         )
+        for field in fields:
+            field.widget.attrs['label'] = field.label
         widgets = [field.widget for field in fields]
 
         super(ChargeAmountField, self).__init__(
             fields=fields, widget=ChargeAmountWidget(widgets),
             require_all_fields=True, *args, **kwargs
         )
+
+    def compress(self, data_list):
+        field_prices = [f.widget.attrs['data-charge-amt'] for f in self.fields]
+        for price, count in zip(field_prices, data_list):
+            pass
+        return 0
 
 class CreateForm(forms.ModelForm):
     billing_items = [
@@ -72,7 +81,7 @@ class CreateForm(forms.ModelForm):
         (25, "Monroe Mailbox Key = $25")
     ]
 
-    charge_amount = ChargeAmountField()
+    charge_amount = ChargeAmountField(label='Charges')
 
     class Meta:
         model = Request
@@ -93,6 +102,8 @@ class CreateForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(CreateForm, self).clean()
+        print(cleaned_data.get("charge_amount"))
+
 
         total_amt = 0
         for price, label in self.billing_items:
@@ -102,7 +113,6 @@ class CreateForm(forms.ModelForm):
                 total_amt += quantity * price
 
         cleaned_data["charge_amount"] = total_amt
-        print(f"Total Amount: {total_amt}")
 
         reason_for_request = cleaned_data.get("reason_for_request")
         amt_received = cleaned_data.get("amt_received")
