@@ -1,0 +1,12 @@
+{% spaceless %}
+    {% for widget in widget.subwidgets %}
+        <div class="row">
+            <div class="large-1 medium-2 small-3 columns">
+                {% include widget.template_name %}
+            </div>
+            <div class="large-11 medium-10 small-9 columns">
+                <label for="{{ widget.attrs.id }}">{{ widget.attrs.label }}</label>
+            </div>
+        </div>
+    {% endfor %}
+{% endspaceless %}
