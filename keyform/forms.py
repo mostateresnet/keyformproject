@@ -43,20 +43,11 @@ class ChargeAmountField(MultiValueField):
         )
         mailbox_key_field.widget.attrs = {'data-charge-amt': 10}
 
-        monroe_mailbox_key_field = IntegerField(
-            required=False,
-            initial=0,
-            validators=[MinValueValidator(0)],
-            label="Monroe Mailbox Key(s)",
-            help_text="If you don't need this, you can mark zero.",
-        )
-        monroe_mailbox_key_field.widget.attrs = {'data-charge-amt': 25}
 
         fields = (
             core_change_field,
             room_key_field,
             mailbox_key_field,
-            monroe_mailbox_key_field,
         )
         for field in fields:
             field.widget.attrs['label'] = field.label
@@ -79,8 +70,8 @@ class CreateForm(forms.ModelForm):
         (50, "Core Change = $50"),
         (10, "Room Key = $10"),
         (10, "Mailbox Key = $10"),
-        (25, "Monroe Mailbox Key = $25")
     ]
+
 
     charge_amount = ChargeAmountField(label='Charges')
 
@@ -103,7 +94,6 @@ class CreateForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super(CreateForm, self).clean()
-        # print(cleaned_data.get("charge_amount"))
 
         reason_for_request = cleaned_data.get("reason_for_request")
         amt_received = cleaned_data.get("amt_received")
