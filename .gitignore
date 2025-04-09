@@ -94,3 +94,6 @@ ENV/
 
 # ignore pycharm files
 .idea/
+Scripts
+
+pyvenv.cfg

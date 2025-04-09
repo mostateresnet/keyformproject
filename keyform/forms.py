@@ -1,5 +1,3 @@
-from random import choices
-
 from django import forms
 from django.forms.widgets import RadioSelect, CheckboxSelectMultiple, NumberInput
 from django.forms import TypedChoiceField, MultiValueField, IntegerField, MultiWidget
