@@ -13,6 +13,10 @@ from django.core.validators import RegexValidator
 
 class BuildingManager(models.Manager):
     def get_queryset(self):
+        """
+        Returns buildings queryset which have not been marked as deleted.
+        :return: queryset of buildings with deleted field as False.
+        """
         return super(BuildingManager, self).get_queryset().filter(deleted=False)
 
 class Building(models.Model):
@@ -22,6 +26,10 @@ class Building(models.Model):
     all_buildings = models.Manager()
 
     def __str__(self):
+        """
+        Returns building object in string representation.
+        :return: building name.
+        """
         return self.name
 
     class Meta:
@@ -42,11 +50,17 @@ class Status(models.Model):
         ordering = ['order']
 
 class RequestManager(models.Manager):
+    """
+    Manager for the Request model to filter queryset to only include requests whose status is marked as visible.
+    """
     def get_queryset(self):
         return super(RequestManager, self).get_queryset().filter(status__visible=True)
 
 class Request(models.Model):
-
+    """
+    Represents a request for damaged, lost/stolen, or staff file keys and gets relevant details like payment, building,
+    status, etc.
+    """
     REQUEST_TYPES = (
         ('dk', _('Damaged Key')),
         ('lk', _('Lost/Stolen Key')),
@@ -80,18 +94,30 @@ class Request(models.Model):
     updated = models.BooleanField(default=True)
 
     def core_number_list(self):
+        """
+        :return: list: a list of all non-empty core_number values from related KeyData entries.
+        """
         return [kd.core_number for kd in self.keydata_set.all() if kd.core_number]
 
     def room_number_list(self):
+        """
+        :return: list: a list of all non-empty room_number values from related KeyData entries.
+        """
         return [kd.room_number for kd in self.keydata_set.all() if kd.room_number]
 
     def __str__(self):
+        """
+        :return: str: a string representation of the Request instance.
+        """
         return str(self.get_reason_for_request_display()) + " " + str(self.created_timestamp)
 
     class Meta:
         ordering = ['-created_timestamp']
 
 class KeyType(models.Model):
+    """
+    Represents the type of key being requested or managed.
+    """
     name = models.CharField(max_length=128)
     hide_core_number = models.BooleanField(default=False)
 
@@ -116,6 +142,9 @@ class KeyData(models.Model):
 
 
 class Comment(models.Model):
+    """
+    Represents a comment associated with a specific Request and stores any notes related to a Request.
+    """
     request = models.ForeignKey(Request)
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
     created_timestamp = models.DateTimeField(default=now, blank=True)
@@ -129,6 +158,9 @@ class Comment(models.Model):
 
 
 class Contact(models.Model):
+    """
+    Represents a contact person responsible for receiving alerts related to specific buildings and request statuses.
+    """
     buildings = models.ManyToManyField(Building)
     alert_statuses = models.ManyToManyField(Status)
     name = models.CharField(max_length=50)
@@ -141,6 +173,13 @@ class Contact(models.Model):
 
 @receiver(pre_save, sender=Request)
 def handle(sender, instance, **kwargs):
+    """
+    Checks whether the status of a Request instance has changed before it is saved.
+    :param sender: The model class sending the signal.
+    :param instance: The instance of model class being saved.
+    :param kwargs: Keyword arguments passed by the signal.
+    :return: None
+    """
     request = Request.objects.filter(pk=instance.pk).first()
     if request is not None:
         if instance.status != request.status:

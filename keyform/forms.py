@@ -14,6 +14,11 @@ class ChargeAmountWidget(MultiWidget):
 
 class ChargeAmountField(MultiValueField):
     def __init__(self, *args, **kwargs):
+        """
+        Initialization function with pre-defined fields for each charge item.
+        :param args: positional args passed to parent class.
+        :param kwargs: keyword args passed to parent class.
+        """
         core_change_field = IntegerField(
             required=False,
             initial=0,
@@ -41,7 +46,6 @@ class ChargeAmountField(MultiValueField):
         )
         mailbox_key_field.widget.attrs = {'data-charge-amt': 10}
 
-
         fields = (
             core_change_field,
             room_key_field,
@@ -57,6 +61,11 @@ class ChargeAmountField(MultiValueField):
         )
 
     def compress(self, data_list):
+        """
+        Calculates total charge amount based on quantity and price.
+        :param data_list: list of values of quantities of each item.
+        :return: total_amt: total calculated charge.
+        """
         field_prices = [f.widget.attrs['data-charge-amt'] for f in self.fields]
         total_amt = 0
         for price, count in zip(field_prices, data_list):
@@ -79,6 +88,11 @@ class CreateForm(forms.ModelForm):
                   'charge_amount', 'charged_on_rcr']
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialization function with validations to payment method field.
+        :param args:  positional args passed to parent class.
+        :param kwargs: keyword args passed to parent class.
+        """
         super(CreateForm, self).__init__(*args, **kwargs)
 
         self.fields['payment_method'] = TypedChoiceField(widget=RadioSelect(), choices=Request.PAYMENT_TYPES,
@@ -91,6 +105,10 @@ class CreateForm(forms.ModelForm):
                                                              "checking out."))
 
     def clean(self):
+        """
+        Validates the form to ensure fields are provided based on the request type.
+        :return: cleaned_data: dictionary containing the validated and cleaned data from the form fields.
+        """
         cleaned_data = super(CreateForm, self).clean()
 
         reason_for_request = cleaned_data.get("reason_for_request")
@@ -138,6 +156,10 @@ class ContactForm(forms.ModelForm):
         }
 
     def clean_email(self):
+        """
+        Cleans the email field and converts it into lowercase.
+        :return: email: email address string in lowercase.
+        """
         email = self.cleaned_data.get('email')
         return email.lower()
 
@@ -151,6 +173,11 @@ class EditForm(forms.ModelForm):
 class KeyDataForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
+        """
+        Initialization function that dynamically adds attributes to the key type field.
+        :param args:  positional args passed to parent class.
+        :param kwargs: keyword args passed to parent class.
+        """
         super(KeyDataForm, self).__init__(*args, **kwargs)
         key_type_attrs = {
             'data-pks_with_hide_core_number': ','.join(
