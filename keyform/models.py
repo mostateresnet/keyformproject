@@ -113,6 +113,7 @@ class Request(models.Model):
 
     class Meta:
         ordering = ['-created_timestamp']
+        permissions = [("can_charge_zero", "Can submit a form with zero charge amount"),]
 
 class KeyType(models.Model):
     """
@@ -181,9 +182,10 @@ def handle(sender, instance, **kwargs):
     :return: None
     """
     request = Request.objects.filter(pk=instance.pk).first()
-    if request is not None:
+    if request is not None: # means its in db already
         if instance.status != request.status:
             instance.previous_status = request.status
             instance.updated = False
     else:
         instance.previous_status = instance.status
+

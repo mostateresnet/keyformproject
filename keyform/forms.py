@@ -26,7 +26,7 @@ class ChargeAmountField(MultiValueField):
             label="Core Change(s)",
             help_text="If you don't need this, you can mark zero.",
         )
-        core_change_field.widget.attrs = {'data-charge-amt': 50}
+        core_change_field.widget.attrs = {'data-charge-amt': 50, 'min': 0}
 
         room_key_field = IntegerField(
             required=False,
@@ -35,7 +35,7 @@ class ChargeAmountField(MultiValueField):
             label="Room Key(s)",
             help_text="If you don't need this, you can mark zero.",
         )
-        room_key_field.widget.attrs = {'data-charge-amt': 10}
+        room_key_field.widget.attrs = {'data-charge-amt': 10, 'min': 0}
 
         mailbox_key_field = IntegerField(
             required=False,
@@ -44,8 +44,7 @@ class ChargeAmountField(MultiValueField):
             label="Mailbox Key(s)",
             help_text="If you don't need this, you can mark zero.",
         )
-        mailbox_key_field.widget.attrs = {'data-charge-amt': 10}
-
+        mailbox_key_field.widget.attrs = {'data-charge-amt': 10, 'min': 0}
         fields = (
             core_change_field,
             room_key_field,
@@ -73,12 +72,6 @@ class ChargeAmountField(MultiValueField):
         return total_amt
 
 class CreateForm(forms.ModelForm):
-    billing_items = [
-        (50, "Core Change = $50"),
-        (10, "Room Key = $10"),
-        (10, "Mailbox Key = $10"),
-    ]
-
 
     charge_amount = ChargeAmountField(label='Charges')
 
@@ -87,7 +80,10 @@ class CreateForm(forms.ModelForm):
         fields = ['building', 'student_name', 'bpn', 'reason_for_request', 'amt_received', 'payment_method',
                   'charge_amount', 'charged_on_rcr']
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args, can_charge_zero=False, **kwargs):
+
+        self.can_charge_zero = can_charge_zero
+
         """
         Initialization function with validations to payment method field.
         :param args:  positional args passed to parent class.
@@ -112,7 +108,7 @@ class CreateForm(forms.ModelForm):
         cleaned_data = super(CreateForm, self).clean()
 
         reason_for_request = cleaned_data.get("reason_for_request")
-        amt_received = cleaned_data.get("amt_received")
+        amt_received = cleaned_data.get("amt_received") or 0
         payment_method = cleaned_data.get("payment_method")
         bpn = cleaned_data.get("bpn")
         student_name = cleaned_data.get("student_name")
@@ -135,6 +131,9 @@ class CreateForm(forms.ModelForm):
                 self.add_error('amt_received', error_msg)
                 self.add_error('charge_amount', error_msg)
                 self.add_error('charged_on_rcr', error_msg)
+
+        if charge_amount == 0 and not self.can_charge_zero:
+            self.add_error('charge_amount', _("Please enter at least one charge. Total cannot be $0.00."))
 
         if amt_received > 0 and payment_method == "na":
             error_msg = _("If Amount Received is greater than zero, Payment Method must be selected.")
@@ -184,6 +183,7 @@ class KeyDataForm(forms.ModelForm):
                 [str(kt.pk) for kt in self.fields['key_type'].queryset if kt.hide_core_number]),
         }
         self.fields['key_type'].widget.attrs.update(key_type_attrs)
+        self.fields['quantity'].widget.attrs.update({'min': '0'})
 
 
 RequestFormSet = inlineformset_factory(Request, KeyData, form=KeyDataForm, extra=1, can_delete=False, exclude=[])

@@ -4,6 +4,9 @@
 
 {% block javascript %}
     {{ block.super }}
+    <script>
+        const CAN_CHARGE_ZERO = {{ can_charge_zero|yesno:"true,false" }};
+    </script>
     <script type="text/javascript" src="{% static 'keyform/js/add_form.js' %}"></script>
 {% endblock %}
 {% block css %}
@@ -69,6 +72,7 @@
                     <div class="large-10 medium-10 small-12 columns">
                         {{ form.charge_amount }}
                         Total to bill to account: <span id="charge_amount_total"></span>
+                        <span id="charge-error-msg" style="color: red; display: none;">Total charge amount cannot be zero.</span>
                     </div>
                 </div>
             </div>

@@ -245,7 +245,9 @@ class KeyRequest(LoginRequiredMixin, FormView):
         :param: The class used to instantiate the form.
         :return: The initialized form instance with the attached formset.
         """
-        form = CreateForm(instance=Request(staff=self.request.user, status=Status.objects.first()), **self.get_form_kwargs())
+        can_charge_zero = self.request.user.has_perm('keyform.can_charge_zero')
+        form = CreateForm(instance=Request(staff=self.request.user, status=Status.objects.first()),
+                          can_charge_zero=can_charge_zero, **self.get_form_kwargs())
         form.request_formset = RequestFormSet(**self.get_form_kwargs())
         return form
 
@@ -256,6 +258,7 @@ class KeyRequest(LoginRequiredMixin, FormView):
         :return: The context dictionary containing the comment errors and text.
         """
         context = super(KeyRequest, self).get_context_data(**kwargs)
+        context['can_charge_zero'] = self.request.user.has_perm('keyform.can_charge_zero')
         if self.request.method == 'POST':
             context['comment_errors'] = self.comment_errors
             context['comment_text'] = self.request.POST.get('comment_text', '')
