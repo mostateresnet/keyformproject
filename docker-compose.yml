@@ -1,13 +1,33 @@
 version: '3'
 
 services:
-  haproxy:
+  init:
+    build: ./compose-init
+    volumes:
+      - unix-socket-vol:/var/run/
+
+  proxy:
+    build: ./haproxy
     image: haproxy:2.7
     ports:
       - "80:80"
+
+  server:
+    build: ./nginx
+    volumes:
+      - unix-socket-vol:/var/run/
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
   app:
     build: .
     volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
+      - unix-socket-vol:/var/run/
+    depends_on:
+      init:
+        condition: service_completed_successfully
+
+volumes:
+  static:
+  unix-socket-vol:

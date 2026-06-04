@@ -4,4 +4,5 @@ RUN mkdir /app
 WORKDIR /app
 COPY uv.lock pyproject.toml ./
 RUN uv sync
+COPY . /app
 CMD exec uv run uwsgi --ini keyformproject/keyform.ini
