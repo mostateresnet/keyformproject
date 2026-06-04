@@ -5,4 +5,5 @@ WORKDIR /app
 COPY uv.lock pyproject.toml ./
 RUN uv sync
 COPY . /app
+RUN chown -R www-data:www-data /app
 CMD exec uv run uwsgi --ini keyformproject/keyform.ini
