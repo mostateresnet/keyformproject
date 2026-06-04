@@ -16,6 +16,7 @@ services:
     build: ./nginx
     volumes:
       - unix-socket-vol:/var/run/
+      - static:/projects/static/
     depends_on:
       init:
         condition: service_completed_successfully
@@ -24,6 +25,7 @@ services:
     build: .
     volumes:
       - unix-socket-vol:/var/run/
+      - static:/projects/static/
     depends_on:
       init:
         condition: service_completed_successfully

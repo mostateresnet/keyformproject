@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
     "django==1.11.29",
+    "psycopg2>=2.9.9",
     "uwsgi>=2.0.31",
 ]
 
