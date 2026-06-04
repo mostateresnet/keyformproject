@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
     "django==1.11.29",
+    "uwsgi>=2.0.31",
 ]
 
 [tool.uv]

@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  haproxy:
+    image: haproxy:2.7
+    ports:
+      - "80:80"
+  app:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
