@@ -5,10 +5,20 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.7"
 dependencies = [
-    "django==1.11.29",
+    "django>=1.11,<1.12",
 ]
 
 [tool.uv]
 dev-dependencies = [
     "django-debug-toolbar>=2.2.1",
+]
+
+[tool.uv.sources]
+django-auth-sgf = { git = "file:///mnt/repo/django-auth-sgf" }
+
+[dependency-groups]
+prod = [
+    "django-auth-sgf",
+    "psycopg2>=2.9.9",
+    "pyuwsgi>=2.0.30.post1",
 ]
