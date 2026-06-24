@@ -37,7 +37,6 @@ $(document).ready(function() {
         room_list.push($(this).val());
     });
 
-
     var global_room_number = $("[name=keydata_set-__prefix__-room_number]");
     var previous_room = mode(room_list);
     global_room_number.val(previous_room);
@@ -54,4 +53,18 @@ $(document).ready(function() {
 
     global_room_number.on('keyup', synchronize_room_number);
 
+    function calculate_charge_amount() {
+        let sum = 0;
+        $('[name^=charge_amount_]').each(function() {
+            const price = parseFloat($(this).data('charge-amt'));
+            const quantity = parseFloat($(this).val());
+            if (!isNaN(price) && !isNaN(quantity)) {
+                sum += quantity * price;
+            }
+        });
+    $('#charge_amount_total').text('$' + sum.toFixed(2));
+    }
+
+    $('[name^=charge_amount_]').on('click change keyup', calculate_charge_amount);
+    calculate_charge_amount();
 });
