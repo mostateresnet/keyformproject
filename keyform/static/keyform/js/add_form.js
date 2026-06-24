@@ -37,7 +37,6 @@ $(document).ready(function() {
         room_list.push($(this).val());
     });
 
-
     var global_room_number = $("[name=keydata_set-__prefix__-room_number]");
     var previous_room = mode(room_list);
     global_room_number.val(previous_room);
@@ -54,4 +53,46 @@ $(document).ready(function() {
 
     global_room_number.on('keyup', synchronize_room_number);
 
+    function calculate_charge_amount() {
+        let sum = 0;
+        $('[name^=charge_amount_]').each(function() {
+            const price = parseFloat($(this).data('charge-amt'));
+            const quantity = parseFloat($(this).val());
+            if (!isNaN(price) && !isNaN(quantity)) {
+                sum += quantity * price;
+            }
+        });
+        $('#charge_amount_total').text('$' + sum.toFixed(2));
+        if (sum === 0 && !CAN_CHARGE_ZERO) {
+            $('#charge-error-msg').show();
+        } else {
+            $('#charge-error-msg').hide();
+        }
+        return sum;
+    }
+
+    $('#form-set').on('input change', '[name^=charge_amount_]', function () {
+        const val = parseFloat(this.value);
+        if (isNaN(val) || val < 0) {
+            this.value = '';
+        }
+        calculate_charge_amount();
+    });
+
+    $('#form-set').on('keydown', '[name^=charge_amount_]', function (e) {
+         if (e.key === '-' || e.key === 'Minus' || e.keyCode === 189) {
+            e.preventDefault();
+        }
+    });
+
+    $('#form-set').on('submit', function (e) {
+    const total = calculate_charge_amount();
+    if (total === 0 && !CAN_CHARGE_ZERO) {
+        e.preventDefault();
+        $('#charge-error-msg').show().text('Please enter at least one charge. Total cannot be $0.00.');
+        }
+    });
+
+    $('[name^=charge_amount_]').on('click change keyup', calculate_charge_amount);
+    calculate_charge_amount();
 });

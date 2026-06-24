@@ -91,3 +91,9 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+# ignore pycharm files
+.idea/
+Scripts
+
+pyvenv.cfg

@@ -56,7 +56,7 @@
                         </div>
                         <div class="row info-row">
                             <div class="large-7 columns">
-                                {% trans 'Amount Received' %}: <span class="section-info">{{ object.amt_received }}</span>
+                                {% trans 'Amount Received' %}: <span class="section-info">${{ object.amt_received }}</span>
                             </div>
                             <div class="large-5 columns">
                                 {% trans 'Paid By' %}: <span class="section-info">{{ object.get_payment_method_display }}</span>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="row info-row">
                             <div class="large-7 columns">
-                                {% trans 'Bill to Account' %}: <span class="section-info">{{ object.charge_amount }}</span>
+                                {% trans 'Bill to Account' %}: <span class="section-info">${{ object.charge_amount }}</span>
                             </div>
                             <div class="large-5 columns">
                                 {% trans 'M-Number' %}: <span class="section-info">{{ object.bpn }}</span>

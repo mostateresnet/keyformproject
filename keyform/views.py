@@ -26,10 +26,18 @@ class HomeView(LoginRequiredMixin, ListView):
                     'payment_method', 'reason_for_request', 'status__id', 'student_name', 'staff']
 
     def get_ordering(self):
+        """
+        Determines the ordering of the queryset.
+        :return: the order criteria, falling back to '-created_timestamp' if not provided.
+        """
         self.order = self.request.GET.get('order') or '-created_timestamp'
         return [self.order, '-created_timestamp']
 
     def get_context_data(self):
+        """
+        Adds additional context data like request types, statuses, buildings, search filters,
+        and ordering information to the template.
+        """
         context = super(HomeView, self).get_context_data()
         context["request_types"] = Request.REQUEST_TYPES
         context["status_types"] = Status.objects.all()
@@ -52,6 +60,9 @@ class HomeView(LoginRequiredMixin, ListView):
         return context
 
     def get_date_range(self):
+        """
+        Parses and sets the date range from 'start_date' and 'end_date'.
+        """
         self.converted_start_date = parse_date(self.request.GET.get('start_date', '')) or datetime.min.replace(tzinfo=utc)
         self.converted_end_date = parse_date(self.request.GET.get('end_date', '')) or datetime.max.replace(tzinfo=utc)
 
@@ -59,6 +70,10 @@ class HomeView(LoginRequiredMixin, ListView):
             self.converted_end_date += timedelta(days=1)
 
     def get_queryset(self):
+        """
+        Builds and returns the filtered queryset for display.
+        :return: A filtered Django QuerySet of Request objects.
+        """
         self.queryset = Request.active_objects
         if 'status__id' in self.request.GET:
             self.queryset = Request.objects
@@ -99,8 +114,14 @@ class RequestView(LoginRequiredMixin, UpdateView):
 
 
 class RequestCommentView(LoginRequiredMixin, View):
-
     def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests to add a new comment to a Request.
+        :param request: The HTTP request object.
+        :param args: Additional positional arguments.
+        :param kwargs: Additional keyword arguments.
+        :return: JsonResponse containing the comment's author, timestamp, and message.
+        """
         message = request.POST['message']
         pk = request.POST['pk']
 
@@ -115,12 +136,18 @@ class ContactView(LoginRequiredMixin, TemplateView):
     template_name = "keyform/contact.html"
 
     def get_context_data(self):
+        """Adds building data to the context for use in the contact template.
+        :return: dict: a dictionary containing context data for the template.
+        """
         context = super(ContactView, self).get_context_data()
         context["buildings"] = Building.objects.all()
         return context
 
     def post(self, request, *args, **kwargs):
-
+        """
+        Handles deletion of a Contact object if the user has permission.
+        :return: JSON response indicating success or failure.
+        """
         success = False
         if request.user.has_perm('keyform.delete_contact'):
             pk = request.POST['pk']
@@ -149,6 +176,11 @@ class NewContactView(LoginRequiredMixin, PermissionRequiredMixin, CreateView):
 
 
     def form_invalid(self, form):
+        """
+        Handles invalid form submissions.
+        :param form: The submitted form instance that failed validation.
+        :return: An HttpResponseRedirect to the existing contact or invalid response.
+        """
         if list(filter(lambda e: e.code == 'unique', form.errors.as_data().get('email', []))):
             messages.error(self.request, 'Error: This contact already exists, you have been redirected to it.')
             preexisting_contact = Contact.objects.filter(email__iexact=form.instance.email).get()
@@ -163,6 +195,11 @@ class KeyRequest(LoginRequiredMixin, FormView):
     comment_errors = []
 
     def form_valid(self, form):
+        """
+        Processes a valid key request form.
+        :param: main form instance that passed validation.
+        :return: An HttpResponseRedirect to the success URL or re-renders the form with errors.
+        """
         new_request = form.save(commit=False)
         form.request_formset = RequestFormSet(self.request.POST, instance=new_request)
         for request_form in form.request_formset.forms:
@@ -180,11 +217,21 @@ class KeyRequest(LoginRequiredMixin, FormView):
             return self.form_invalid(form)
 
     def form_invalid(self, form):
+        """
+        Handles invalid form submissions for the key request.
+        :param: The submitted form instance that failed validation.
+        :return: The result of the superclass's `form_invalid` method.
+        """
         # Generate any self.comment_errors
         self.check_comment(form)
         return super(KeyRequest, self).form_invalid(form)
 
     def check_comment(self, form):
+        """
+        Validates the comment text for the key request form.
+        :param: The form instance that is being validated.
+        :return: The comment text if valid, or an empty string if no comment is provided.
+        """
         comment_text = self.request.POST.get('comment_text', '')
         if comment_text.strip():
             return comment_text
@@ -193,12 +240,25 @@ class KeyRequest(LoginRequiredMixin, FormView):
         return ''
 
     def get_form(self, form_class=None):
-        form = CreateForm(instance=Request(staff=self.request.user, status=Status.objects.first()), **self.get_form_kwargs())
+        """
+        Initializes and returns the form instance for the key request.
+        :param: The class used to instantiate the form.
+        :return: The initialized form instance with the attached formset.
+        """
+        can_charge_zero = self.request.user.has_perm('keyform.can_charge_zero')
+        form = CreateForm(instance=Request(staff=self.request.user, status=Status.objects.first()),
+                          can_charge_zero=can_charge_zero, **self.get_form_kwargs())
         form.request_formset = RequestFormSet(**self.get_form_kwargs())
         return form
 
     def get_context_data(self, **kwargs):
+        """
+        Adds additional context data to the template for key request.
+        :param kwargs: Additional keyword arguments.
+        :return: The context dictionary containing the comment errors and text.
+        """
         context = super(KeyRequest, self).get_context_data(**kwargs)
+        context['can_charge_zero'] = self.request.user.has_perm('keyform.can_charge_zero')
         if self.request.method == 'POST':
             context['comment_errors'] = self.comment_errors
             context['comment_text'] = self.request.POST.get('comment_text', '')
